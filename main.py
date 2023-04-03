@@ -12,7 +12,7 @@ class App(customtkinter.CTk):
         super().__init__()
         # configure window
         self.title("CustomTkinter complex_example.py")
-        self.geometry(f"{1280}x{1024}")
+        self.geometry(f"{640}x{480}")
         self.wm_geometry()
         # configure grid layout (4x4)
         self.grid_columnconfigure(1, weight=1)

@@ -1,2 +1,6 @@
-docker run -it -p 5900:5900 -e DISPLAY=host.docker.internal:0 --rm enigma
+docker build -t enigma .
+docker run -ti --rm \
+       -e DISPLAY=$DISPLAY \
+       -v /tmp/.X11-unix:/tmp/.X11-unix \
+       enigma
 

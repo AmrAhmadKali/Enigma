@@ -1,19 +1,23 @@
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME /home/developer
 
 COPY requirements.txt /mnt/requirements.txt
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nano x11vnc xvfb xfce4 xfce4-terminal dbus-x11 python3 python3-tk python3-pip && \
-    apt-get autoclean && \
-    apt-get autoremove && \
-    pip3 install -r /mnt/requirements.txt && \
+RUN apt-get update &&\
+    apt-get install -y python3 python3-pip &&\
+    apt-get install -y python3-tk &&\
+    pip install -r /mnt/requirements.txt && \
+    apt-get purge -y python3-pip &&\
+    apt-get autoremove -y &&\
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p ~/.vnc && \
-    x11vnc -storepasswd 1234 ~/.vnc/passwd && \
-    echo "#!/bin/bash\nxrdb /root/.Xresources\nstartxfce4 &\nxfwm4 --replace\n" > ~/.vnc/xstartup && \
-    chmod +x ~/.vnc/xstartup
-COPY main.py /mnt/main.py
+# Replace 1000 with your user / group id
+RUN export uid=1000 gid=1000 && \
+    useradd developer &&\
+    usermod -aG sudo developer &&\
+    chown ${uid}:${gid} -R $HOME
 
-WORKDIR /mnt/
-CMD ["x11vnc", "-forever", "-create"]
-#CMD ["python3", "main.py"]
+USER developer
+COPY main.py $HOME
+WORKDIR $HOME
+CMD /usr/bin/python3 main.py
