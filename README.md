@@ -1,12 +1,9 @@
 # Enigma
 
 Initial test;
-1) `docker build . -t enigma`
-2) `chmod +x go.sh`
-3) `./go.sh`
-4) connect to localhost:5900 with any VNC client of your choice, for example TigerVNC
-5) run `python3 main.py` inside the container.
-6) Enjoy
+1) `chmod +x go.sh`
+2) `./go.sh`
+3) Enjoy
 
 TESTED ON ARCH LINUX, 02.04.2023
 ## Test and Deploy

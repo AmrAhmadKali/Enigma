@@ -1,23 +1,23 @@
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
+FROM alpine
+#ENV DEBIAN_FRONTEND=noninteractive
 ENV HOME /home/developer
 
 COPY requirements.txt /mnt/requirements.txt
-RUN apt-get update &&\
-    apt-get install -y python3 python3-pip &&\
-    apt-get install -y python3-tk &&\
-    pip install -r /mnt/requirements.txt && \
-    apt-get purge -y python3-pip &&\
-    apt-get autoremove -y &&\
-    rm -rf /var/lib/apt/lists/*
+RUN apk fetch &&\
+    apk add python3 python3-tkinter py3-pip &&\
+    pip install -r /mnt/requirements.txt &&\
+    rm -rf /var/cache/apk/* &&\
+    apk del py3-pip &&\
+    rm -rf /usr/share
+
 
 # Replace 1000 with your user / group id
 RUN export uid=1000 gid=1000 && \
-    useradd developer &&\
-    usermod -aG sudo developer &&\
+    adduser developer -D &&\
     chown ${uid}:${gid} -R $HOME
 
-USER developer
+#USER developer
 COPY main.py $HOME
 WORKDIR $HOME
-CMD /usr/bin/python3 main.py
+#CMD /bin/sh
+CMD python3 main.py
