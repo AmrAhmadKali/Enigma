@@ -1,7 +1,8 @@
 # GUI
-- Grafiken erstellen und anzeigen
-- Tasten (Klicken, Leuchten)
-- Einstellungen an Enigma
+- Standardelement Button (klickbar, Leuchtet)
+- Keyboard zusammenstellen
+- Steckbrett (soll Einstellung anzeigen)
+- Möglichkeit Einstellungen vorzunehmen, Varianten einzustellen
 
 # Interface
 - Übersetzung GUI Befehle an Enigma
