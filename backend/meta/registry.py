@@ -109,9 +109,9 @@ class Registry:
     def get_module_name(cls, inst):
         parts = inst.__module__.split(".")
         if parts[0] == "core":
-            return "core"
+            return parts[0] + "." + parts[1]
         # last name in directory path should be first part, then the next name should be last part
-        elif parts[0] == "modules":
+        if parts[0] == "modules":
             return parts[1] + "." + parts[2]
         else:
             return ".".join(parts[:-1])

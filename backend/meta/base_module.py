@@ -1,7 +1,7 @@
 import abc
 
 
-class Base_Module(abc.ABC):
+class BaseModule(abc.ABC):
     def inject(self, reg):
         pass
 

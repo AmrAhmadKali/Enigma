@@ -1,5 +1,5 @@
 # taken from: https://stackoverflow.com/a/26151604/280574
-from core.registry import Registry
+from meta.registry import Registry
 
 
 def parameterized(dec):

@@ -2,7 +2,7 @@ FROM alpine
 ENV HOME /home/developer/
 
 RUN apk fetch &&\
-    apk add python3 python3-tkinter py3-pip &&\
+    apk add python3 py3-pip &&\
     rm -rf /var/cache/apk/*
 
 COPY requirements.txt $HOME
@@ -15,7 +15,8 @@ RUN export uid=1000 gid=1000 && \
 
 USER developer
 COPY main.py $HOME
-ADD core/ $HOME/core
+ADD meta $HOME/meta
+ADD core $HOME/core
 WORKDIR $HOME
 #CMD /bin/sh
-CMD python3 main.py
+CMD python3 -ubEOO main.py

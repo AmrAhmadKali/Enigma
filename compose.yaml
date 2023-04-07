@@ -1,9 +1,0 @@
-version: "3"
-services:
-  enigma:
-    image: enigma
-    container_name: enigma
-    environment:
-      - DISPLAY=$DISPLAY
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
