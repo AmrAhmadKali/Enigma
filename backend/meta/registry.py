@@ -8,13 +8,20 @@ def flatmap(func, *iterable):
     return itertools.chain.from_iterable(map(func, *iterable))
 
 
-# taken from: https://gitlab.com/CynderGames/igncore (own project)
+def get_attrs(obj):
+    attrs = {}
+    for cls in obj.__class__.__mro__:
+        attrs.update(cls.__dict__.items())
+    attrs.update(obj.__class__.__dict__.items())
+    return attrs
+
+
 class Registry:
     _registry = {}
     logger = None
 
     @classmethod
-    def inject_all(cls, modules):
+    def inject_all(cls):
         # inject registry so instance can get references to other instances
         for key in cls._registry:
             try:
