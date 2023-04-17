@@ -1,14 +1,20 @@
+import typing
+
 from meta.base_module import BaseModule
 from meta.decorators import instance, command
 from meta.dict_object import DictObject
+
+if typing.TYPE_CHECKING:
+    from core.main import Server
+    from core.command_service import CommandService
 
 
 @instance("help")
 class Addon2(BaseModule):
 
     def inject(self, reg):
-        self.app = reg.get_instance("app")
-        self.command_service = reg.get_instance("command_service")
+        self.app: Server = reg.get_instance("app")
+        self.command_service: CommandService = reg.get_instance("command_service")
 
     @command(command="help", params=[],
              description="This command will return an index of all available commands.")

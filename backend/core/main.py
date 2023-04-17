@@ -1,5 +1,6 @@
 import asyncio
 import json
+import typing
 
 import websockets
 from websockets.exceptions import ConnectionClosedError
@@ -8,6 +9,9 @@ from websockets.legacy.server import WebSocketServerProtocol, WebSocketServer
 from meta.decorators import instance
 from meta.dict_object import DictObject
 from meta.registry import Registry
+
+if typing.TYPE_CHECKING:
+    from core.command_service import CommandService
 
 
 @instance("app")
@@ -22,7 +26,7 @@ class Server(WebSocketServer):
         self.stop = self.loop.create_future()
 
     def inject(self, reg):
-        self.cmd_service = reg.get_instance('command_service')
+        self.cmd_service: CommandService = reg.get_instance('command_service')
 
     def startup(self):
         self.loop.run_until_complete(self.server())

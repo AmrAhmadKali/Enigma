@@ -2,13 +2,18 @@ import collections
 import inspect
 import json
 import re
+import typing
 
 from websockets.legacy.server import WebSocketServerProtocol
 
 from meta.base_module import BaseModule
 from meta.decorators import instance
 from meta.dict_object import DictObject
-from meta.registry import Registry, get_attrs
+from meta.registry import get_attrs
+
+if typing.TYPE_CHECKING:
+    from core.main import Server
+    from meta.registry import Registry
 
 
 @instance()
@@ -22,8 +27,8 @@ class CommandService(BaseModule):
         self.pre_processors = []
 
     def inject(self, registry):
-        self.bot = registry.get_instance("app")
-        self.reg = registry
+        self.bot: Server = registry.get_instance("app")
+        self.reg: Registry = registry
 
     def start(self):
 
@@ -31,7 +36,7 @@ class CommandService(BaseModule):
         for _, inst in self.reg.get_all_instances().items():
             for name, method in get_attrs(inst).items():
                 if hasattr(method, "command"):
-                    key = Registry.get_module_name(inst).split(".")
+                    key = self.reg.get_module_name(inst).split(".")
                     if key[0] not in self.bot.modules:
                         continue
                     cmd_name, params, description, sub_command = getattr(
