@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="Konfiguration.css">
+    <script> 
+    function closeConfiguration(){
+        var closeConfig = window.close()
+    }
+
+    let allplugs = document.querySelectorAll(".row ")
+    /*for (let plug of allplugs){
+        addEventListener("click", function(){
+           
+
+        })
+    }*/
+    function colorbtn() {
+        for(let plug of allplugs)
+        //document.getElementsByClassName("key")[plug].style.color = "yellow"
+        //addEventListener("click", function(){
+             //plug.style.color = "yellow"
+        //} )
+        {
+            allplugs.style.background = "yellow"
+        }
+    }
+
+    </script>
+</head>
+<body>
+    <div class ="closebtn">
+        <button onclick="closeConfiguration()">Close</button>
+
+    </div>
+    <div class = "keyboard">
+        <div class = "row row1"> 
+            <button onclick="colorbtn()"></button>
+            <div class ="key">Q</div>
+            <div class ="key">W</div>
+            <div class ="key">R</div>
+            <div class ="key">T</div>
+            <div class ="key">Z</div>
+            <div class ="key">U</div>
+            <div class ="key">I</div>
+            <div class ="key">O</div>
+            <div class ="key">P</div>
+            <div class ="key delete">delete</div>
+        </div>
+        
+            <div class = "row row2"> 
+                <!--<div class="key capslock">CapsLock</div>-->
+            <div class ="key">A</div>
+            <div class ="key">S</div>
+            <div class ="key">D</div>
+            <div class ="key">F</div>
+            <div class ="key">G</div>
+            <div class ="key">H</div>
+            <div class ="key">J</div>
+            <div class ="key">K</div>
+            <div class ="key">L</div>
+            <div class="key enter">Enter</div>
+            
+            </div>
+            
+            <div class = "row row3">
+                <div class ="key">y</div>
+                <div class ="key">X</div>
+                <div class ="key">C</div>
+                <div class ="key">V</div>
+                <div class ="key">B</div>
+                <div class ="key">N</div>
+                <div class ="key">M</div>
+                <div class ="key">O</div>
+                <div class ="key">P</div>
+        
+            </div>
+            <div class="row">
+                <div class="key space"></div>
+            </div>
+        </div>
+</body>
+
+</html> 

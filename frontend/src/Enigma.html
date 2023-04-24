@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="Enigma.css">
+    <!--<script>
+
+        /*let letter = document.getElementsByTagName("button")
+        let p = document.getElementById("ip")
+        var space = document.getElementById("space")
+        var backspace = document.getElementById("backspace")
+        let count = 0
+        let countkeys = 0
+        
+        
+        for(let x of button){
+//MouseDown occurs when the user presses the mouse button
+    x.addEventListener("mousedown" , function(){
+        x.className="active"
+        p.innerHTML+=x.innerHTML
+    })
+}
+for(let y of button){
+    y.addEventListener("mouseup" , function(){
+        y.className=""
+    })
+}
+
+
+
+       function help(){
+       document.getElementById("help").innerHTML = "Help"
+       }
+       
+       function presskeys(){
+        document.getElementById("Q").innerHTML = "Q"}
+
+        document.getElementById("W").addEventListener("click", presskeys2)
+
+
+       function presskeys2(){
+       document.getElementById("W").innerHTML = "W"
+       count = count + 1 }
+
+       if (count == 1 ){
+        document.getElementById("W").value.reset()
+       }
+
+       function keypressed(){
+        let key = event.key;
+        document.getElementById("key").innerHTML = key
+        if (key == "W"){
+            console.log("W")
+        }
+        if(key == "Q"){
+            console.log("Q")
+
+        }
+        
+       }
+
+    if (count == 1) {
+        console.log("Button wurde gedrückt")
+        count = 0
+    }*/
+   
+
+
+
+
+
+
+    </script>
+<title>Enigma</title>
+</head>
+<body>
+
+<h1>Enigma</h1>
+<p>This is a paragraph.</p>-->
+<!--<button type="button" onclick="help()">Help</button>
+<p id = "help"></p>-->
+<div class ="textContainer">
+    <input type="text" size="40" onkeydown="keypressed(event)">
+</div>
+<!--<div class = "lamppanel">
+    <div class = "row row1">
+    <button>Q</button>
+    <button>W</button>
+    <button>R</button>
+    <button>R</button>
+    <button>T</button>
+    <button>Z</button>
+    <button>U</button>
+    <button>I</button>
+    <button>O</button>
+    <button>P</button>
+    </div>
+    <div class = "row row2">
+    <button>A</button>
+    <button>S</button>
+    <button>D</button>
+    <button>F</button>
+    <button>G</button>
+    <button>H</button>
+    <button>J</button>
+    <button>K</button>
+    <button>L</button>
+    </div>
+    
+    <div class = "row row3">
+    <button>Y</button>
+    <button>X</button>
+    <button>C</button>
+    <button>V</button>
+    <button>B</button>
+    <button>N</button>
+    <button>M</button>
+    </div>
+</div>-->
+
+<div class = "keyboard">
+<div class = "row row1"> 
+    <div class ="key">Q</div>
+    <div class ="key">W</div>
+    <div class ="key">R</div>
+    <div class ="key">T</div>
+    <div class ="key">Z</div>
+    <div class ="key">U</div>
+    <div class ="key">I</div>
+    <div class ="key">O</div>
+    <div class ="key">P</div>
+    <div class ="key delete">delete</div>
+</div>
+
+    <div class = "row row2"> 
+        <div class="key capslock">CapsLock</div>
+    <div class ="key">A</div>
+    <div class ="key">S</div>
+    <div class ="key">D</div>
+    <div class ="key">F</div>
+    <div class ="key">G</div>
+    <div class ="key">H</div>
+    <div class ="key">J</div>
+    <div class ="key">K</div>
+    <div class ="key">L</div>
+    <div class="key enter">Enter</div>
+    
+    </div>
+    
+    <div class = "row row3">
+        <div class ="key">y</div>
+        <div class ="key">X</div>
+        <div class ="key">C</div>
+        <div class ="key">V</div>
+        <div class ="key">B</div>
+        <div class ="key">N</div>
+        <div class ="key">M</div>
+        <div class ="key">O</div>
+        <div class ="key">P</div>
+
+    </div>
+    <div class="row">
+        <div class="key space"></div>
+    </div>
+</div>
+<div class ="plugboard">
+    <button onclick="openwindow()">Konfiguration</button>
+        
+    <!--<div class ="ID"></div>
+        <p id = "Q" >Q</p>
+        <p id = "hallo">W</p>
+    </div>
+</div>
+
+<div class = "plugboard">
+<div class = "row row1">
+<button type="button" onclick=this.style.background = 'green'> Q</button>
+<button>W</button>
+<button>R</button>
+<button>R</button>
+<button>T</button>
+<button>Z</button>
+<button>U</button>
+<button>I</button>
+<button>O</button>
+<button>P</button>
+</div>
+<div class = "row row2">
+<button>A</button>
+<button>S</button>
+<button>D</button>
+<button>F</button>
+<button>G</button>
+<button>H</button>
+<button>J</button>
+<button>K</button>
+<button>L</button>
+</div>
+
+<div class = "row row3">
+<button>Y</button>
+<button>X</button>
+<button>C</button>
+<button>V</button>
+<button>B</button>
+<button>N</button>
+<button>M</button>
+</div>
+</div>
+
+<div class = "text" contenteditable>
+    <input type="text" size="40" onkeydown="keypressed(event)">
+    <p id = "key"></p> 
+    <p id = "ip"></p>
+</div>-->
+<script src="./Enigma.js"></script>
+
+</body>
+
+</html> 
