@@ -1,5 +1,6 @@
 import asyncio
 import json
+import random
 
 import websockets
 from websockets.exceptions import InvalidStatusCode, ConnectionClosedOK
@@ -17,14 +18,24 @@ class WebsocketClient:
         try:
             async with websockets.connect(uri) as websocket:
                 websocket: WebSocketClientProtocol
-                await websocket.send(json.dumps({'cmd': 'help'}))
-                print(await websocket.recv())
-                await websocket.send(json.dumps({'cmd': 'set', 'sub_cmd': "rotor", 'params': [5]}))
-                print(await websocket.recv())
-                await websocket.send(json.dumps({'cmd': 'set', 'sub_cmd': "rotor", 'params': [5, "string"]}))
-                print(await websocket.recv())
-                await websocket.send(json.dumps({'cmd': 'set', 'sub_cmd': "rotor", 'params': [5, "str"]}))
-                print(await websocket.recv())
+                await websocket.send(json.dumps({'cmd': 'dump'}))
+                await websocket.recv()
+
+                # print(await websocket.recv())
+                translate = random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ", k=10)
+                translate = "".join(translate)
+                print(f"Sending Translate Request for: {translate}")
+                await websocket.send(json.dumps({'cmd': "encrypt", 'params': [translate]}))
+                d = await websocket.recv()
+                d = json.loads(d)
+                print(f"Received: {d['response']}.. Requesting decryption")
+                await websocket.send(json.dumps({'cmd': 'decrypt', 'params': [d['response']]}))
+                # print(d := json.loads(await websocket.recv()))
+                d = json.loads(await websocket.recv())
+                print(
+                    f"Received: {d['response']}.. This is {'' if d['response'] == translate else '**NOT** '}the original message")
+                # await websocket.send(json.dumps({'cmd': 'set', 'sub_cmd': "rotor", 'params': [5, "str"]}))
+                # print(await websocket.recv())
         except ConnectionClosedOK:
             return
         except websockets.exceptions.ConnectionClosedError:

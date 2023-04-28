@@ -1,8 +1,10 @@
 from meta.registry import Registry
 
 
-# taken from: https://stackoverflow.com/a/26151604/280574
+# DO NOT TOUCH UNLESS YOU'RE 100% SURE WHAT YOU'RE DOING!
 
+
+# taken from: https://stackoverflow.com/a/26151604/280574
 
 def parameterized(dec):
     def layer(*args, **kwargs):

@@ -23,7 +23,7 @@
 .row{
     display: flex;
     align-items: center;
-    margin: 0px;
+    margin: 0;
     justify-content: space-evenly;
 }
 
@@ -71,11 +71,11 @@
     border-radius: 50%;
 }
 
-.textContainer{
+.textContainer {
     width: 90vw;
     height: 20vh;
     background: white;
-    box-shadow: 0 0 20px 2 px grey;
+    box-shadow: 0 0 20px 2px grey;
     border-radius: 0.5rem;
     padding: 1rem;
 }

@@ -18,8 +18,8 @@ class DictObject(dict):
 
         return val
 
-    def __getattr__(self, name):
-        return self.get_value(name)
+    def __getattr__(self, key):
+        return self.get(key, None)
 
     def __setattr__(self, key, value):
         self[key] = value

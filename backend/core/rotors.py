@@ -1,10 +1,9 @@
 # Enigma B, I and M3
-from abc import ABC
-
 
 #   THESE CLASSES
 #   ARE NOT IN THE
 #   REGISTRY!
+# use as temporary lookup table, for building the rotors in the future.
 
 # META
 

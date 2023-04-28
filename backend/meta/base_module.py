@@ -15,3 +15,8 @@ class BaseModule(abc.ABC):
         # Module final loading;
         # here all dependencies are loaded and ready to go
         pass
+
+    async def setup(self, storage):
+        # prepare all required stuff inside the storage here.
+        # This method gets called ONCE after opening a connection to prepare for it.
+        pass

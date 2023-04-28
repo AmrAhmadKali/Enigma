@@ -1,3 +1,5 @@
+# DO NOT TOUCH UNLESS YOU'RE 100% SURE WHAT YOU'RE DOING!
+
 class CommandParam:
     is_optional = False
 

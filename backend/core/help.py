@@ -18,12 +18,19 @@ class Addon2(BaseModule):
 
     @command(command="help", params=[],
              description="This command will return an index of all available commands.")
-    async def handler1(self, _, _1):
+    async def help_cmd(self, _, _1):
         data = []
         for key, val in self.command_service.handlers.items():
             for handler in val:
                 handler = DictObject(handler)
-                l = {"cmd": key, "params": ', '.join([x.get_name() for x in handler.params]),
-                     "desc": handler.description}
-                data.append(l)
+                entry = {"cmd": key, "params": ', '.join([x.get_name() for x in handler.params]),
+                         "desc": handler.description}
+                data.append(entry)
         return 200, data
+
+    # TODO: remove in RELEASE build. DEBUGGING PURPOSES ONLY!
+    # Possibly: add a FEATURE_FLAG, which enables/disables including this command.
+    @command(command="dump", params=[],
+             description="this will dump the whole storage to the client")
+    async def dump_cmd(self, _, storage):
+        return 200, storage

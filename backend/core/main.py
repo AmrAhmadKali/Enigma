@@ -39,17 +39,20 @@ class Server(WebSocketServer):
             await self.stop
 
     async def ws_handler(self, websocket: WebSocketServerProtocol, path):
+        """
+        :param websocket: the Client this handler has been allocated for
+        :param path: Path used by the Client. Unused in this Project, would allow splitting clients based on it for other use cases.
+        """
         print(f'Client connected: {websocket.id}')
-        data = DictObject({'usages': 0})  # save client data in here
-        # do setup here
+        data = DictObject({'usages': 0})
+        await Registry.setup_storage(data)
         try:
             async for msg in websocket:
                 message = json.loads(msg)
                 print(f'Received: {msg} via {path} from {websocket.id}')
                 await self.cmd_service.process_command(websocket, DictObject(message), data)
-                # await websocket.send(msg)
         except ConnectionClosedError:
             pass
-        except TypeError:
-            await self.cmd_service.reply(websocket, 500)
+        except NameError as e:
+            await self.cmd_service.reply(websocket, (500, e.args))
         print(f'Client disconnected: {websocket.id}')

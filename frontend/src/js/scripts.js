@@ -31,7 +31,13 @@ function on_message(msg) {
                     "<td>" + val.desc + "</td>" +
                     "</tr>");
             });
-
+            break;
+        }
+        case 'dump': {
+            $('#dump').remove();
+            $('#main').append("<div id='dump'><a id='d-status'>Status Code: </a><br></div>")
+            $('#d-status').append(data.status);
+            $(`#dump`).append(msg.data);
         }
     }
 
