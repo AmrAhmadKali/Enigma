@@ -14,9 +14,7 @@ function sock_open() {
 function on_message(msg) {
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
-    if(data.status == 200){
-        letter_received(data.response);
-    }
+
     switch (req) {
         case 'help': {
             $('#help').remove();
@@ -39,6 +37,7 @@ function on_message(msg) {
             $('#d-status').append(data.status);
             $(`#dump`).append(msg.data);
         }
+        case 'encrypt': { letter_received(data.response); }
     }
 
 }
