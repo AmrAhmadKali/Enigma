@@ -22,9 +22,6 @@ function letter_received(letter){
     //TODO: Lamp panel change letter state
 }
 
-
-
-
 function openwindow(){
     const newwindow = window.open("Konfiguration.html", "Konfiguration");
     newwindow.focus()
