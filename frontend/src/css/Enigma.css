@@ -1,25 +1,24 @@
+*{
+    box-sizing: border-box;
+}
+
 .keyboard {
     border-radius: 50%;
-    width: 590px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 20px;
-    height: 50vh;
-    width: 90vw;
-    border-radius: 10px;
-    border-radius: 3rem;
+    padding: 15vw 15vw;
+    margin: auto;
 }
-.keyboard :active {
-    color: pink;
 
-}
 .keyboard button {
-    width: 30px;
-    height: 30px;
+    width: 5vw;
+    height: 5vw;
     color: white;
     background-color: brown;
 }
+
 .row{
     display: flex;
     align-items: center;
@@ -27,19 +26,22 @@
     justify-content: space-evenly;
 }
 
-.key {
+.key{
     stroke: #306f91;
     stroke-width: 5;
-    border-radius:50%;
+    border-radius: 50%;
     color: white;
     background-color: black;
     margin: 3px;
     width: 2em;
     height: 2em;
     text-align: center;
+    font-size: 1em;
+
 }
+
 .key :active{
-    color: pink;
+    background-color: pink;
 }
 .plugboard{
     width: 590px;
@@ -71,9 +73,20 @@
     border-radius: 50%;
 }
 
-.textContainer {
-    width: 90vw;
+.inputContainer {
+    width: 50%;
     height: 20vh;
+    float: left;
+    background: white;
+    box-shadow: 0 0 20px 2px grey;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.outputContainer {
+    width: 50%;
+    height: 20vh;
+    float: right;
     background: white;
     box-shadow: 0 0 20px 2px grey;
     border-radius: 0.5rem;

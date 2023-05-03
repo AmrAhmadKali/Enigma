@@ -1,45 +1,14 @@
-
-let textContainer = document.querySelector(".textContainer");
-let allKey = document.querySelectorAll(".key");
-/**
-deleteKey.addEventListener("click",function(){
-    let textContainerContent = textContainer.innerText;
-    if(textContainerContent.length == 0){
-        return;
-    }
-    console.log(textContainerContent);
-    let newContent = textContainerContent.slice(0,textContainerContent.length-1);
-    textContainer.innerText = newContent;
-})
-
-enterKey.addEventListener("click",function(){
-    let content = textContainer.innerText;
-    let newContent = content+"\n";
-    textContainer.innerText = newContent;
-})
-
-spaceKey.addEventListener("click",function(){
-    let content = textContainer.innerText;
-    let newContent = content+ '\u00A0';
-    textContainer.innerText = newContent;
-})
-**/
-for(let key of allKey){
-    key.addEventListener("click",function(){
-        textContainer.innerText += key.innerText;
-    })
+function key_pressed(key){
+    let inputContainer = document.querySelector(".inputContainer");
+    inputContainer.innerText += key;
+    sendRequest('encrypt', null, key);
+    console.log("Key pressed: " + key);
 }
 
-function keypressed(){
-    let key = event.key;
-    document.getElementById("key").innerHTML = key
-    if (key == "W"){
-        console.log("W")
-    }
-    if(key == "Q"){
-        console.log("Q")
-
-    }
+function letter_received(letter){
+    console.log("Ecrypted Letter Received: " + letter);
+    let outputContainer = document.querySelector(".outputContainer");
+    outputContainer.innerText += letter;
 }
 
 
