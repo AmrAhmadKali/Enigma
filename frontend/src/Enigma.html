@@ -6,13 +6,13 @@
     <script src="js/Enigma.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body onload="clear_inputContainer()">
 
-<div class ="inputContainer">
-    <!-- TODO: Text input via physical keyboard -->
+<div>
+    <input class="inputContainer" type="text" autofocus onkeydown="key_pressed(event.key); return false">
 </div>
 
-<div class ="outputContainer"></div>
+<div class ="outputContainer"></div> <!-- TODO: Schriftart in Containern anpassen -->
 
 <div class = "keyboard">
     <div class = "row row1">
@@ -52,6 +52,7 @@
     </div>
 </div>
 
+<!-- TODO: Plugboard (auf selbe Seite!) -->
 <div class ="plugboard">
 <button onclick="openwindow()">Konfiguration</button>
 </div>
