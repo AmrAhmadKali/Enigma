@@ -17,7 +17,7 @@ class Encryption(BaseModule):
 
     # TODO: testing
 
-    @command("encrypt", params=[Any('text_to_encrypt', allowed_chars="[a-zA-Z]")],
+    @command("encrypt", params=[Any('text_to_encrypt', allowed_chars="[a-zA-Z ]")],
              description="Encrypt a given message")
     async def encrypt_cmd(self, ws, storage, encrypt_me):
         """
@@ -26,19 +26,35 @@ class Encryption(BaseModule):
         :param encrypt_me: The message which is meant to get encrypted
         :return: Status Code, Encrypted Message
         """
-        out = encrypt_me
+        out = encrypt_me.upper()
         tmp = ""
-        if self.rotors:
-            for k in out:
-                tmp += self.rotors.encrypt(storage, k)
-            out = tmp
         if self.plugboard:
             for k in out:
+                if k == " ":
+                    tmp += k
+                    continue
                 tmp += self.plugboard.encrypt(storage, k)
             out = tmp
+            tmp = ""
+        if self.rotors:
+            for k in out:
+                if k == " ":
+                    tmp += k
+                    continue
+                tmp += self.rotors.encrypt(storage, k)
+            out = tmp
+            tmp = ""
+        if self.plugboard:
+            for k in out:
+                if k == " ":
+                    tmp += k
+                    continue
+                tmp += self.plugboard.encrypt(storage, k)
+            out = tmp
+
         return 200, out
 
-    @command("decrypt", params=[Any('text_to_decrypt', allowed_chars="[a-zA-Z]")],
+    @command("decrypt", params=[Any('text_to_decrypt', allowed_chars="[a-zA-Z ]")],
              description="Decrypt a given message")
     async def decrypt_cmd(self, ws, storage, decrypt_me):
         return await self.encrypt_cmd(ws, storage, decrypt_me)
