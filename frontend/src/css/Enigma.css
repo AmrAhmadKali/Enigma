@@ -81,9 +81,14 @@
     box-shadow: 0 0 20px 2px grey;
     border-radius: 0.5rem;
     padding: 1rem;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+    font-size: 2em;
 }
 
 .outputContainer {
+    font-size: 2em;
     width: 50%;
     height: 20vh;
     float: right;
@@ -92,5 +97,6 @@
     border-radius: 0.5rem;
     padding: 1rem;
     display: flex;
-    align-items: center
+    align-items: center;
+    overflow-wrap: anywhere;
 }

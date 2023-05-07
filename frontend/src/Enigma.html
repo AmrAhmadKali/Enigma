@@ -6,13 +6,11 @@
     <script src="js/Enigma.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload="clear_inputContainer()">
+<body onload="listener_init()">
 
-<div>
-    <input class="inputContainer" type="text" autofocus onkeydown="key_pressed(event.key); return false">
-</div>
+<div class="inputContainer"></div> <!-- TODO: Textboxen beschriften -->
 
-<div class ="outputContainer"></div> <!-- TODO: Schriftart in Containern anpassen -->
+<div class ="outputContainer"></div>
 
 <div class = "keyboard">
     <div class = "row row1">

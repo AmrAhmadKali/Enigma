@@ -1,6 +1,5 @@
-function clear_inputContainer() {
-    let inputContainer = document.querySelector(".inputContainer");
-    inputContainer.value = null;
+function listener_init() {
+    document.addEventListener("keydown", function(){key_pressed(event.key)});
 }
 
 function key_pressed(key){
@@ -8,10 +7,13 @@ function key_pressed(key){
     const alphabet = ['Q','W','E','R','T','Z','U','I','O','P','L','K','J','H','G','F','D','S','A','Y','X','C','V','B','N','M']
     if(alphabet.includes(key)){
         let inputContainer = document.querySelector(".inputContainer");
-        inputContainer.value = inputContainer.value + key;
+        inputContainer.innerText += key;
         awaiting.push('encrypt');
         sendRequest('encrypt', null, key);
         console.log("Key pressed: " + key);
+    }
+    else{
+        console.log("Invalid key '"+key+"' pressed");
     }
 }
 
