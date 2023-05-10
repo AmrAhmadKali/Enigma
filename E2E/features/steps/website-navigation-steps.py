@@ -18,24 +18,24 @@ def step_impl(context):
     assert context.driver.title == "Enigma"
 
 
-@when('I press the {letter} key on the VIRTUAL keyboard')
-def step_impl(context, letter):
-    key = context.driver.find_element(By.NAME, f"{letter}")
-    key.click()
+@when('I press the {letter} key on the {keyboard} keyboard')
+def step_impl(context, letter, keyboard):
+    if keyboard == 'virtual':
+        key = context.driver.find_element(By.NAME, f"{letter}")
+        key.click()
+    elif keyboard == 'physical':
+        context.driver.find_element(By.CSS_SELECTOR, 'body').send_keys(f"{letter}")
+    else:
+        assert 0, "Wrong keyboard argument given"
 
 
-@when('I press the {letter} key on the PHYSICAL keyboard')
-def step_impl(context, letter):
-    context.driver.find_element(By.CSS_SELECTOR, 'body').send_keys(f"{letter}")
-
-
-@then('The letter {letter} should be displayed in the INPUT box')
-def step_impl(context, letter):
-    element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
-    assert element == letter
-
-
-@then('The letter {letter} should be displayed in the OUTPUT box')
-def step_impl(context, letter):
-    element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
-    assert element == letter
+@then('The letter {letter} should be displayed in the {box} box')
+def step_impl(context, letter, box):
+    if box == 'input':
+        element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
+        assert element == letter, 'Input Container does not contain '+f"{letter}"+', but '+f"{element}"
+    elif box == 'output':
+        element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
+        assert element == letter, 'Output Container does not contain '+f"{letter}"+', but '+f"{element}"
+    else:
+        assert 0, "Wrong box argument given"
