@@ -62,9 +62,9 @@ e2e-test:
     - pip3 install pipenv
     - pipenv install --dev
     - pipenv run behave E2E
-  after_script:
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+#  after_script:
+#    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
+#    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
 
 
 remove-container:
