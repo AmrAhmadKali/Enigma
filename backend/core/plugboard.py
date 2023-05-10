@@ -26,7 +26,7 @@ class Plugboard(BaseModule):
         storage.plugboard[y] = pbs[0]
         return 200
 
-    @command(command="plugboard", sub_command="reset", params=[Any("setting")],
+    @command(command="plugboard", sub_command="reset", params=[],
     description="Reset the Plugboard Configuration to default")
     async def pb_reset_cmd(self, ws, storage):
         storage.plugboard = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
