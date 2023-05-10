@@ -4,13 +4,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ActionChains
 from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 
 
 @given('The Enigma Website is opened')
 def step_impl(context):
     # spin up driver
-    context.driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+    options = Options()
+    options.headless = True
+    context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     #context.driver.set_window_size(1920, 1080)
     context.action_chains = ActionChains(context.driver)
 
