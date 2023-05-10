@@ -11,7 +11,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 def step_impl(context):
     # spin up driver
     context.driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
-    context.driver.set_window_size(1920, 1080, context.driver.window_handles[0])
+    #context.driver.set_window_size(1920, 1080)
     context.action_chains = ActionChains(context.driver)
 
     context.driver.get("http://localhost")
