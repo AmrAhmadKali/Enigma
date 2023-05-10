@@ -28,8 +28,8 @@ class Server(WebSocketServer):
     def inject(self, reg):
         self.cmd_service: CommandService = reg.get_instance('command_service')
 
-    def startup(self):
-        self.loop.run_until_complete(self.server())
+    async def startup(self):
+        await self.server()
 
     async def process_request(self, path, request_headers):
         print(path, request_headers)

@@ -1,5 +1,5 @@
-from command_param_types import Any
 from meta.base_module import BaseModule
+from meta.command_param_types import Any
 from meta.decorators import instance, command
 
 
