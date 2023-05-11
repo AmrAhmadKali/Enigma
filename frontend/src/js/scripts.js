@@ -19,13 +19,14 @@ function on_message(msg) {
         case 'help': {
             $('#help').remove();
             $('#main').append("<div id='help'><a id='status'>Status Code: </a><table id='help-table'>   " +
-                "<tr><td>Command</td><td>Parameters</td><td>Description</td></tr>" +
+                "<tr><td>Command</td><td>Parameters</td><td>Regex</td><td>Description</td></tr>" +
                 "</table></div>")
             $('#status').append(data.status);
             data.response.forEach((val, index, array) => {
                 $('#help-table').append("<tr id='help-tr'>" +
                     "<td>" + val.cmd + "</td>" +
                     "<td>" + val.params + "</td>" +
+                    "<td>" + val.regex + "</td>" +
                     "<td>" + val.desc + "</td>" +
                     "</tr>");
             });

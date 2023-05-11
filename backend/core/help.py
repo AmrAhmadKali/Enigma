@@ -24,7 +24,7 @@ class Addon2(BaseModule):
         """
         Return a list of all commands, with their parameters and description to the client
         :param _: Websocket connection executing this command
-        :param _1: storagespace used by this command
+        :param _1: storage space used by this command
         :return:
         """
         data = []
@@ -32,6 +32,7 @@ class Addon2(BaseModule):
             for handler in val:
                 handler = DictObject(handler)
                 entry = {"cmd": key, "params": ', '.join([x.get_name() for x in handler.params]),
+                         "regex": handler.regex.pattern,
                          "desc": handler.description}
                 data.append(entry)
         return 200, data
