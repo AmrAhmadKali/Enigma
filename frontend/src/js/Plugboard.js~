@@ -1,0 +1,255 @@
+let countClicksW = 0
+let countClicksQ = 0
+let countClicksE = 0
+let countClicksR = 0
+var buttonID 
+let counterButtonsClicked = 0
+function closeConfiguration(){
+    var closeConfig = window.close()
+}
+
+document.getElementById("W").addEventListener("click", buttonClicked)
+
+document.getElementById("Q").addEventListener("click", buttonClicked)
+document.getElementById("E").addEventListener("click", buttonClicked)
+document.getElementById("R").addEventListener("click", buttonClicked)
+document.getElementById("Z").addEventListener("click", buttonClicked)
+document.getElementById("T").addEventListener("click", buttonClicked)
+document.getElementById("U").addEventListener("click", buttonClicked)
+document.getElementById("I").addEventListener("click", buttonClicked)
+document.getElementById("O").addEventListener("click", buttonClicked)
+document.getElementById("P").addEventListener("click", buttonClicked)
+document.getElementById("A").addEventListener("click", buttonClicked)
+document.getElementById("S").addEventListener("click", buttonClicked)
+document.getElementById("D").addEventListener("click", buttonClicked)
+document.getElementById("F").addEventListener("click", buttonClicked)
+document.getElementById("G").addEventListener("click", buttonClicked)
+document.getElementById("H").addEventListener("click", buttonClicked)
+document.getElementById("J").addEventListener("click", buttonClicked)
+document.getElementById("K").addEventListener("click", buttonClicked)
+document.getElementById("L").addEventListener("click", buttonClicked)
+document.getElementById("Y").addEventListener("click", buttonClicked)
+document.getElementById("X").addEventListener("click", buttonClicked)
+document.getElementById("C").addEventListener("click", buttonClicked)
+document.getElementById("V").addEventListener("click", buttonClicked)
+document.getElementById("B").addEventListener("click", buttonClicked)
+document.getElementById("N").addEventListener("click", buttonClicked)
+document.getElementById("M").addEventListener("click", buttonClicked)
+document.getElementById("Back").addEventListener("click", setback)
+
+
+function setback(event){
+event = document.querySelectorAll('.buttons')
+for(let i = 0; i < event.length; i++) {
+event[i].style.backgroundColor = 'white'}
+counterButtonsClicked = 0
+console.log(counterButtonsClicked)
+}
+
+
+function changeColor2(event){
+
+
+
+
+if (counterButtonsClicked<=0 || counterButtonsClicked==1){
+    event.style.backgroundColor = "green"
+    /*var buttonID1
+    var buttonID2
+    if(counterButtonsClicked<=0){
+        buttonID1 = buttonID
+        console.log(buttonID1)
+    }
+    if(counterButtonsClicked==1){
+      buttonID2 = buttonID
+    }*/
+  
+
+}
+if (counterButtonsClicked==2 || counterButtonsClicked==3){
+    event.style.backgroundColor = "blue"
+}
+
+if (counterButtonsClicked==4 || counterButtonsClicked==5){
+    event.style.backgroundColor = "yellow"
+}
+
+if (counterButtonsClicked==6 || counterButtonsClicked==7){
+    event.style.backgroundColor = "pink"
+}
+
+if (counterButtonsClicked==8 || counterButtonsClicked==9){
+    event.style.backgroundColor = "purple"
+}
+
+if (counterButtonsClicked==10 || counterButtonsClicked==11){
+    event.style.backgroundColor = "red"
+}
+
+if (counterButtonsClicked==12 || counterButtonsClicked==13){
+    event.style.backgroundColor = "lime"}
+
+if (counterButtonsClicked==14 || counterButtonsClicked==15){
+    event.style.backgroundColor = "#FF00FF"
+}
+
+if (counterButtonsClicked==16 || counterButtonsClicked==17){
+    event.style.backgroundColor = "#00FFFF"
+}
+
+
+if (counterButtonsClicked==18 || counterButtonsClicked==19){
+    event.style.backgroundColor = "#800000"
+}
+
+} 
+
+function buttonClicked(event){
+  buttonID = event.target.id
+if (buttonID == "W"){
+
+    //awaiting.push('plugboard')
+    //sendRequest('plugboard','set', buttonID)
+    console.log(buttonID)
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)
+    countClicksW  = countClicksW + 1
+    console.log("Klick W" + countClicksW)
+}
+if (buttonID=="Q"){
+    awaiting.push('plugboard')
+    sendRequest('plugboard','set', buttonID)
+    console.log("Q wurde gedrückt")
+    countClicksQ = countClicksQ + 1
+    console.log("Klick W" + countClicksW)
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log("Counter Buttons" + counterButtonsClicked)
+}
+if (buttonID == "E"){
+    countClicksE = countClicksE + 1 
+    console.log("Klick E" + countClicksE)
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log("Counter Buttons" + counterButtonsClicked)
+   
+}
+
+if (buttonID == "R"){
+    console.log("R wurde gedrückt")
+    countClicksR = countClicksR + 1
+    console.log("Klick R" + countClicksR)
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)
+}
+
+if (buttonID == "T"){
+    console.log("T wurde gedrückt")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)
+}
+if (buttonID == "Z"){
+   console.log("Z wurde gedrückt")
+   counterButtonsClicked= counterButtonsClicked + 1
+   console.log(counterButtonsClicked)
+}
+if (buttonID == "U"){
+    console.log("U")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "I"){
+    console.log("I")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "O"){
+    console.log("O")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "P"){
+    console.log("P")
+    counterButtonsClicked = counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "A"){
+    console.log("A")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "S"){
+    console.log("S")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "D"){
+    console.log("D")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "F"){
+    console.log("F")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "G"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "H"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "J"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "K"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "L"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "Y"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "X"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "C"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "V"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+    
+if (buttonID == "B"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "N"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+
+if (buttonID == "M"){
+    console.log("G")
+    counterButtonsClicked= counterButtonsClicked + 1
+    console.log(counterButtonsClicked)}
+}
+
+

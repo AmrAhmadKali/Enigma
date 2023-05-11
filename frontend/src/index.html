@@ -3,8 +3,12 @@
 <head>
     <title> Enigma </title>
     <link rel="stylesheet" href="css/Enigma.css">
+    <link rel="stylesheet" href="css/Plugboard.css">
     <script src="js/scripts.js"></script>
     <script src="js/Enigma.js"></script>
+    <script src ="js/Plugboard.js"></script>
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body onload="listener_init()">
@@ -51,9 +55,44 @@
     </div>
 </div>
 
-<!-- TODO: Plugboard (auf selbe Seite!) -->
-<div class ="plugboard">
-<button onclick="openwindow()">Konfiguration</button>
+
+<div class = "plugboard">
+    <div class = "row row1"> 
+        <button class = "buttons" type="button" id = "Q" onclick="plugboard_pressed('Q')">Q</button>
+        <button class = "buttons" type="button" id = "W" onclick="plugboard_pressed('W')">W</button>
+        <button class = "buttons" type="button" id = "E" onclick="plugboard_pressed('E')" >E</button>
+        <button class = "buttons" type="button" id = "R" onclick="plugboard_pressed('R')" >R</button>
+        <button class = "buttons" type="button" id = "T" onclick="plugboard_pressed('T')" >T</button>
+        <button class = "buttons" type="button" id = "Z" onclick="plugboard_pressed('Z')" >Z</button>
+        <button class = "buttons" type="button" id = "U" onclick="plugboard_pressed('U')" >U</button>
+        <button class = "buttons" type="button" id = "I" onclick="plugboard_pressed('I')" >I</button>
+        <button class = "buttons" type="button" id = "O" onclick="plugboard_pressed('O')" >O</button>
+        <button class = "buttons" type="button" id = "P" onclick="plugboard_pressed('P')" >P</button>
+        <button class = "buttons" type="button" id = "A" onclick="plugboard_pressed('A')" >A</button>
+        <button class = "buttons" type="button" id = "S" onclick="plugboard_pressed('S')" >S</button>
+        <button class = "buttons" type="button" id = "D" onclick="plugboard_pressed('D')" >D</button>
+    </div>
+    
+    <div class = "row row2"> 
+        <button class = "buttons" type="button" id = "F" onclick="plugboard_pressed('F')" >F</button>
+        <button class = "buttons" type="button" id = "G" onclick="plugboard_pressed('G')" >G</button>
+        <button class = "buttons" type="button" id = "H" onclick="plugboard_pressed('H')" >H</button>
+        <button class = "buttons" type="button" id = "J" onclick="plugboard_pressed('J')" >J</button>
+        <button class = "buttons" type="button" id = "K" onclick="plugboard_pressed('K')" >K</button>
+        <button class = "buttons" type="button" id = "L" onclick="plugboard_pressed('L')" >L</button>
+        <button class = "buttons" type="button" id = "Y" onclick="plugboard_pressed('Y')" >Y</button>
+        <button class = "buttons" type="button" id = "X" onclick="plugboard_pressed('X')" >X</button>
+        <button class = "buttons" type="button" id = "C" onclick="plugboard_pressed('C')" >C</button>
+        <button class = "buttons" type="button" id = "V" onclick="plugboard_pressed('V')" >V</button>
+        <button class = "buttons" type="button" id = "B" onclick="plugboard_pressed('B')" >B</button>
+        <button class = "buttons" type="button" id = "N" onclick="plugboard_pressed('N')" >N</button>
+        <button class = "buttons" type="button" id = "M" onclick="plugboard_pressed('M')" >M</button>
+        
+        
+
+</div>
+<div class = "setback">
+    <button  type="button" id = "Back" onclick="setback(this)" >Back</button>
 </div>
 
 </body>
