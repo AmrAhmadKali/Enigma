@@ -11,11 +11,11 @@ class Plugboard(BaseModule):
         storage.plugboard = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     @command(command="plugboard", sub_command="set", params=[Any("setting")],
-    description="Set the Plugboard Configuration")
+             description="Set the Plugboard Configuration")
     async def pb_set_cmd(self, ws, storage, pbs):
-        if(len(pbs) % 2 == 1):
+        if len(pbs) % 2 == 1:
             return 400, "Uneven variable count"
-        if(len(pbs) != 2):
+        if len(pbs) != 2:
             return 300, "Variable count not 2"
         if not (pbs.isalpha()):
             return 400, "Received non alphabetical letters"
@@ -27,7 +27,7 @@ class Plugboard(BaseModule):
         return 200
 
     @command(command="plugboard", sub_command="reset", params=[],
-    description="Reset the Plugboard Configuration to default")
+             description="Reset the Plugboard Configuration to default")
     async def pb_reset_cmd(self, ws, storage):
         storage.plugboard = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         return 200

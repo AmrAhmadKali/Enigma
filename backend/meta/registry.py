@@ -2,6 +2,15 @@ import importlib
 import itertools
 import os
 import re
+from pathlib import Path
+from typing import List
+
+from meta.base_module import BaseModule
+from meta.dict_object import DictObject
+
+
+# Whatever you do, do not touch this file.
+# It WILL end in a horrible bloodbath.
 
 
 def flatmap(func, *iterable):
@@ -16,12 +25,16 @@ def get_attrs(obj):
     return attrs
 
 
+# noinspection PyUnresolvedReferences
 class Registry:
+    """
+    Central Place for managing dependencies for the entire project.
+    """
     _registry = {}
     logger = None
 
     @classmethod
-    def inject_all(cls):
+    def inject_all(cls) -> None:
         """
         Inject Dependencies into all @instance()'s
         """
@@ -34,7 +47,7 @@ class Registry:
                 cls._registry[key].inject(cls)
 
     @classmethod
-    def pre_start_all(cls):
+    def pre_start_all(cls) -> None:
         """
         Run all initialisations for instances, which may be used by other modules
         """
@@ -50,7 +63,7 @@ class Registry:
                 cls._registry[key].pre_start()
 
     @classmethod
-    def start_all(cls):
+    def start_all(cls) -> None:
         """
         Run final initialisations, different modules should not depend on stuff done in these.
         """
@@ -66,7 +79,7 @@ class Registry:
                 cls._registry[key].start()
 
     @classmethod
-    def get_instance(cls, name, is_optional=False):
+    def get_instance(cls, name: str, is_optional=False) -> BaseModule:
         """
         :param name: Name of the Module which is being requested
         :param is_optional: return None if True, otherwise throw error and exit.
@@ -79,11 +92,11 @@ class Registry:
             raise Exception("Missing required dependency '%s'" % name)
 
     @classmethod
-    def get_all_instances(cls):
+    def get_all_instances(cls) -> dict:
         return cls._registry
 
     @classmethod
-    def add_instance(cls, name, inst, override=False):
+    def add_instance(cls, name: str, inst: BaseModule, override=False) -> None:
         """
         Inject Dependencies into all @instance()'s
         :param name: Name of the Instance to be added
@@ -101,13 +114,13 @@ class Registry:
         cls._registry[name] = inst
 
     @classmethod
-    def format_name(cls, name):
+    def format_name(cls, name: str) -> str:
         # camel-case to snake-case
         s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     @classmethod
-    def load_instances(cls, parent_dirs):
+    def load_instances(cls, parent_dirs: List[str | Path]) -> None:
         """
         :param parent_dirs: List of Directories to check for modules
         """
@@ -127,7 +140,7 @@ class Registry:
             cls.load_module(file)
 
     @classmethod
-    async def setup_storage(cls, storage):
+    async def setup_storage(cls, storage: DictObject) -> None:
         """
         :param storage: Allocated storage for the connection which needs initialisation
         """
@@ -143,13 +156,13 @@ class Registry:
                 await cls._registry[key].setup(storage)
 
     @classmethod
-    def load_module(cls, file):
+    def load_module(cls, file: Path) -> None:
         # strip the extension
         file = file[:-3]
         importlib.import_module(file.replace("\\", ".").replace("/", "."))
 
     @classmethod
-    def get_module_name(cls, inst):
+    def get_module_name(cls, inst: BaseModule) -> str:
         parts = inst.__module__.split(".")
         if parts[0] == "core":
             return parts[0] + "." + parts[1]
@@ -160,10 +173,14 @@ class Registry:
             return ".".join(parts[:-1])
 
     @classmethod
-    def get_module_dir(cls, inst):
+    def get_module_dir(cls, inst: BaseModule) -> str:
         parts = inst.__module__.split(".")
         return "." + os.sep + os.sep.join(parts[:-1])
 
     @classmethod
-    def clear(cls):
+    def clear(cls) -> None:
+        """
+        Reset the registry
+        :return:
+        """
         cls._registry = {}

@@ -1,16 +1,37 @@
 # DO NOT TOUCH UNLESS YOU'RE 100% SURE WHAT YOU'RE DOING!
+import abc
+from typing import List
 
-class CommandParam:
+
+class CommandParam(abc.ABC):
     is_optional = False
 
-    def get_regex(self):
-        pass
+    def get_regex(self) -> str:
+        """
+        Get the Regex used by this command parameter.
+        :return:
+        """
 
-    def get_name(self):
-        pass
+    def get_name(self) -> str:
+        """
+        Get the Name of the Parameter.
+        :return:
+        """
+
+    def process_matches(self, params: List[str]) -> None | str:
+        """
+
+        :param params: List of remaining parameters
+        :return: Parameter matching this Type
+        """
 
 
 class Const(CommandParam):
+    """
+    This is a Constant Parameter type for usage by Command Handlers.
+    It will only match, if the name is exactly matched.
+    """
+
     def __init__(self, name, is_optional=False):
         self.name = name
         self.is_optional = is_optional
@@ -36,6 +57,11 @@ class Const(CommandParam):
 
 
 class Int(CommandParam):
+    """
+    This is an Int Parameter type for usage by Command Handlers.
+    It will only match, if a decimal number is being provided.
+    """
+
     def __init__(self, name, is_optional=False):
         self.name = name
         self.is_optional = is_optional
@@ -63,6 +89,11 @@ class Int(CommandParam):
 
 
 class Any(CommandParam):
+    """
+    This is a "catchall" Parameter type for usage by Command Handlers.
+    By default, it will match any number, character or symbol.
+    """
+
     def __init__(self, name, is_optional=False, allowed_chars="."):
         self.name = name
         self.is_optional = is_optional

@@ -1,4 +1,10 @@
 class DictObject(dict):
+    """
+    Class-like Dictionary's.
+    This class is used to make accessing elements of Dictionaries with
+    fixed names easier and faster, by mapping them to class attributes.
+    """
+
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
 

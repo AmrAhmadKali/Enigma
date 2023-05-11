@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Any, List
 
 import aiosqlite
 
@@ -11,7 +12,8 @@ from meta.dict_object import DictObject
 
 @instance("db")
 class DB(BaseModule):
-    DB_LOCATION = "../db.sqlite"
+    # TODO: Move Database to persistent docker volume
+    DB_LOCATION = "enigma.db"
     _conn: Connection
 
     def __init__(self):
@@ -31,7 +33,7 @@ class DB(BaseModule):
         # rows = await self.exec("INSERT INTO storage(UUID, data) VALUES(?, ?)", params=[1, var])
         # a = await self.query_single('SELECT * FROM storage')
 
-    async def _exec_wrapper(self, sql: str, params: [], callback):
+    async def _exec_wrapper(self, sql: str, params: List[Any], callback):
         cur: Cursor = await self._conn.cursor()
         string: str = sql.upper()
         try:

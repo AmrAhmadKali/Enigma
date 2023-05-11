@@ -40,6 +40,7 @@ class Server(WebSocketServer):
 
     async def ws_handler(self, websocket: WebSocketServerProtocol, path):
         """
+        This handler will take care of all incoming connections, and forward their commands to the correct handlers.
         :param websocket: the Client this handler has been allocated for
         :param path: Path used by the Client. Unused in this Project, would allow splitting clients based on it for other use cases.
         """
