@@ -43,20 +43,6 @@
 .key :active{
     background-color: pink;
 }
-.plugboard{
-    width: 590px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 20px;
-    border-radius: 10px;
-
-}
-.plugboard button {
-    color: black;
-    background-color: white;
-  
-}
 
 .lamppanel {
     width: 590px;
@@ -99,4 +85,43 @@
     display: flex;
     align-items: center;
     overflow-wrap: anywhere;
+}
+
+.plugboardContainer{
+    float: right;
+    height: fit-content;
+    align-items: center;
+    display: flex;
+    width: 50%;
+}
+
+.plugboard {
+    float: left;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50vh;
+
+}
+
+
+.row{
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    justify-content: space-evenly;
+}
+
+
+.plugboard button {
+    width: 30%;
+    border-radius: 10%;
+    height: 30px;
+    color: black;
+    background-color: white;
+
+}
+.setback button {
+    width: 100%
 }
