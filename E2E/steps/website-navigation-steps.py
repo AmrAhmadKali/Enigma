@@ -24,13 +24,22 @@ def step_impl(context):
 @when('I press the {letter} key on the {keyboard} keyboard')
 def step_impl(context, letter, keyboard):
     if keyboard == 'virtual':
-        key = context.driver.find_element(By.NAME, f"{letter}")
+        key = context.driver.find_element(By.NAME, f"k_{letter}")
         key.click()
     elif keyboard == 'physical':
         context.driver.find_element(By.CSS_SELECTOR, 'body').send_keys(f"{letter}")
     else:
         assert 0, "Wrong keyboard argument given"
 
+@when('I press the {letter} key on the plugboard')
+def step_impl(context, letter):
+    key = context.driver.find_element(By.NAME, f"p_{letter}")
+    key.click()
+
+@when('I press the reset button on the plugboard')
+def step_impl(context):
+    key = context.driver.find_element(By.NAME, "plugboard_reset")
+    key.click()
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):

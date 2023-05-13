@@ -34,7 +34,7 @@ function plugboard_pressed(key) {
 
     letters.push([key, lastpressed])
     awaiting.push('plugboard_set')
-    sendRequest('plugboard', 'set', [key, lastpressed])
+    sendRequest('plugboard', 'set', ''+key+lastpressed+'')
     $('.plugboardContainer').append("<div class='tuple' id='"+key+lastpressed+"'>"+key+lastpressed+"</div><br>")
     lastpressed = null
     $('#lastpressed').remove()
