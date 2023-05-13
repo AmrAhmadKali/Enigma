@@ -3,7 +3,7 @@
 <head>
     <title> Enigma </title>
     <link rel="stylesheet" href="css/Enigma.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/Enigma.js"></script>
     <script src ="js/Plugboard.js"></script>
@@ -90,11 +90,12 @@
     </div>
 
     <div class = "setback">
-        <button  type="button" id = "Back" onclick="setback(this)" >Reset</button>
+        <button  type="button" id = "Back" onclick="reset_plugboard()" >Reset</button>
     </div>
 
 </div>
 <div class="plugboardContainer"></div>
+<!--TODO: Bug fix <br> not shown-->
 
 </body>
 </html> 
