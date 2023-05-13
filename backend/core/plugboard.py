@@ -37,7 +37,7 @@ class Plugboard(BaseModule):
     @command(command="plugboard", sub_command="reset", params=[],
              description="Reset the Plugboard Configuration to default")
     async def pb_reset_cmd(self, ws, storage):
-        storage.plugboard = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        storage.plugboard = {}
         return 200
 
     def encrypt(self, storage, key):
