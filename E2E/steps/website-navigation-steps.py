@@ -14,7 +14,6 @@ def step_impl(context):
     options = Options()
     options.headless = True
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
-    #context.driver.set_window_size(1920, 1080)
     context.action_chains = ActionChains(context.driver)
 
     context.driver.get("http://localhost")

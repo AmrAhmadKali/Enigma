@@ -1,6 +1,6 @@
 Feature: Plugboard
 
-  Scenario: Plugboard Set and Reset
+  Scenario: Plugboard Set
     Given The Enigma Website is opened
       When I press the U key on the plugboard
       And I press the N key on the plugboard
