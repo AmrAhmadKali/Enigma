@@ -52,9 +52,9 @@ function sendRequest(cmd, sub, params) {
     } else if (sub == null && params != null) {
         socket.send('{"cmd": "' + cmd + '", "params": "' + params + '"}');
     } else if (params == null && sub != null) {
-        socket.send('{"cmd": "' + cmd + '", "sub": "' + sub + '"}');
+        socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '"}');
     } else {
-        socket.send('{"cmd": "' + cmd + '", "sub": "' + sub + '", "params": "' + params + '"}');
+        socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '", "params": "' + params + '"}');
 
     }
 }
