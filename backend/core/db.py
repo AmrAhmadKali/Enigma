@@ -2,7 +2,6 @@ import sqlite3
 from typing import Any, List
 
 import aiosqlite
-
 from aiosqlite import Connection, Cursor
 
 from meta.base_module import BaseModule
@@ -19,8 +18,10 @@ class DB(BaseModule):
     def __init__(self):
         pass
 
-    async def connect_db(self):
-        self._conn = await aiosqlite.connect(self.DB_LOCATION)
+    async def connect_db(self, location=None):
+        if not location:
+            location = self.DB_LOCATION
+        self._conn = await aiosqlite.connect(location)
         self._conn.row_factory = sqlite3.Row
         await self._create_table()
 

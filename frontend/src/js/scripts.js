@@ -1,7 +1,12 @@
 let socket;
 
 // this will automatically pick the websocket up, making the assumption that it runs on the same host as the Website
-socket = new WebSocket('ws://' + document.location.hostname + ':25500/', 'chat');
+if (document.location.hostname === "frontend") {
+    socket = new WebSocket('ws://backend:25500/', 'chat');
+} else {
+    socket = new WebSocket('ws://' + document.location.hostname + ':25500/', 'chat');
+}
+
 
 socket.onopen = sock_open
 socket.onmessage = on_message
@@ -23,7 +28,7 @@ function on_message(msg) {
                 "<tr><td>Command</td><td>Parameters</td><td>Regex</td><td>Description</td></tr>" +
                 "</table></div>")
             $('#status').append(data.status);
-            data.response.forEach((val, index, array) => {
+            data.response.forEach((val, _, _1) => {
                 $('#help-table').append("<tr id='help-tr'>" +
                     "<td>" + val.cmd + "</td>" +
                     "<td>" + val.params + "</td>" +
@@ -38,8 +43,12 @@ function on_message(msg) {
             $('#main').append("<div id='dump'><a id='d-status'>Status Code: </a><br></div>")
             $('#d-status').append(data.status);
             $(`#dump`).append(msg.data);
+            break;
         }
-        case 'encrypt': { letter_received(data.response); }
+        case 'encrypt': {
+            letter_received(data.response);
+            break;
+        }
     }
 
 }

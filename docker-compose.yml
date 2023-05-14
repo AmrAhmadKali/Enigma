@@ -2,12 +2,10 @@ version: "3"
 services:
   backend:
     build: backend/
-    container_name: enigma_back
     ports:
       - "25500:25500"
 
   frontend:
-    build: frontend
-    container_name: enigma_front
+    build: frontend/
     ports:
       - "80:80"

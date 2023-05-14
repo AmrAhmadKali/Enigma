@@ -29,12 +29,6 @@ class Server(WebSocketServer):
         self.cmd_service: CommandService = reg.get_instance('command_service')
 
     async def startup(self):
-        await self.server()
-
-    async def process_request(self, path, request_headers):
-        print(path, request_headers)
-
-    async def server(self):
         async with websockets.serve(self.ws_handler, self.host, self.port):
             await self.stop
 

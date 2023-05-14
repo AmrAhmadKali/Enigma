@@ -19,4 +19,5 @@ ADD meta $HOME/meta
 ADD core $HOME/core
 WORKDIR $HOME
 #CMD /bin/sh
+EXPOSE 25500
 CMD python3 -ubEOO main.py

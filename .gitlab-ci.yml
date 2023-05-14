@@ -16,23 +16,23 @@ sast:
 include:
   - template: Security/SAST.gitlab-ci.yml
 
-# Uncomment once test are added
-#unit-test:
-#  stage: test
-#  image: python:3.11-alpine
-#  script:
-#    - pip install pipenv
-#    - pipenv install --dev
-#    - pipenv run coverage run -m pytest --junitxml=report.xml backend/tests/unit
-#    - pipenv run coverage report
-#    - pipenv run coverage xml
-#  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
-#  artifacts:
-#    reports:
-#      junit: report.xml
-#      coverage_report:
-#        coverage_format: cobertura
-#        path: coverage.xml
+unit-test:
+  stage: test
+  image: python:3.11-alpine
+  script:
+    - cd backend
+    - pip install pytest coverage
+    - pip install -r requirements.txt
+    - python -m coverage run -m pytest --junitxml=report.xml tests/
+    - python -m coverage report
+    - python -m coverage xml
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    reports:
+      junit: backend/report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: backend/coverage.xml
 
 containerize:
   stage: package
@@ -49,23 +49,20 @@ containerize:
     - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
     - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
 
-#e2e-test:
-#  stage: e2e
-#  image: docker:20.10.15-dind
-#  variables:
-#    #CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}/enigma:${CI_COMMIT_REF_SLUG}
-#  before_script:
-#    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-#  script:
-#    - apk add firefox
-#    - apk add --update python3
-#    - python3 -m ensurepip
-#    - pip3 install pipenv
-#    - pipenv install --dev
-#    - pipenv run behave E2E
-##  after_script:
-##    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
-##    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+e2e-test:
+  image: docker:20.10.15-dind
+  services:
+    - name: ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+      alias: frontend
+
+    - name: ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
+      alias: backend
+  stage: e2e
+  script:
+    - apk add --no-cache python3 py3-pip firefox
+    - pip3 install behave selenium
+    - python3 -m behave E2E/
+
 
 
 remove-container:

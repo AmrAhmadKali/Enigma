@@ -26,8 +26,8 @@ class Rotors(BaseModule):
         #  - KEY (rotor offset) AAA
 
         storage.rotor_order = [
-            ['Enigma I-R3', 'Enigma I-R2', 'Enigma I-R1', 'Reflector A'],  # Forward
-            ['Enigma I-R1', 'Enigma I-R2', 'Enigma I-R3']  # Backwards
+            ['Enigma I-R3', 'Enigma I-R2', 'Enigma I-R1'],
+            'Reflector A',  # Forward
         ]
         storage.rotors = {}
         for x in storage.rotor_order[0]:
@@ -56,10 +56,12 @@ class Rotors(BaseModule):
         perform natural rotor rotation
         :param storage: Storage space in which we can find the used rotors & offsets
         """
+
         r1 = storage.rotor_order[0][2]
         r2 = storage.rotor_order[0][1]
         r3 = storage.rotor_order[0][0]
-        if (storage.rotors[r2] % 26) == self.rotors[r2][1] and (storage.rotors[r3] % 26) == self.rotors[r3][1]:
+        if (storage.rotors[r2] % 26) == self.rotors[r2][1] \
+                and (storage.rotors[r3] % 26) == self.rotors[r3][1]:
             self._rotate(storage, r1)
             self._rotate(storage, r2)
             self._rotate(storage, r3)
@@ -84,7 +86,9 @@ class Rotors(BaseModule):
         key = self.convert_to_int(key)
         for x in storage.rotor_order[0]:
             key = self.forward(x, key, storage.rotors[x])
-        for x in storage.rotor_order[1]:
+        key = self.forward(storage.rotor_order[1], key, 0)
+
+        for x in reversed(storage.rotor_order[0]):
             key = self.backward(x, key, storage.rotors[x])
         return self.convert_to_str(key)
 
