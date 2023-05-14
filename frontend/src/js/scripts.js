@@ -15,6 +15,7 @@ function on_message(msg) {
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
+    // TODO: Statuscodes abfragen!
     switch (req) {
         case 'help': {
             $('#help').remove();

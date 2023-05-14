@@ -1,22 +1,53 @@
 *{
     box-sizing: border-box;
+    background-color: darkgray;
 }
 
-.keyboard {
-    border-radius: 50%;
-    width: 70%;
+/* Container: */
+
+.inputContainer, .outputContainer {
+    font-size: 2em;
+    width: 50%;
+    height: 20vh;
+    float: left;
+    background: white;
+    box-shadow: 0 0 0.1em grey;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+
+.plugboardContainer{
+    float: right;
+    box-shadow: 0 0 0.1em grey;
+    align-items: center;
+    display: flex;
+    width: 50%;
+    height: 10vh;
+    font-size: 1em;
+    background: white;
+    border-radius: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+/* Keyboards: */
+
+.plugboard {
+    float: left;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15vw 15vw;
-    margin: auto;
-}
+    height: 10vh;
 
-.keyboard button {
-    width: 5vw;
-    height: 5vw;
-    color: white;
-    background-color: brown;
+}
+.keyboard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 10vw;
 }
 
 .row{
@@ -26,102 +57,33 @@
     justify-content: space-evenly;
 }
 
-.key{
-    stroke: #306f91;
-    stroke-width: 5;
-    border-radius: 50%;
+/* Keys: */
+
+.keyboard button {
+    width: 5vw;
+    height: 5vw;
     color: white;
     background-color: black;
-    margin: 3px;
+}
+.key {
+    border-radius: 50%;
+    color: white;
+    margin: 0.1em;
     width: 2em;
     height: 2em;
     text-align: center;
-    font-size: 1em;
-
+    font-size: 2vw;
 }
-
-.key :active{
-    background-color: pink;
-}
-
-.lamppanel {
-    width: 590px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 20px;
-    border-radius: 10px;
-}
-
-.lamppanel button {
-    color: black;
-    background-color: white;
-    border-radius: 50%;
-}
-
-.inputContainer {
-    width: 50%;
-    height: 20vh;
-    float: left;
-    background: white;
-    box-shadow: 0 0 20px 2px grey;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    overflow-wrap: anywhere;
-    font-size: 2em;
-}
-
-.outputContainer {
-    font-size: 2em;
-    width: 50%;
-    height: 20vh;
-    float: right;
-    background: white;
-    box-shadow: 0 0 20px 2px grey;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    overflow-wrap: anywhere;
-}
-
-.plugboardContainer{
-    float: right;
-    height: fit-content;
-    align-items: center;
-    display: flex;
-    width: 50%;
-}
-
-.plugboard {
-    float: left;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 50vh;
-
-}
-
-
-.row{
-    display: flex;
-    align-items: center;
-    margin: 0px;
-    justify-content: space-evenly;
-}
-
-
 .plugboard button {
-    width: 30%;
+    text-align: center;
+    font-size: 1.5vw;
+    width: 2.5vw;
     border-radius: 10%;
-    height: 30px;
+    height: 2.5vw;
     color: black;
     background-color: white;
-
 }
-.setback button {
-    width: 100%
+
+.reset button {
+    width: fit-content;
 }
