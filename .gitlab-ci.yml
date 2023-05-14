@@ -37,25 +37,29 @@ unit-test:
 containerize:
   stage: package
   image: docker:20.10.15-dind
+  variables:
+    loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   before_script:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
   script:
-    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH} backend/
-    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH} frontend/
+    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_back:${loc} backend/
+    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_front:${loc} frontend/
 
-    - docker push ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
-    - docker push ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+    - docker push ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
+    - docker push ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
   after_script:
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
+    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
 
 e2e-test:
   image: docker:20.10.15-dind
+  variables:
+    loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   services:
-    - name: ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+    - name: ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
       alias: frontend
 
-    - name: ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
+    - name: ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
       alias: backend
   stage: e2e
   script:
@@ -66,6 +70,8 @@ e2e-test:
 
 
 remove-container:
+  variables:
+    loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   stage: cleanup
   image: docker:20.10.15-dind
   before_script:
@@ -73,8 +79,8 @@ remove-container:
   script:
     - wget -O /usr/bin/reg https://github.com/genuinetools/reg/releases/download/v0.16.0/reg-linux-amd64
     - chmod +x /usr/bin/reg
-    - reg rm ${CI_REGISTRY_IMAGE}/enigma_back:${CI_COMMIT_BRANCH}
-    - reg rm ${CI_REGISTRY_IMAGE}/enigma_front:${CI_COMMIT_BRANCH}
+    - reg rm ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
+    - reg rm ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
   except:
     variables:
       - $CI_COMMIT_TAG
