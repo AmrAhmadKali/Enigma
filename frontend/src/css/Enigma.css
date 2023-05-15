@@ -1,0 +1,83 @@
+*{
+    box-sizing: border-box;
+    background-color: darkgray;
+}
+
+/* Container: */
+
+.inputContainer, .outputContainer {
+    font-size: 2em;
+    width: 50%;
+    height: 20vh;
+    float: left;
+    background: white;
+    box-shadow: 0 0 0.1em grey;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    overflow-wrap: anywhere;
+}
+.plugboardContainer{
+    float: right;
+    box-shadow: 0 0 0.1em grey;
+    align-items: center;
+    display: flex;
+    width: 50%;
+    height: 10vh;
+    font-size: 1em;
+    background: white;
+    border-radius: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+/* Keyboards: */
+.plugboard {
+    float: left;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 10vh;
+}
+.keyboard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 10vw;
+}
+.row{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    justify-content: space-evenly;
+}
+
+/* Keys: */
+.keyboard button {
+    width: 5vw;
+    height: 5vw;
+    color: white;
+    background-color: black;
+}
+.key {
+    border-radius: 50%;
+    color: white;
+    margin: 0.1em;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    font-size: 2vw;
+}
+.plugboard button {
+    text-align: center;
+    font-size: 1.5vw;
+    width: 2.5vw;
+    border-radius: 10%;
+    height: 2.5vw;
+    color: black;
+    background-color: white;
+}
+.reset button {
+    width: fit-content;
+}
