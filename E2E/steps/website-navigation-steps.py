@@ -6,6 +6,10 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
+# TODO: context.driver.close() (oder ähnlich) am Ende des Tests, damit Firefox Prozess geschlossen wird
+# TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
+#  Derzeit Probleme da Steps nicht in richtiger Reihenfolge ausgeführt werden
+
 
 @given('The Enigma Website is opened')
 def step_impl(context):

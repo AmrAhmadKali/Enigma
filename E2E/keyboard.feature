@@ -11,3 +11,5 @@ Feature: Keyboard
       When I press the G key on the virtual keyboard
       Then The letter G should be displayed in the input box
       And The letter U should be displayed in the output box
+
+    # TODO: Encryption History test (140 characters)
