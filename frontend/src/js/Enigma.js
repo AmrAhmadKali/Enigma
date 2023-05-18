@@ -8,26 +8,26 @@ function key_pressed(key){
     if(alphabet.includes(key)){
         let inputContainer = document.querySelector(".inputContainer");
         inputContainer.innerHTML += key;
-        awaiting.push('encrypt');
-        sendRequest('encrypt', null, key);
+        if(key === ' '){
+            space_pressed()
+        } else {
+            awaiting.push('encrypt');
+            sendRequest('encrypt', null, key);
+        }
         console.log("Key pressed: " + key);
-    }
-    else{
+    } else{
         console.log("Invalid key '"+key+"' pressed");
     }
+}
+
+function space_pressed(){
+    let outputContainer = document.querySelector(".outputContainer");
+    outputContainer.innerHTML += ' ';
 }
 
 function letter_received(letter){
     console.log("Encrypted Letter Received: " + letter);
     let outputContainer = document.querySelector(".outputContainer");
-    if (outputContainer.innerHTML.length % 5 === 0){
-        outputContainer.innerHTML += ' ';
-    }
     outputContainer.innerHTML += letter;
     //TODO: Lamp panel change letter state
-}
-
-function openwindow(){
-    const newwindow = window.open("Konfiguration.html", "Konfiguration");
-    newwindow.focus()
 }
