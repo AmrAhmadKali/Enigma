@@ -1,11 +1,11 @@
 import unittest
 
-from core.rotor_config import Rotors
+from core.rotor_service import RotorService
 from meta.dict_object import DictObject
 
 
 class PlugboardTest(unittest.IsolatedAsyncioTestCase):
-    r = Rotors()
+    r = RotorService()
     str = DictObject()
 
     async def test_0_setup(self):

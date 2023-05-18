@@ -1,22 +1,38 @@
-from typing import Iterable
-
 from meta.base_module import BaseModule
 from meta.decorators import instance
 from meta.dict_object import DictObject
 
 
 @instance()
-class Rotors(BaseModule):
+class RotorService(BaseModule):
 
     def start(self):
         self.basemap = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        self.rotors = {  # name: [mapping, notch]
+        self.rotors = {  # name: [mapping, turnover, notch]
+            # Reflectors
             'Reflector A': ["EJMZALYXVBWFCRQUONTSPIKHGD"],
             'Reflector B': ["YRUHQSLDPXNGOKMIEBFZCWVJAT"],
             'Reflector C': ["FVPJIAOYEDRZXWGCTKUQSBNMHL"],
-            'Enigma I-R1': ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", self.convert_to_int("Q")],
-            'Enigma I-R2': ["AJDKSIRUXBLHWTMCQGZNPYFVOE", self.convert_to_int("E")],
-            'Enigma I-R3': ["BDFHJLCPRTXVZNYEIWGAKMUSQO", self.convert_to_int("V")],
+            # Enigma I
+            'Enigma I-R1': ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", self.convert_to_int("Q"), self.convert_to_int("Y")],
+            'Enigma I-R2': ["AJDKSIRUXBLHWTMCQGZNPYFVOE", self.convert_to_int("E"), self.convert_to_int("M")],
+            'Enigma I-R3': ["BDFHJLCPRTXVZNYEIWGAKMUSQO", self.convert_to_int("V"), self.convert_to_int("D")],
+            'Enigma I-R4': ["ESOVPZJAYQUIRHXLNFTGKDCMWB", self.convert_to_int("J"), self.convert_to_int("R")],
+            'Enigma I-R5': ["VZBRGITYUPSDNHLXAWMJQOFECK", self.convert_to_int("Z"), self.convert_to_int("H")],
+            # Enigma B
+            'Enigma B-R1': ["DMTWSILRUYQNKFEJCAZBPGXOHV", self.convert_to_int("Q"), self.convert_to_int("")],
+            'Enigma B-R2': ["HQZGPJTMOBLNCIFDYAWVEUSRKX", self.convert_to_int("E"), self.convert_to_int("")],
+            'Enigma B-R3': ["UQNTLSZFMREHDPLKIBVYGJCWOA", self.convert_to_int("V"), self.convert_to_int("")],
+            # Enigma M3
+            'Enigma M3-R1': ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", self.convert_to_int("Q"), self.convert_to_int("Y")],
+            'Enigma M3-R2': ["AJDKSIRUXBLHWTMCQGZNPYFVOE", self.convert_to_int("E"), self.convert_to_int("M")],
+            'Enigma M3-R3': ["BDFHJLCPRTXVZNYEIWGAKMUSQO", self.convert_to_int("V"), self.convert_to_int("D")],
+            'Enigma M3-R4': ["ESOVPZJAYQUIRHXLNFTGKDCMWB", self.convert_to_int("J"), self.convert_to_int("R")],
+            'Enigma M3-R5': ["VZBRGITYUPSDNHLXAWMJQOFECK", self.convert_to_int("Z"), self.convert_to_int("H")],
+            'Enigma M3-R6': ["JPGVOUMFYQBENHZRDKASXLICTW", self.convert_to_int("ZM"), self.convert_to_int("HU")],
+            'Enigma M3-R7': ["NZJHGRCXMYSWBOUFAIVLPEKQDT", self.convert_to_int("ZM"), self.convert_to_int("HU")],
+            'Enigma M3-R8': ["FKQHTLXOCBJSPDZRAMEWNIUYGV", self.convert_to_int("ZM"), self.convert_to_int("HU")],
+
         }
 
     async def setup(self, storage: DictObject) -> None:
@@ -29,18 +45,12 @@ class Rotors(BaseModule):
             ['Enigma I-R3', 'Enigma I-R2', 'Enigma I-R1'],
             'Reflector A',  # Forward
         ]
+        self.reset_offsets(storage)
+
+    def reset_offsets(self, storage):
         storage.rotors = {}
         for x in storage.rotor_order[0]:
-            # TODO: fix this: This will add an unused offset for Reflector A, but that's getting ignored
             storage.rotors[x] = 0
-
-    def rotate_rotors(self, storage: DictObject, offset: Iterable[int] = [1, 0, 0]) -> None:
-        """
-        This function adjusts the rotor offsets for the currently used rotors.
-        :param storage: Storage space in which we can find the currently used rotors
-        :param offset: new offsets for the rotors
-        """
-        raise NotImplementedError("This function will be implemented in a later stage.")
 
     def _rotate(self, storage: DictObject, rotor: str, n: int = 1) -> None:
         """
@@ -60,16 +70,18 @@ class Rotors(BaseModule):
         r1 = storage.rotor_order[0][2]
         r2 = storage.rotor_order[0][1]
         r3 = storage.rotor_order[0][0]
-        if (storage.rotors[r2] % 26) == self.rotors[r2][1] \
-                and (storage.rotors[r3] % 26) == self.rotors[r3][1]:
+
+        # notch might be a list!
+        if (storage.rotors[r2] % 26) in self.rotors[r2][1] \
+                and (storage.rotors[r3] % 26) in self.rotors[r3][1]:
             self._rotate(storage, r1)
             self._rotate(storage, r2)
             self._rotate(storage, r3)
-        elif (storage.rotors[r2] % 26) == self.rotors[r2][1]:
+        elif (storage.rotors[r2] % 26) in self.rotors[r2][1]:
             self._rotate(storage, r1)
             self._rotate(storage, r2)
             self._rotate(storage, r3)
-        elif (storage.rotors[r3] % 26) == self.rotors[r3][1]:
+        elif (storage.rotors[r3] % 26) in self.rotors[r3][1]:
             self._rotate(storage, r2)
             self._rotate(storage, r3)
         else:
@@ -83,7 +95,7 @@ class Rotors(BaseModule):
         :return: encrypted letter.
         """
         self._perform_rotate(storage)
-        key = self.convert_to_int(key)
+        key = self.convert_to_int(key)[0]
         for x in storage.rotor_order[0]:
             key = self.forward(x, key, storage.rotors[x])
         key = self.forward(storage.rotor_order[1], key, 0)
@@ -117,13 +129,13 @@ class Rotors(BaseModule):
         signal = self.rotors[rotor][0].find(letter) - (offset % 26)
         return signal
 
-    def convert_to_int(self, key: str) -> int:
+    def convert_to_int(self, keys: str) -> [int]:
         """
-        Convert Key to int, for rotor usage
-        :param key: Key to convert
-        :return: Int value of the key
+        Convert Keys to a list of ints, for rotor usage.
+        :param keys: Keys to convert
+        :return: List of int values of the key
         """
-        return "ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(key)
+        return ["ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(key) for key in keys]
 
     def convert_to_str(self, key: int) -> str:
         """

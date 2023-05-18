@@ -1,7 +1,7 @@
 import unittest
 
 from core.db import DB
-from meta.command_param_types import Const, Any, Int
+from meta.command_param_types import Const, Any, Int, Rotor, Reflector, Multiple
 
 
 class TestCommandParams(unittest.IsolatedAsyncioTestCase):
@@ -45,3 +45,39 @@ class TestCommandParams(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(a.get_name(), '[abc]')
         a.is_optional = False
         self.assertEqual(a.get_name(), 'abc')
+
+    async def test_rotor(self):
+        a = Rotor('abc', is_optional=True)
+        self.assertEqual(a.name, "abc")
+        self.assertEqual(a.is_optional, True)
+        self.assertRaises(Exception, Any, 'ab c')
+        self.assertEqual(a.process_matches([None]), None)
+        self.assertEqual(a.process_matches([" Engima I-R1"]), "Engima I-R1")
+        self.assertEqual(a.get_regex(), r'(\s+Enigma .+?-R[1-8])?')
+
+        self.assertEqual(a.get_name(), '[abc]')
+        a.is_optional = False
+        self.assertEqual(a.get_name(), 'abc')
+
+    async def test_reflector(self):
+        a = Reflector('abc', is_optional=True)
+        self.assertEqual(a.name, "abc")
+        self.assertEqual(a.is_optional, True)
+        self.assertRaises(Exception, Any, 'ab c')
+        self.assertEqual(a.process_matches([None]), None)
+        self.assertEqual(a.process_matches([" Reflector A"]), "Reflector A")
+        self.assertEqual(a.get_regex(), r'(\s+Reflector [ABC])?')
+
+        self.assertEqual(a.get_name(), '[abc]')
+        a.is_optional = False
+        self.assertEqual(a.get_name(), 'abc')
+
+    async def test_multiple(self):
+        a = Multiple(Reflector('abc'))
+        self.assertEqual(a.get_name(), "abc*")
+        self.assertRaises(Exception, Any, 'ab c')
+        self.assertEqual(["Reflector A", "Reflector C", "Reflector B"],
+                         a.process_matches([" Reflector A Reflector C Reflector B", " Reflector A"]))
+        self.assertEqual(a.get_regex(), r'((\s+Reflector [ABC]){1,})')
+
+        self.assertEqual(a.get_name(), 'abc*')

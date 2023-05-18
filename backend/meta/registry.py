@@ -39,12 +39,9 @@ class Registry:
         Inject Dependencies into all @instance()'s
         """
         for key in cls._registry:
-            try:
-                cls._registry[key].inject
-            except AttributeError:
-                pass
-            else:
-                cls._registry[key].inject(cls)
+            m = cls._registry[key]
+            if 'inject' in get_attrs(m):
+                m.inject(cls)
 
     @classmethod
     def pre_start_all(cls) -> None:
@@ -55,12 +52,9 @@ class Registry:
         for key in cls._registry:
             if str(cls._registry[key].module_name).split(".")[0] not in mods:
                 continue
-            try:
-                cls._registry[key].pre_start
-            except AttributeError:
-                pass
-            else:
-                cls._registry[key].pre_start()
+            m = cls._registry[key]
+            if 'pre_start' in get_attrs(m):
+                m.pre_start()
 
     @classmethod
     def start_all(cls) -> None:
@@ -71,12 +65,9 @@ class Registry:
         for key in cls._registry:
             if str(cls._registry[key].module_name).split(".")[0] not in mods:
                 continue
-            try:
-                cls._registry[key].start
-            except AttributeError:
-                pass
-            else:
-                cls._registry[key].start()
+            m = cls._registry[key]
+            if 'start' in get_attrs(m):
+                m.start()
 
     @classmethod
     def get_instance(cls, name: str, is_optional=False) -> BaseModule:
@@ -146,14 +137,11 @@ class Registry:
         """
         mods = cls.get_instance("app").modules
         for key in cls._registry:
-            if str(cls._registry[key].module_name).split(".")[0] not in mods:
+            m = cls._registry[key]
+            if str(m.module_name).split(".")[0] not in mods:
                 continue
-            try:
-                cls._registry[key].setup
-            except AttributeError:
-                pass
-            else:
-                await cls._registry[key].setup(storage)
+            if 'setup' in get_attrs(m):
+                await m.setup(storage)
 
     @classmethod
     def load_module(cls, file: Path) -> None:

@@ -9,14 +9,14 @@ from meta.decorators import instance, command
 from meta.dict_object import DictObject
 
 if typing.TYPE_CHECKING:
-    from core.rotor_config import Rotors
+    from core.rotor_service import RotorService
 
 
-@instance("encrypt")
-class Encryption(BaseModule):
+@instance("encryption_controller")
+class EncryptionController(BaseModule):
 
     def inject(self, reg):
-        self.rotors: Rotors = reg.get_instance("rotors", is_optional=True)
+        self.rotors: RotorService = reg.get_instance("rotor_service", is_optional=True)
         self.plugboard = reg.get_instance("plugboard", is_optional=True)
 
     # noinspection PyUnusedLocal

@@ -10,9 +10,9 @@ class TestDB(unittest.IsolatedAsyncioTestCase):
         try:
             # return
             await self.db.connect_db(':memory:')
-            exec = await self.db.exec('INSERT INTO storage(UUID, data) VALUES(?, ?)', [1, 'data'])
-            exec2 = await self.db.exec('INSERT INTO storage(UUID, data) VALUES(?, ?)', [2, 'data2'])
-            self.assertEqual(exec, exec2, -1)
+            t_exec = await self.db.exec('INSERT INTO storage(UUID, data) VALUES(?, ?)', [1, 'data'])
+            t_exec2 = await self.db.exec('INSERT INTO storage(UUID, data) VALUES(?, ?)', [2, 'data2'])
+            self.assertEqual(t_exec, t_exec2, -1)
 
             with self.assertRaises(Exception):
                 await self.db.exec('INSERT INTO storage(UUID, data) VALUES(?, ?)', [2, 'data3'])
