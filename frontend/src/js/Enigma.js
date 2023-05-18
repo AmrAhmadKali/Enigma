@@ -23,6 +23,8 @@ function key_pressed(key){
 function space_pressed(){
     let outputContainer = document.querySelector(".outputContainer");
     outputContainer.innerHTML += ' ';
+
+    checkCharLimit()
 }
 
 function letter_received(letter){
@@ -30,4 +32,22 @@ function letter_received(letter){
     let outputContainer = document.querySelector(".outputContainer");
     outputContainer.innerHTML += letter;
     //TODO: Lamp panel change letter state
+
+    checkCharLimit()
+}
+
+
+function checkCharLimit(){
+    let inputContainer = document.querySelector(".inputContainer");
+    let outputContainer = document.querySelector(".outputContainer");
+    let inputLength = inputContainer.innerText.length
+    let outputLength = outputContainer.innerText.length
+
+    if(inputLength !== outputLength){
+        throw "Input and Output Container out of sync"
+    }
+    if (inputLength >= 140){
+        inputContainer.innerHTML = inputContainer.innerHTML.slice(1,141)
+        outputContainer.innerHTML = outputContainer.innerHTML.slice(1,141)
+    }
 }
