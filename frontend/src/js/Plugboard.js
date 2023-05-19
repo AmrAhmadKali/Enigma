@@ -45,7 +45,6 @@ function plugboard_pressed(key) {
     $('[name="p_'+key+'"]').css('background-color', 'LightBlue')
     $('[name="p_'+lastpressed+'"]').css('background-color', 'LightBlue')
     lastpressed = null
-
 }
 
 function reset_plugboard() {
@@ -54,6 +53,7 @@ function reset_plugboard() {
     awaiting.push('plugboard_reset')
     sendRequest('plugboard', 'reset')
     $('.plugboardContainer').empty()
+    $("[name^=p_]").css('background-color', 'white')
 }
 
 function checkPlugLimitReached(){
