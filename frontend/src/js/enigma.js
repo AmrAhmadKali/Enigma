@@ -1,5 +1,9 @@
 function listener_init() {
     document.addEventListener("keydown", function(){key_pressed(event.key)});
+
+    document.getElementById('showMenuBtn').addEventListener('click', () => {
+        document.getElementById('menu').showModal()
+    });
 }
 
 function key_pressed(key){

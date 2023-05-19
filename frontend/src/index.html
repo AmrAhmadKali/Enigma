@@ -2,11 +2,12 @@
 <html>
 <head>
     <title> Enigma </title>
-    <link rel="stylesheet" href="css/Enigma.css">
+    <link rel="stylesheet" href="css/enigma.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/Enigma.js"></script>
-    <script src ="js/Plugboard.js"></script>
+    <script src="js/enigma.js"></script>
+    <script src ="js/plugboard.js"></script>
+    <script src="js/menu.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -54,6 +55,67 @@
         <button class="key" onclick="key_pressed(' ')" name='k_space'> </button>
     </div>
 </div>
+
+<!-- TODO: Dialog in andere Datei auslagern -->
+<dialog id="menu">
+    <form>
+        <p>
+            <label> Rotor 1:
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </label>
+            <br>
+            <label> Rotor 2:
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </label>
+            <br>
+            <label> Rotor 3:
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </label>
+            <br>
+            <label> Rotor 4:
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </label>
+            <br>
+            <label> Rotor 5:
+                <select>
+                    <option value="default">Choose...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </label>
+        </p>
+        <div>
+            <button onclick="cancelMenu()">Cancel</button>
+            <button onclick="submitMenu()">Submit</button>
+        </div>
+    </form>
+</dialog>
+<p>
+    <button id="showMenuBtn">Show the menu</button>
+</p>
+
+
 
 <div class="plugboardContainer"></div>
 
