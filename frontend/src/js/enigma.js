@@ -50,8 +50,8 @@ function checkCharLimit(){
     if(inputLength !== outputLength){
         throw "Input and Output Container out of sync"
     }
-    if (inputLength >= 140){
-        inputContainer.innerHTML = inputContainer.innerHTML.slice(1,141)
-        outputContainer.innerHTML = outputContainer.innerHTML.slice(1,141)
+    if (inputLength > 140){
+        inputContainer.innerHTML = inputContainer.innerHTML.slice(1, inputLength)
+        outputContainer.innerHTML = outputContainer.innerHTML.slice(1, outputLength)
     }
 }
