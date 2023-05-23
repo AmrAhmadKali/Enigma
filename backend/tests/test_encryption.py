@@ -46,7 +46,8 @@ class EncryptionTest(unittest.IsolatedAsyncioTestCase):
         await self.rc.rotors_set_all_cmd(None, self.str, 'Reflector B',
                                          ['Enigma M3-R3', 'Enigma M3-R2', 'Enigma M3-R1'])
         self.assertEqual(self.str, {'rotor_order': [['Enigma M3-R1', 'Enigma M3-R2', 'Enigma M3-R3'], 'Reflector B'],
-                                    'rotors': {'Enigma M3-R3': 0, 'Enigma M3-R2': 0, 'Enigma M3-R1': 0}})
+                                    'rotors': {'Enigma M3-R3': 0, 'Enigma M3-R2': 0, 'Enigma M3-R1': 0},
+                                    'rotorkeyring': {'Enigma M3-R3': 0, 'Enigma M3-R2': 0, 'Enigma M3-R1': 0}})
 
         self.enc.rotors = self.r
         self.enc.plugboard = None

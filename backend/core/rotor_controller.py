@@ -88,7 +88,7 @@ class RotorController(BaseModule):
             return 400, 'Out of Bounds'
         if len(offset) != 1:
             return 400, 'please provide an offset with the length 1'
-
+        offset = offset.upper()
         storage.rotors[storage.rotor_order[0][rotor_id]] = self.rotor_service.convert_to_int(offset)[0]
         return 200, "Offset Adjusted."
 
@@ -102,6 +102,39 @@ class RotorController(BaseModule):
             Tuple[int, str]:
         if len(offset) != 3:
             return 400, 'Please provide an offset with the length 3'
+        offset = offset.upper()
         for i, rotor in enumerate(storage.rotor_order[0]):
             storage.rotors[rotor] = self.rotor_service.convert_to_int(offset[i])[0]
         return 200, "Offset Adjusted."
+
+    @command(command="rotors",
+             sub_command='ringoffset',
+             params=[Int('rotor_id'), Any('offset', allowed_chars='[a-zA-Z]')],
+             description="Set the Ringoffset of a single Rotor. ID 0 comes after reflector, 1 middle, 2 right. Example param: 'ABC'")
+    async def rotors_ringoffset_single_cmd(self, _: WebSocketServerProtocol,
+                                       storage: DictObject,
+                                       rotor_id: int,
+                                       offset: str) -> \
+            Tuple[int, str]:
+        if rotor_id > len(storage.rotor_order):
+            return 400, 'Out of Bounds'
+        if len(offset) != 1:
+            return 400, 'please provide an offset with the length 1'
+        offset = offset.upper()
+        storage.rotorkeyring[storage.rotor_order[0][rotor_id]] = self.rotor_service.convert_to_int(offset)[0]
+        return 200, "Ringoffset Adjusted."
+
+    @command(command="rotors",
+             sub_command='ringoffset',
+             params=[Any('ringoffset', allowed_chars='[a-zA-Z]')],
+             description="Set the Ringoffset of all Rotors. ID 0 comes after reflector, 1 middle, 2 right. Example param: 'ABC'")
+    async def rotors_ringoffset_all_cmd(self, _: WebSocketServerProtocol,
+                                    storage: DictObject,
+                                    offset: [str]) -> \
+            Tuple[int, str]:
+        if len(offset) != 3:
+            return 400, 'Please provide an offset with the length 3'
+        offset = offset.upper()
+        for i, rotor in enumerate(storage.rotor_order[0]):
+            storage.rotorkeyring[rotor] = self.rotor_service.convert_to_int(offset[i])[0]
+        return 200, "Ringoffset Adjusted."
