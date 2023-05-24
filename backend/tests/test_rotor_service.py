@@ -15,7 +15,10 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
             'Reflector A'],
             'rotors': {'Enigma I-R3': 0,
                        'Enigma I-R2': 0,
-                       'Enigma I-R1': 0}})
+                       'Enigma I-R1': 0},
+            'rotorkeyring': {'Enigma I-R3': 0,
+                             'Enigma I-R2': 0,
+                             'Enigma I-R1': 0}})
 
     async def test_1_rotation(self):
         # 21
