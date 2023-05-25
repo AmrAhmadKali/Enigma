@@ -1,10 +1,13 @@
 function listener_init() {
     document.addEventListener("keydown", function(){key_pressed(event.key)});
-    load();
+
+    loadCookie();
 
     document.getElementById('showMenuBtn').addEventListener('click', () => {
         document.getElementById('menu').showModal()
     });
+
+    document.getElementById('resetBtn').addEventListener('click', function(){deleteCookie(); window.location.reload()});
 }
 
 function key_pressed(key){
@@ -36,9 +39,10 @@ function letter_received(letter){
     console.log("Encrypted Letter Received: " + letter);
     let outputContainer = document.querySelector(".outputContainer");
     outputContainer.innerHTML += letter;
-    //TODO: Lamp panel change letter state
-
+    $("[name^=l_]").css('background-color', 'white')
+    $('[name="l_'+letter+'"]').css('background-color', 'yellow')
     checkCharLimit()
+    changeCookie()
 }
 
 
@@ -52,11 +56,9 @@ function checkCharLimit(){
         throw "Input and Output Container out of sync"
     }
     if (inputLength > 140){
-        inputContainer.innerHTML = inputContainer.innerHTML.slice(1, inputLength)
-        outputContainer.innerHTML = outputContainer.innerHTML.slice(1, outputLength)
+        inputContainer.innerHTML = inputContainer.innerHTML.slice(1, inputContainer.innerHTML.length)
+        outputContainer.innerHTML = outputContainer.innerHTML.slice(1, outputContainer.innerHTML.length)
     }
-
-    changeCookie()
 }
 
 function generateUUID() {
@@ -70,10 +72,8 @@ function generateUUID() {
 
 function changeCookie(){
     let settings = getCookie();
-    console.log(settings)
     if (settings.length !== 0) {
         deleteCookie();
-        //if (settings[0].includes("UUID=")) settings[0] = settings[0].replace("UUID=", "");
         setCookie(settings[0]);
     }else{
         let uuid = generateUUID();
@@ -111,7 +111,7 @@ function getCookie() {
   return [];
 }
 
-function load(){
+function loadCookie(){
     let settings = getCookie();
     if (settings.length !== 0){
         let inputContainer = document.querySelector(".inputContainer");

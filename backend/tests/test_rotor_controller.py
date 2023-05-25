@@ -29,19 +29,22 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
                                                       ['Enigma I-R1', 'Enigma I-R3', 'Enigma I-R2'])
         self.assertEqual(code, 200)
         self.assertEqual(storage, {'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
-                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
+                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0},
+                                   'rotorkeyring': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
 
         code, resp = await self.rc.rotors_set_all_cmd(None, storage, 'Reflector X',
                                                       ['Enigma I-R1', 'Enigma I-R3', 'Enigma I-R2'])
         self.assertEqual(code, 400)
         self.assertEqual(storage, {'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
-                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
+                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0},
+                                   'rotorkeyring': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
 
         code, resp = await self.rc.rotors_set_all_cmd(None, storage, 'Reflector A',
                                                       ['Enigma I-R9', 'Enigma I-R3', 'Enigma I-R2'])
         self.assertEqual(code, 400)
         self.assertEqual(storage, {'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
-                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
+                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0},
+                                   'rotorkeyring': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
 
     async def test_2_set_reflector(self):
         self.rc.rotor_service = self.rs
@@ -55,7 +58,8 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
         code, resp = await self.rc.reflector_set_cmd(None, storage, 'Reflector A')
         self.assertEqual(code, 200)
         self.assertEqual(storage, {'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
-                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
+                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0},
+                                   'rotorkeyring': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
 
         code, resp = await self.rc.reflector_set_cmd(None, storage, 'Reflector X')
         self.assertEqual(code, 400)
@@ -74,7 +78,8 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
         code, resp = await self.rc.rotors_set_single_cmd(None, storage, 1, 'Enigma I-R5')
         self.assertEqual(code, 200)
         self.assertEqual(storage, {'rotor_order': [['Enigma I-R2', 'Enigma I-R5', 'Enigma I-R1'], 'Reflector A'],
-                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R5': 0, 'Enigma I-R1': 0}})
+                                   'rotors': {'Enigma I-R2': 0, 'Enigma I-R5': 0, 'Enigma I-R1': 0},
+                                   'rotorkeyring': {'Enigma I-R2': 0, 'Enigma I-R5': 0, 'Enigma I-R1': 0}})
 
     async def test_4_offset_single(self):
         self.rc.rotor_service = self.rs

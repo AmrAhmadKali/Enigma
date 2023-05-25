@@ -39,7 +39,8 @@ class RotorService(BaseModule):
         # Setting up of the Rotor Chain
         # By Default, we'll use:
         #  - Enigma I - A-I-II-III
-        #  - KEY (rotor offset) AAA
+        #  - KEY rotor offset AAA
+        #  - KEY rotorrkeying offset AAA
 
         storage.rotor_order = [
             ['Enigma I-R3', 'Enigma I-R2', 'Enigma I-R1'],
@@ -49,8 +50,10 @@ class RotorService(BaseModule):
 
     def reset_offsets(self, storage):
         storage.rotors = {}
+        storage.rotorkeyring = {}
         for x in storage.rotor_order[0]:
             storage.rotors[x] = 0
+            storage.rotorkeyring[x] = 0
 
     def _rotate(self, storage: DictObject, rotor: str, n: int = 1) -> None:
         """
@@ -97,12 +100,12 @@ class RotorService(BaseModule):
         self._perform_rotate(storage)
         key = self.convert_to_int(key)[0]
         for x in storage.rotor_order[0]:
-            key = self.forward(x, key, storage.rotors[x])
+            key = self.forward(x, key, storage.rotors[x] - storage.rotorkeyring[x])
         key = self.forward(storage.rotor_order[1], key, 0)
 
         for x in reversed(storage.rotor_order[0]):
-            key = self.backward(x, key, storage.rotors[x])
-        return self.convert_to_str(key)
+            key = self.backward(x, key, storage.rotors[x] - storage.rotorkeyring[x])
+        return self.convert_to_str((26 + key) % 26)
 
     def forward(self, rotor: str, signal: int, offset: int) -> int:
         """
