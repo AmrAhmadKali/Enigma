@@ -5,6 +5,8 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException
 
 
@@ -17,8 +19,8 @@ from selenium.common.exceptions import NoAlertPresentException
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = False  # To change
-    context.driver = webdriver.Firefox(options=options)
+    options.headless = True  # To change
+    context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")

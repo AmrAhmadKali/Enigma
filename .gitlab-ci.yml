@@ -65,6 +65,7 @@ e2e-test:
   script:
     - apk add --no-cache python3 py3-pip firefox
     - pip3 install behave selenium
+    - pip3 install webdriver_manager
     - python3 -m behave E2E/
 
 
