@@ -109,3 +109,12 @@ def step_impl(context):
         alert.accept()
     except NoAlertPresentException:
         assert 0, 'No alert is shown'
+
+
+@then('The lamp {lamp} lights up')
+def step_impl(context, lamp):
+    context.driver.implicitly_wait(0.5)
+    element = context.driver.find_element(By.NAME, f"l_{lamp}")
+    background_color = element.value_of_css_property("background-color")
+    YELLOW = 'rgb(255, 255, 0)'
+    assert background_color == YELLOW, f"The lamp {lamp} didn't light up"
