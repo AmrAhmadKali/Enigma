@@ -6,6 +6,12 @@ function listener_init() {
     document.getElementById('showMenuBtn').addEventListener('click', function(){showMenu()});
 
     document.getElementById('resetBtn').addEventListener('click', function(){cookie.deleteCookie(); window.location.reload()});
+
+    //document.getElementById('submitBtn').addEventListener('click', function(){submitMenu()});
+
+    //document.getElementById('cancelBtn').addEventListener('click', function(){hideMenu()});
+
+
 }
 
 function key_pressed(key){

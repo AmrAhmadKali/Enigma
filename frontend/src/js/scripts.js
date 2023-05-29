@@ -22,7 +22,7 @@ function on_message(msg) {
 
     console.log(data)
     if (data.status !== 200){
-        console.log("Error Code "+data.response+" received")
+        alert("Error Code "+data.status+" received")
         return
     }
 

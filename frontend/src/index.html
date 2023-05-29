@@ -26,8 +26,8 @@
         <p id="current_R2">A</p>
         <p id="current_R3">A</p>
     </div>
-    <img src="images/setting_icon.png" id="showMenuBtn">
-    <img src="images/reset_icon.png" id="resetBtn">
+    <img src="images/setting_icon.png" id="showMenuBtn" alt="Settings">
+    <img src="images/reset_icon.png" id="resetBtn" alt="Reset All">
 
 </div>
 
@@ -122,105 +122,135 @@
 <dialog id="menu">
     <form action="#" onsubmit="submitMenu(); return false">
         <p>
-            <label> Auswahl Enigma:</label>
-            <select id="variants" onchange="setvariants()">
-                <option value="default"></option>
-                <option value="1">Enigma 1</option>
-                <option value="B">Enigma B</option>
-                <option value="M3">Enigma M3</option>
-                <option value="All">All</option>
-            </select>
-            <br>
-
-            <label for="reflector"> Reflector:</label>
-            <select id="reflector">
-                <option value="default"></option>
-                <option value="Reflector A">Reflector A</option>
-                <option value="Reflector B">Reflector B</option>
-                <option value="Reflector C">Reflector C</option>
-                <!--option value = "Reflector-B">Reflector Enigma B</option   TODO: neuen Rotor ?-->
-            </select>
-            <br>
-
-            <label for="r1"> Rotor 1:</label>
-            <select id="r1">
-                <option value="default"></option>
-                <option value="Enigma I-R1">Enigma I-R1</option>
-                <option value="Enigma I-R2">Enigma I-R2</option>
-                <option value="Enigma I-R3">Enigma I-R3</option>
-                <option value="Enigma I-R4">Enigma I-R4</option>
-                <option value="Enigma I-R5">Enigma I-R5</option>
-                <option value="Enigma B-R1">Enigma B-R1</option>
-                <option value="Enigma B-R2">Enigma B-R2</option>
-                <option value="Enigma B-R3">Enigma B-R3</option>
-                <option value="Enigma M3-R1">Enigma M3-R1</option>
-                <option value="Enigma M3-R2">Enigma M3-R2</option>
-                <option value="Enigma M3-R3">Enigma M3-R3</option>
-                <option value="Enigma M3-R4">Enigma M3-R4</option>
-                <option value="Enigma M3-R5">Enigma M3-R5</option>
-                <option value="Enigma M3-R6">Enigma M3-R6</option>
-                <option value="Enigma M3-R7">Enigma M3-R7</option>
-                <option value="Enigma M3-R8">Enigma M3-R8</option>
-            </select>
-            <br>
-            <input name="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
-            <br>
-
-            <label for="r2"> Rotor 2: </label>
-            <select id="r2">
-                <option value="default"></option>
-                <option value="Enigma I-R1">Enigma I-R1</option>
-                <option value="Enigma I-R2">Enigma I-R2</option>
-                <option value="Enigma I-R3">Enigma I-R3</option>
-                <option value="Enigma I-R4">Enigma I-R4</option>
-                <option value="Enigma I-R5">Enigma I-R5</option>
-                <option value="Enigma B-R1">Enigma B-R1</option>
-                <option value="Enigma B-R2">Enigma B-R2</option>
-                <option value="Enigma B-R3">Enigma B-R3</option>
-                <option value="Enigma M3-R1">Enigma M3-R1</option>
-                <option value="Enigma M3-R2">Enigma M3-R2</option>
-                <option value="Enigma M3-R3">Enigma M3-R3</option>
-                <option value="Enigma M3-R4">Enigma M3-R4</option>
-                <option value="Enigma M3-R5">Enigma M3-R5</option>
-                <option value="Enigma M3-R6">Enigma M3-R6</option>
-                <option value="Enigma M3-R7">Enigma M3-R7</option>
-                <option value="Enigma M3-R8">Enigma M3-R8</option>
-            </select>
-            <br>
-            <input name="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
-            <br>
-
-            <label for="r3"> Rotor 3:</label>
-            <select id="r3">
-                <option value="default"></option>
-                <option value="Enigma I-R1">Enigma I-R1</option>
-                <option value="Enigma I-R2">Enigma I-R2</option>
-                <option value="Enigma I-R3">Enigma I-R3</option>
-                <option value="Enigma I-R4">Enigma I-R4</option>
-                <option value="Enigma I-R5">Enigma I-R5</option>
-                <option value="Enigma B-R1">Enigma B-R1</option>
-                <option value="Enigma B-R2">Enigma B-R2</option>
-                <option value="Enigma B-R3">Enigma B-R3</option>
-                <option value="Enigma M3-R1">Enigma M3-R1</option>
-                <option value="Enigma M3-R2">Enigma M3-R2</option>
-                <option value="Enigma M3-R3">Enigma M3-R3</option>
-                <option value="Enigma M3-R4">Enigma M3-R4</option>
-                <option value="Enigma M3-R5">Enigma M3-R5</option>
-                <option value="Enigma M3-R6">Enigma M3-R6</option>
-                <option value="Enigma M3-R7">Enigma M3-R7</option>
-                <option value="Enigma M3-R8">Enigma M3-R8</option>
-            </select>
-            <br>
-            <input name="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
-            <br>
-
-        </p>
-
-        <br>
-        <button onclick="hideMenu()">Cancel</button>
-        <input type="submit" id="submitBtn" value="Submit">
-
-
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <label for="variants">Enigma Variant:</label>
+                </td>
+                <td>
+                    <select id="variants" onchange="setvariants()">
+                        <option value="default" disabled selected="selected"></option>
+                        <option value="1">Enigma 1</option>
+                        <option value="B">Enigma B</option>
+                        <option value="M3">Enigma M3</option>
+                        <option value="All">All</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="reflector">Reflector: </label>
+                </td>
+                <td>
+                    <select id="reflector">
+                        <option value="default" disabled selected="selected"></option>
+                        <option value="Reflector A">Reflector A</option>
+                        <option value="Reflector B">Reflector B</option>
+                        <option value="Reflector C">Reflector C</option>
+                        <!--option value = "Reflector-B">Reflector Enigma B</option   TODO: neuen Rotor ?-->
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="r1"> Rotor 1:</label></td>
+                <td>
+                    <select id="r1">
+                        <option value="default" disabled selected="selected"></option>
+                        <option value="Enigma I-R1">Enigma I-R1</option>
+                        <option value="Enigma I-R2">Enigma I-R2</option>
+                        <option value="Enigma I-R3">Enigma I-R3</option>
+                        <option value="Enigma I-R4">Enigma I-R4</option>
+                        <option value="Enigma I-R5">Enigma I-R5</option>
+                        <option value="Enigma B-R1">Enigma B-R1</option>
+                        <option value="Enigma B-R2">Enigma B-R2</option>
+                        <option value="Enigma B-R3">Enigma B-R3</option>
+                        <option value="Enigma M3-R1">Enigma M3-R1</option>
+                        <option value="Enigma M3-R2">Enigma M3-R2</option>
+                        <option value="Enigma M3-R3">Enigma M3-R3</option>
+                        <option value="Enigma M3-R4">Enigma M3-R4</option>
+                        <option value="Enigma M3-R5">Enigma M3-R5</option>
+                        <option value="Enigma M3-R6">Enigma M3-R6</option>
+                        <option value="Enigma M3-R7">Enigma M3-R7</option>
+                        <option value="Enigma M3-R8">Enigma M3-R8</option>
+                    </select>
+                </td>
+                <td>
+                    <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="r2"> Rotor 2: </label>
+                </td>
+                <td>
+                    <select id="r2">
+                        <option value="default" disabled selected="selected"></option>
+                        <option value="Enigma I-R1">Enigma I-R1</option>
+                        <option value="Enigma I-R2">Enigma I-R2</option>
+                        <option value="Enigma I-R3">Enigma I-R3</option>
+                        <option value="Enigma I-R4">Enigma I-R4</option>
+                        <option value="Enigma I-R5">Enigma I-R5</option>
+                        <option value="Enigma B-R1">Enigma B-R1</option>
+                        <option value="Enigma B-R2">Enigma B-R2</option>
+                        <option value="Enigma B-R3">Enigma B-R3</option>
+                        <option value="Enigma M3-R1">Enigma M3-R1</option>
+                        <option value="Enigma M3-R2">Enigma M3-R2</option>
+                        <option value="Enigma M3-R3">Enigma M3-R3</option>
+                        <option value="Enigma M3-R4">Enigma M3-R4</option>
+                        <option value="Enigma M3-R5">Enigma M3-R5</option>
+                        <option value="Enigma M3-R6">Enigma M3-R6</option>
+                        <option value="Enigma M3-R7">Enigma M3-R7</option>
+                        <option value="Enigma M3-R8">Enigma M3-R8</option>
+                    </select>
+                </td>
+                <td>
+                    <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                </td>
+            </tr>
+            <tr id="menu_row3">
+                <td>
+                    <label for="r3"> Rotor 3:</label>
+                </td>
+                <td>
+                    <select id="r3">
+                        <option value="default" disabled selected="selected"></option>
+                        <option value="Enigma I-R1">Enigma I-R1</option>
+                        <option value="Enigma I-R2">Enigma I-R2</option>
+                        <option value="Enigma I-R3">Enigma I-R3</option>
+                        <option value="Enigma I-R4">Enigma I-R4</option>
+                        <option value="Enigma I-R5">Enigma I-R5</option>
+                        <option value="Enigma B-R1">Enigma B-R1</option>
+                        <option value="Enigma B-R2">Enigma B-R2</option>
+                        <option value="Enigma B-R3">Enigma B-R3</option>
+                        <option value="Enigma M3-R1">Enigma M3-R1</option>
+                        <option value="Enigma M3-R2">Enigma M3-R2</option>
+                        <option value="Enigma M3-R3">Enigma M3-R3</option>
+                        <option value="Enigma M3-R4">Enigma M3-R4</option>
+                        <option value="Enigma M3-R5">Enigma M3-R5</option>
+                        <option value="Enigma M3-R6">Enigma M3-R6</option>
+                        <option value="Enigma M3-R7">Enigma M3-R7</option>
+                        <option value="Enigma M3-R8">Enigma M3-R8</option>
+                    </select>
+                </td>
+                <td>
+                    <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    <button type="button" id="cancelBtn" onclick="hideMenu()">Cancel</button>
+                </td>
+                <td>
+                    <br>
+                    <input type="submit" id="submitBtn" value="Submit">
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </dialog>
 
