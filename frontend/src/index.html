@@ -117,48 +117,134 @@
 <dialog id="menu">
     <form>
         <p>
-            <label> Rotor 1:
-                <select>
+            
+            <label> Auswahl Enigma:
+                <select id="variants" onchange="setvariants()">
                     <option value="default">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option value = "B">Enigma B</option>
+                    <option value = "1">Enigma 1</option>
+                    <option value = "M3">Enigma M3</option>
+                    <option value = "All">All</option>
                 </select>
             </label>
             <br>
-            <label> Rotor 2:
-                <select>
+            <label for="reflector" hidden> Reflector:
+                <select id ="reflector">
                     <option value="default">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option value = "UKW-A" disabled>Reflector A</option>
+                    <option value = "UKW-B" disabled> Reflector B</option>
+                    <option value = "UKW-C" disabled>Reflector C</option>
+                    <option value = "Reflector-B" disabled>Reflector Enigma B</option>
+                </select>
+            </label>
+        <br>
+            <label for="r1" hidden > Rotor 1: 
+                <select  id = "r1" >
+                    <option value="default">Choose...</option>
+                    <option value = "R-I-R1" disabled>Enigma I-R1</option>
+                    <option value = "R-I-R2"disabled>Enigma I-R2</option>
+                    <option value = "R-I-R3"disabled>Enigma I-R3</option>
+                    <option value = "R-I-R4"disabled>Enigma I-R4</option>
+                    <option value = "R-I-R5"disabled>Enigma I-R5</option>
+                    <option value = "R-B-R1"disabled>Enigma B-R1</option>
+                    <option value ="R-B-R2"disabled> Enigma B-R2</option>
+                    <option value = "R-B-R3"disabled> Enigma B-R3</option>
+                    <option value = "R-M3-R1" disabled>Enigma M3-R1</option>
+                    <option value = "R-M3-R2" disabled>Enigma M3-R2</option>
+                    <option value = "R-M3-R3" disabled>Enigma M3-R3</option>
+                    <option value = "R-M3-R4" disabled>Enigma M3-R4</option>
+                    <option value = "R-M3-R5" disabled>Enigma M3-R5</option>
+                    <option value = "R-M3-R6" disabled>Enigma M3-R6</option>
+                    <option value = "R-M3-R7" disabled>Enigma M3-R7</option>
+                    <option value = "R-M3-R8" disabled>Enigma M3-R8</option>
                 </select>
             </label>
             <br>
-            <label> Rotor 3:
-                <select>
+            <label for="r2"hidden> Rotor 2:
+                <select id = "r2" >
                     <option value="default">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option value = "R-I-R1" disabled>Enigma I-R1</option>
+                    <option value = "R-I-R2"disabled>Enigma I-R2</option>
+                    <option value = "R-I-R3"disabled>Enigma I-R3</option>
+                    <option value = "R-I-R4"disabled>Enigma I-R4</option>
+                    <option value = "R-I-R5"disabled>Enigma I-R5</option>
+                    <option value = "R-B-R1"disabled>Enigma B-R1</option>
+                    <option value ="R-B-R2"disabled> Enigma B-R2</option>
+                    <option value = "R-B-R3"disabled> Enigma B-R3</option>
+                    <option value = "R-M3-R1" disabled>Enigma M3-R1</option>
+                    <option value = "R-M3-R2" disabled>Enigma M3-R2</option>
+                    <option value = "R-M3-R3" disabled>Enigma M3-R3</option>
+                    <option value = "R-M3-R4" disabled>Enigma M3-R4</option>
+                    <option value = "R-M3-R5" disabled>Enigma M3-R5</option>
+                    <option value = "R-M3-R6" disabled>Enigma M3-R6</option>
+                    <option value = "R-M3-R7" disabled>Enigma M3-R7</option>
+                    <option value = "R-M3-R8" disabled>Enigma M3-R8</option>
                 </select>
             </label>
             <br>
-            <label> Rotor 4:
-                <select>
+            <label for="r3"hidden> Rotor 3:
+                <select id ="r3">
                     <option value="default">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option value = "R-I-R1" disabled>Enigma I-R1</option>
+                    <option value = "R-I-R2"disabled>Enigma I-R2</option>
+                    <option value = "R-I-R3"disabled>Enigma I-R3</option>
+                    <option value = "R-I-R4"disabled>Enigma I-R4</option>
+                    <option value = "R-I-R5"disabled>Enigma I-R5</option>
+                    <option value = "R-B-R1"disabled>Enigma B-R1</option>
+                    <option value ="R-B-R2"disabled> Enigma B-R2</option>
+                    <option value = "R-B-R3"disabled> Enigma B-R3</option>
+                    <option value = "R-M3-R1" disabled>Enigma M3-R1</option>
+                    <option value = "R-M3-R2" disabled>Enigma M3-R2</option>
+                    <option value = "R-M3-R3" disabled>Enigma M3-R3</option>
+                    <option value = "R-M3-R4" disabled>Enigma M3-R4</option>
+                    <option value = "R-M3-R5" disabled>Enigma M3-R5</option>
+                    <option value = "R-M3-R6" disabled>Enigma M3-R6</option>
+                    <option value = "R-M3-R7" disabled>Enigma M3-R7</option>
+                    <option value = "R-M3-R8" disabled>Enigma M3-R8</option>
                 </select>
             </label>
             <br>
-            <label> Rotor 5:
-                <select>
+            <label for="r4" hidden> Rotor 4:
+                <select id = "r4">
                     <option value="default">Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                    <option value = "R-I-R1" disabled>Enigma I-R1</option>
+                    <option value = "R-I-R2"disabled>Enigma I-R2</option>
+                    <option value = "R-I-R3"disabled>Enigma I-R3</option>
+                    <option value = "R-I-R4"disabled>Enigma I-R4</option>
+                    <option value = "R-I-R5"disabled>Enigma I-R5</option>
+                    <option value = "R-B-R1"disabled>Enigma B-R1</option>
+                    <option value ="R-B-R2"disabled> Enigma B-R2</option>
+                    <option value = "R-B-R3"disabled> Enigma B-R3</option>
+                    <option value = "R-M3-R1" disabled>Enigma M3-R1</option>
+                    <option value = "R-M3-R2" disabled>Enigma M3-R2</option>
+                    <option value = "R-M3-R3" disabled>Enigma M3-R3</option>
+                    <option value = "R-M3-R4" disabled>Enigma M3-R4</option>
+                    <option value = "R-M3-R5" disabled>Enigma M3-R5</option>
+                    <option value = "R-M3-R6" disabled>Enigma M3-R6</option>
+                    <option value = "R-M3-R7" disabled>Enigma M3-R7</option>
+                    <option value = "R-M3-R8" disabled>Enigma M3-R8</option>
+                </select>
+            </label>
+            <br>
+            <label for="r5" hidden > Rotor 5:
+                <select id = "r5">
+                    <option value="default">Choose...</option>
+                    <option value = "R-I-R1" disabled>Enigma I-R1</option>
+                    <option value = "R-I-R2"disabled>Enigma I-R2</option>
+                    <option value = "R-I-R3"disabled>Enigma I-R3</option>
+                    <option value = "R-I-R4"disabled>Enigma I-R4</option>
+                    <option value = "R-I-R5"disabled>Enigma I-R5</option>
+                    <option value = "R-B-R1"disabled>Enigma B-R1</option>
+                    <option value ="R-B-R2"disabled> Enigma B-R2</option>
+                    <option value = "R-B-R3"disabled> Enigma B-R3</option>
+                    <option value = "R-M3-R1" disabled>Enigma M3-R1</option>
+                    <option value = "R-M3-R2" disabled>Enigma M3-R2</option>
+                    <option value = "R-M3-R3" disabled>Enigma M3-R3</option>
+                    <option value = "R-M3-R4" disabled>Enigma M3-R4</option>
+                    <option value = "R-M3-R5" disabled>Enigma M3-R5</option>
+                    <option value = "R-M3-R6" disabled>Enigma M3-R6</option>
+                    <option value = "R-M3-R7" disabled>Enigma M3-R7</option>
+                    <option value = "R-M3-R8" disabled>Enigma M3-R8</option>
                 </select>
             </label>
         </p>
