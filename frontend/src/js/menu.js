@@ -1,11 +1,12 @@
 function showMenu(){
     awaiting.push('getSetting')
     sendRequest('dump')
-
+    remove_keydown_listener()
 }
 
 function hideMenu(){
     document.getElementById('menu').close()
+    document.addEventListener("keydown", key_event)
 }
 
 function currentSet(response){
@@ -58,6 +59,7 @@ function submitMenu(){
     }
 
     document.getElementById('menu').close()
+    document.addEventListener("keydown", key_event)
 }
 
 function setvariants(rotor_count = null){

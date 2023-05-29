@@ -1,5 +1,9 @@
+const key_event = function () {
+    key_pressed(event.key)
+};
+
 function listener_init() {
-    document.addEventListener("keydown", function(){key_pressed(event.key)});
+    document.addEventListener("keydown", key_event);
 
     cookie.loadCookie();
 
@@ -7,11 +11,10 @@ function listener_init() {
 
     document.getElementById('resetBtn').addEventListener('click', function(){cookie.deleteCookie(); window.location.reload()});
 
-    //document.getElementById('submitBtn').addEventListener('click', function(){submitMenu()});
+}
 
-    //document.getElementById('cancelBtn').addEventListener('click', function(){hideMenu()});
-
-
+function remove_keydown_listener(){
+    document.removeEventListener("keydown", key_event);
 }
 
 function key_pressed(key){
