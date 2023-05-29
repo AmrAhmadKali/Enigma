@@ -13,6 +13,10 @@ button {
     cursor: pointer;
 }
 
+img {
+    margin: 1%;
+}
+
 /* Container: */
 
 .flex {
@@ -30,6 +34,18 @@ button {
     border-radius: 0.5rem;
     align-items: center;
     overflow-wrap: anywhere;
+}
+
+.rotorContainer{
+    display: flex;
+    width: 65%;
+}
+
+.rotorContainer p{
+    margin: 2%;
+    padding: 1.5%;
+    background: white;
+    align-self: center;
 }
 
 .plugboardContainer{
