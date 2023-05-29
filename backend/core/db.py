@@ -85,7 +85,7 @@ class DB(BaseModule):
     async def _create_table(self):
         sql_create_table = """ CREATE TABLE IF NOT EXISTS storage
                                 (
-                                    UUID INTEGER PRIMARY KEY,
+                                    UUID TEXT PRIMARY KEY,
                                     data TEXT
                                ); """
         await self.exec(sql_create_table)

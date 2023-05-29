@@ -49,6 +49,10 @@ function on_message(msg) {
             letter_received(data.response);
             break;
         }
+        case 'uuid': {
+            cookie.setCookie(data.response);
+            break;
+        }
     }
 
 }
