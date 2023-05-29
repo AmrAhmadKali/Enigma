@@ -49,6 +49,10 @@ function on_message(msg) {
             $(`#dump`).append(msg.data);
             break;
         }
+        case 'getSetting':{
+            currentSet(data.response.rotor_order)
+            return;
+        }
         case 'encrypt': {
             letter_received(data.response);
             break;

@@ -3,9 +3,7 @@ function listener_init() {
 
     cookie.loadCookie();
 
-    document.getElementById('showMenuBtn').addEventListener('click', () => {
-        document.getElementById('menu').showModal()
-    });
+    document.getElementById('showMenuBtn').addEventListener('click', function(){showMenu()});
 
     document.getElementById('resetBtn').addEventListener('click', function(){cookie.deleteCookie(); window.location.reload()});
 }
