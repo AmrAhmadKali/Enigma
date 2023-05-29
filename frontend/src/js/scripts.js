@@ -20,7 +20,11 @@ function on_message(msg) {
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
-    // TODO: Statuscodes abfragen!
+    if (data.status !== 200){
+        console.log("Error Code "+data.response+" received")
+        return
+    }
+
     switch (req) {
         case 'help': {
             $('#help').remove();
