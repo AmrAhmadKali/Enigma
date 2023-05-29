@@ -20,6 +20,7 @@ function on_message(msg) {
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
+    console.log(data)
     if (data.status !== 200){
         console.log("Error Code "+data.response+" received")
         return

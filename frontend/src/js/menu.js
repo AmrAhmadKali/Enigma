@@ -15,7 +15,7 @@ function currentSet(response){
 
     for(let i= 1; i <= rotors.length; i++ ){
         document.getElementById('reflector').value = reflector
-        document.getElementById('r'+i).value = rotors[i-1]
+        document.getElementById('r'+i).value = rotors[rotors.length-i]
     }
 
     setvariants(rotors.length)
@@ -38,6 +38,14 @@ function submitMenu(){
 
     awaiting.push("rotors:set")
     sendRequest("rotors", "set", setup)
+
+
+    let offset_r1 =     $('input[offset_r1]').value
+    let offset_r2 =    $('input[offset_r2]').value
+    let offset_r3 =     $('input[offset_r3]').value
+
+    awaiting.push("rotors:offset")
+    sendRequest("rotors", "offset", offset_r1+offset_r2+offset_r3)
 
     document.getElementById('menu').close()
 }
