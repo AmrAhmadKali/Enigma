@@ -9,13 +9,14 @@ stages:
   - test
   - package
   - e2e
+  - container scan
   - cleanup
   - release
 
-sast:
-  stage: test
 include:
   - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
 
 unit-test:
   stage: test
@@ -70,7 +71,6 @@ e2e-test:
     - python3 -m behave E2E/
 
 
-
 remove-container:
   variables:
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
@@ -89,6 +89,7 @@ remove-container:
 
 
 release:
+  stage: release
   variables:
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   rules:
