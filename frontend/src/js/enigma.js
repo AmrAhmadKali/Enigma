@@ -51,11 +51,11 @@ function letter_received(response){
     $("[name^=l_]").css('background-color', 'white')
     $('[name="l_'+letter+'"]').css('background-color', 'yellow')
 
-    document.getElementById('current_R1').innerText = rotors[0]
-    document.getElementById('current_R2').innerText = rotors[1]
-    document.getElementById('current_R3').innerText = rotors[2]
-    document.getElementById('current_R4').innerText = rotors[3]
-    document.getElementById('current_R5').innerText = rotors[4]
+    //document.getElementById('current_R1').innerText = rotors[0]
+    //document.getElementById('current_R2').innerText = rotors[1]
+    //document.getElementById('current_R3').innerText = rotors[2]
+    //document.getElementById('current_R4').innerText = rotors[3]
+    //document.getElementById('current_R5').innerText = rotors[4]
 
     checkCharLimit()
     cookie.changeCookie()
