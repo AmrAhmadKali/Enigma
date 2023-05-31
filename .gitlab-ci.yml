@@ -10,6 +10,7 @@ stages:
   - package
   - e2e
   - cleanup
+  - release
 
 sast:
   stage: test
@@ -85,3 +86,21 @@ remove-container:
   except:
     variables:
       - $CI_COMMIT_TAG
+
+
+release:
+  variables:
+    loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
+  rules:
+    - if: $CI_COMMIT_TAG != null
+      when: manual
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - release-cli create
+      --name "enigma_front:${loc}"
+      --description "A docker image is available at ${CI_REGISTRY_IMAGE}/enigma_front:${loc}"
+      --tag-name "${CI_COMMIT_TAG}"
+    - release-cli create
+      --name "enigma_back:${loc}"
+      --description "A docker image is available at  ${CI_REGISTRY_IMAGE}/enigma_back:${loc}"
+      --tag-name "${CI_COMMIT_TAG}"
