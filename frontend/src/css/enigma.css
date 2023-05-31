@@ -110,6 +110,8 @@ img {
 .lamppanel button {
     color: black;
     background-color: white;
+    cursor: default;
+
 }
 .plugboard button {
     text-align: center;
