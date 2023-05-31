@@ -9,15 +9,28 @@ function hideMenu(){
     document.addEventListener("keydown", key_event)
 }
 
-function currentSet(response){
-    let reflector = response[1].toString()
-    let rotors = response[0]
+function currentSet(rotor_setting, offsets){
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    let reflector = rotor_setting[1].toString()
+    let rotors = rotor_setting[0]
+    let off_r1 = offsets[rotors[2]]
+    let off_r2 = offsets[rotors[1]]
+    let off_r3 = offsets[rotors[0]]
+
     document.getElementById('menu').showModal()
 
     for(let i= 1; i <= rotors.length; i++ ){
         document.getElementById('reflector').value = reflector
         document.getElementById('r'+i).value = rotors[rotors.length-i]
     }
+
+    let mapped_off_r1 = alphabet.charAt(off_r1)
+    let mapped_off_r2 = alphabet.charAt(off_r2)
+    let mapped_off_r3 = alphabet.charAt(off_r3)
+
+    document.getElementById('offset_r1').value = mapped_off_r1
+    document.getElementById('offset_r2').value = mapped_off_r2
+    document.getElementById('offset_r3').value = mapped_off_r3
 
     setvariants(rotors.length)
 }

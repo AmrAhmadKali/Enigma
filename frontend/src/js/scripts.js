@@ -51,7 +51,7 @@ function on_message(msg) {
             break;
         }
         case 'getSetting':{
-            currentSet(data.response.rotor_order)
+            currentSet(data.response.rotor_order, data.response.rotors)
             return;
         }
         case 'encrypt': {
@@ -61,6 +61,14 @@ function on_message(msg) {
         case 'uuid': {
             cookie.setCookie(data.response);
             break;
+        }
+        case 'rotors:set': {
+            alert('Rotors successfully set')
+            break
+        }
+        case 'rotors:offset': {
+            alert('Offset successfully set')
+            break
         }
     }
 
