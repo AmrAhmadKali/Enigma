@@ -1,20 +1,14 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
   - test
   - package
   - e2e
-  - container_scan
+  - container_scanning
   - cleanup
-  - release
+
 
 include:
   - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
 
 unit-test:
   stage: test
@@ -68,11 +62,6 @@ e2e-test:
     - pip3 install webdriver_manager
     - python3 -m behave E2E/
 
-container_scanning:
-  stage: container_scanning
-    - template: Security/Container-Scanning.gitlab-ci.yml
-
-
 remove-container:
   variables:
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
@@ -86,4 +75,5 @@ remove-container:
     - reg rm ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
     - reg rm ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
   except:
-    - main
+    variables:
+      - $CI_COMMIT_TAG
