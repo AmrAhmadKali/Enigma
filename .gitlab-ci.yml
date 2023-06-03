@@ -58,14 +58,14 @@ containerize-and-tag:
   before_script:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
   script:
-    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_back:daily backend/
-    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_front:daily frontend/
+    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_back:latest backend/
+    - docker build -t ${CI_REGISTRY_IMAGE}/enigma_front:latest frontend/
 
-    - docker push ${CI_REGISTRY_IMAGE}/enigma_back:daily
-    - docker push ${CI_REGISTRY_IMAGE}/enigma_front:daily
+    - docker push ${CI_REGISTRY_IMAGE}/enigma_back:latest
+    - docker push ${CI_REGISTRY_IMAGE}/enigma_front:latest
   after_script:
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:daily
-    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:daily
+    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_back:latest
+    - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:latest
 
 e2e-test:
   image: docker:20.10.15-dind
@@ -91,7 +91,7 @@ e2e-test-daily:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
-    loc: "daily"
+    loc: "latest"
   services:
     - name: ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
       alias: frontend
@@ -131,7 +131,7 @@ scan_back-daily:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     GIT_STRATEGY: none
-    loc: "daily"
+    loc: "latest"
     CS_IMAGE: ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
   allow_failure: true
   artifacts:
@@ -169,7 +169,7 @@ scan_front-daily:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
     GIT_STRATEGY: none
-    loc: "daily"
+    loc: "latest"
     CS_IMAGE: ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
   allow_failure: true
   artifacts:
