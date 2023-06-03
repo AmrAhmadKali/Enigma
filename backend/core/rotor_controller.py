@@ -25,7 +25,7 @@ class RotorController(BaseModule):
 
     @command(command="rotors",
              sub_command='set',
-             params=[Reflector('Reflector'), Multiple(Rotor('Rotors'), 3, 3)],
+             params=[Reflector('Reflector'), Multiple(Rotor('Rotors'), 1, 3)],
              description="Change the full Rotor/Reflector Setup, from left to right.")
     async def rotors_set_all_cmd(self, _: WebSocketServerProtocol, storage: DictObject, reflector: str,
                                  rotors: list[str]) -> Tuple[int, str]:
@@ -100,8 +100,8 @@ class RotorController(BaseModule):
                                     storage: DictObject,
                                     offset: [str]) -> \
             Tuple[int, str]:
-        if len(offset) != 3:
-            return 400, 'Please provide an offset with the length 3'
+        if len(offset) != len(storage.rotor_order[0]):
+            return 400, f'Please provide an offset with the length {len(storage.rotor_order[0])}'
         offset = offset.upper()
         for i, rotor in enumerate(storage.rotor_order[0]):
             storage.rotors[rotor] = self.rotor_service.convert_to_int(offset[i])[0]
@@ -129,11 +129,11 @@ class RotorController(BaseModule):
              params=[Any('ringoffset', allowed_chars='[a-zA-Z]')],
              description="Set the Ringoffset of all Rotors. ID 0 comes after reflector, 1 middle, 2 right. Example param: 'ABC'")
     async def rotors_ringoffset_all_cmd(self, _: WebSocketServerProtocol,
-                                    storage: DictObject,
-                                    offset: [str]) -> \
+                                        storage: DictObject,
+                                        offset: [str]) -> \
             Tuple[int, str]:
-        if len(offset) != 3:
-            return 400, 'Please provide an offset with the length 3'
+        if len(offset) != len(storage.rotor_order[0]):
+            return 400, f'Please provide an offset with the length {len(storage.rotor_order[0])}'
         offset = offset.upper()
         for i, rotor in enumerate(storage.rotor_order[0]):
             storage.rotorkeyring[rotor] = self.rotor_service.convert_to_int(offset[i])[0]

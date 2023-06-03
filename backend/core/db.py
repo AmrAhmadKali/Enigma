@@ -36,16 +36,9 @@ class DB(BaseModule):
 
     async def _exec_wrapper(self, sql: str, params: List[Any], callback):
         cur: Cursor = await self._conn.cursor()
-        string: str = sql.upper()
         try:
-            if string.__contains__("UPDATE ") or string.__contains__("INSERT "):
-                await cur.execute("BEGIN;")
             await cur.execute(sql, params)
-            if string.__contains__("UPDATE ") or string.__contains__("INSERT "):
-                await cur.execute("COMMIT;")
         except Exception as e:
-            if string.__contains__("UPDATE ") or string.__contains__("INSERT "):
-                await cur.execute("ROLLBACK;")
             raise Exception(f"SQL Error: '{str(e)}' for '{sql}' "
                             f"[{', '.join(map(lambda x: str(x), params))}]") from e
 
@@ -85,7 +78,8 @@ class DB(BaseModule):
     async def _create_table(self):
         sql_create_table = """ CREATE TABLE IF NOT EXISTS storage
                                 (
-                                    UUID TEXT PRIMARY KEY,
-                                    data TEXT
+                                    UUID INT NOT NULL UNIQUE,
+                                    data TEXT,
+                                    timeout INT NOT NULL
                                ); """
         await self.exec(sql_create_table)

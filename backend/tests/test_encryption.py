@@ -8,38 +8,35 @@ from meta.dict_object import DictObject
 
 
 class EncryptionTest(unittest.IsolatedAsyncioTestCase):
-    r = RotorService()
-    rc = RotorController()
-    pg = Plugboard()
-    enc = EncryptionController()
-    str = DictObject()
-
-    async def test_2_encrypt(self):
+    async def asyncSetUp(self) -> None:
+        self.r = RotorService()
+        self.rc = RotorController()
+        self.pg = Plugboard()
+        self.enc = EncryptionController()
+        self.str = DictObject()
         self.r.start()
         self.r.pre_start()
+
+    async def test_2_encrypt(self):
         await self.r.setup(self.str)
         self.enc.rotors = self.r
         self.enc.plugboard = self.pg
         self.str.plugboard = {'S': 'W', 'W': 'S'}
         out = await self.enc.decrypt_cmd(None, self.str, 'ABC DEF')
         # SKP
-        self.assertEqual(out, (200, 'WKP TTU'))
+        self.assertEqual(out, (200, ['WKP TTU', 'AAG']))
 
     async def test_3_encrypt(self):
-        self.r.start()
-        self.r.pre_start()
         self.rc.rotor_service = self.r
         await self.r.setup(self.str)
         self.enc.rotors = self.r
         self.enc.plugboard = self.pg
-        # self.str.plugboard = {'S': 'W', 'W': 'S'}
+        self.str.plugboard = {'S': 'W', 'W': 'S'}
         out = await self.enc.decrypt_cmd(None, self.str, 'ABC DEF')
         # SKP
-        self.assertEqual(out, (200, 'WKP TTU'))
+        self.assertEqual(out, (200, ['WKP TTU', 'AAG']))
 
     async def test_4_encrypt(self):
-        self.r.start()
-        self.r.pre_start()
         self.rc.rotor_service = self.r
         self.str = DictObject()
         await self.r.setup(self.str)
@@ -54,5 +51,6 @@ class EncryptionTest(unittest.IsolatedAsyncioTestCase):
         out = await self.enc.decrypt_cmd(None, self.str, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                                                          'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                                                          'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-        self.assertEqual(out, (200, 'FTZMGISXIPJWGDNJJCOQTYRIGDMXFIESRWZGTOIUIEKKDCSHTPYOEPVXNHVRWWESFRUXDGWOZDM'
-                                    'NKIZWNCZDUCOBLTUYHDZGOVBUYPKOJWBOWSEEMTZFWYGKODTBZDQRCZCIFDIDXCQZOOKVIIOML'))
+        self.assertEqual(out, (200, ['FTZMGISXIPJWGDNJJCOQTYRIGDMXFIESRWZGTOIUIEKKDCSHTPYOEPVXNHVRWWESFRUXDGWOZDM'
+                                     'NKIZWNCZDUCOBLTUYHDZGOVBUYPKOJWBOWSEEMTZFWYGKODTBZDQRCZCIFDIDXCQZOOKVIIOML',
+                                     'BHT']))

@@ -1,4 +1,5 @@
 import json
+import typing
 import unittest
 from functools import partial
 
@@ -15,14 +16,17 @@ from meta.registry import Registry
 
 
 class InitTest(unittest.IsolatedAsyncioTestCase):
-    reg = Registry()
 
-    async def test_0_init(self):
+    async def asyncSetUp(self) -> None:
+        # First of all, we need to check if the code would even run, prior to testing it..
+        typing.TYPE_CHECKING = True
+        self.reg = Registry()
         HelpController()
         DB()
         EncryptionController()
         RotorService()
         RotorController()
+        CommandService()
         app: Server = self.reg.get_instance("app")
         self.reg.load_instances(["core"])
         app.init(["core"], self.reg)
@@ -30,6 +34,8 @@ class InitTest(unittest.IsolatedAsyncioTestCase):
         self.reg.inject_all()
         self.reg.pre_start_all()
         self.reg.start_all()
+
+    async def test_0_init(self):
         d = DictObject()
         await self.reg.setup_storage(d)
         self.assertNotEqual(d, {})

@@ -24,9 +24,9 @@ function currentSet(rotor_setting, offsets){
         document.getElementById('r'+i).value = rotors[rotors.length-i]
     }
 
-    let mapped_off_r1 = alphabet.charAt(off_r1)
-    let mapped_off_r2 = alphabet.charAt(off_r2)
-    let mapped_off_r3 = alphabet.charAt(off_r3)
+    let mapped_off_r1 = alphabet.charAt(off_r1%26)
+    let mapped_off_r2 = alphabet.charAt(off_r2%26)
+    let mapped_off_r3 = alphabet.charAt(off_r3%26)
 
     document.getElementById('offset_r1').value = mapped_off_r1
     document.getElementById('offset_r2').value = mapped_off_r2
@@ -59,9 +59,9 @@ function submitMenu(){
     sendRequest("rotors", "set", setup)
 
 
-    let offset_r1 =     $('input[id=offset_r1]').val()
-    let offset_r2 =    $('input[id=offset_r2]').val()
-    let offset_r3 =     $('input[id=offset_r3]').val()
+    let offset_r1 = $('input[id=offset_r1]').val()
+    let offset_r2 = $('input[id=offset_r2]').val()
+    let offset_r3 = $('input[id=offset_r3]').val()
 
     if(document.getElementById('menu_row3').hidden === true){
         awaiting.push("rotors:offset")
@@ -83,16 +83,17 @@ function setvariants(rotor_count = null){
         document.getElementById("r1").value = "default"
         document.getElementById("r2").value = "default"
         document.getElementById("r3").value = "default"
-
     }
 
     switch(variant){
         case "B":{
-            $('tr[id="menu_row3"]').prop('hidden', true)
+            //$('tr[id="menu_row3"]').prop('hidden', true)
 
             $('[value="Reflector A"]').prop('disabled', true)
-            $('[value="Reflector B"]').prop('disabled', false)
+            $('[value="Reflector B"]').prop('disabled', true)
             $('[value="Reflector C"]').prop('disabled', true)
+            $('[value="Reflector UKW"]').prop('disabled', false)
+
 
             $('option[value^="Enigma B-"]').prop('disabled', false)
             $('option[value^="Enigma I-"]').prop('disabled', true)
@@ -101,11 +102,13 @@ function setvariants(rotor_count = null){
         }
 
         case "1":{
-            $('tr[id="menu_row3"]').prop('hidden', false)
+            //$('tr[id="menu_row3"]').prop('hidden', false)
 
             $('[value="Reflector A"]').prop('disabled', false)
             $('[value="Reflector B"]').prop('disabled', false)
             $('[value="Reflector C"]').prop('disabled', false)
+            $('[value="Reflector UKW"]').prop('disabled', true)
+
 
             $('option[value^="Enigma B-"]').prop('disabled', true)
             $('option[value^="Enigma I-"]').prop('disabled', false)
@@ -114,11 +117,13 @@ function setvariants(rotor_count = null){
         }
 
         case "M3":{
-            $('tr[id="menu_row3"]').prop('hidden', false)
+           //$('tr[id="menu_row3"]').prop('hidden', false)
 
             $('[value="Reflector A"]').prop('disabled', true)
             $('[value="Reflector B"]').prop('disabled', false)
             $('[value="Reflector C"]').prop('disabled', false)
+            $('[value="Reflector UKW"]').prop('disabled', true)
+
 
             $('option[value^="Enigma B-"]').prop('disabled', true)
             $('option[value^="Enigma I-"]').prop('disabled', true)
@@ -127,7 +132,7 @@ function setvariants(rotor_count = null){
         }
 
         case "All":{
-            $('tr[id="menu_row3"]').prop('hidden', false)
+            //$('tr[id="menu_row3"]').prop('hidden', false)
             $('[value^=Reflector]').prop('disabled', false)
             $('option[value^=Enigma]').prop('disabled', false)
             break
