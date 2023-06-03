@@ -1,6 +1,6 @@
 Feature: Option Menu
 
-  Scenario Outline: Test Enigma I, Reflector A, Rotors I-R1, IR-2, IR-3
+  Scenario Outline: Test Enigma variants with the different Rotors and Reflectors
    Given The Enigma Website is opened
     When I click setting symbol
     And I choose the variant <variant>
