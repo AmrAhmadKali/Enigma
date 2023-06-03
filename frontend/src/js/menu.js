@@ -24,9 +24,9 @@ function currentSet(rotor_setting, offsets){
         document.getElementById('r'+i).value = rotors[rotors.length-i]
     }
 
-    let mapped_off_r1 = alphabet.charAt(off_r1)
-    let mapped_off_r2 = alphabet.charAt(off_r2)
-    let mapped_off_r3 = alphabet.charAt(off_r3)
+    let mapped_off_r1 = alphabet.charAt(off_r1%26)
+    let mapped_off_r2 = alphabet.charAt(off_r2%26)
+    let mapped_off_r3 = alphabet.charAt(off_r3%26)
 
     document.getElementById('offset_r1').value = mapped_off_r1
     document.getElementById('offset_r2').value = mapped_off_r2
