@@ -5,7 +5,7 @@ const key_event = function () {
 function listener_init() {
     document.addEventListener("keydown", key_event);
 
-    cookie.loadCookie();
+    // cookie.loadCookie();
 
     document.getElementById('showMenuBtn').addEventListener('click', function(){showMenu()});
 
@@ -42,37 +42,37 @@ function space_pressed(){
     checkCharLimit();
 }
 
-function letter_received(response){
+function letter_received(response) {
     let letter = response[0]
     let rotors = response[1]
     console.log("Encrypted Letter Received: " + letter);
     let outputContainer = document.querySelector(".outputContainer");
     outputContainer.innerHTML += letter;
     $("[name^=l_]").css('background-color', 'white')
-    $('[name="l_'+letter+'"]').css('background-color', 'yellow')
+    $('[name="l_' + letter + '"]').css('background-color', 'yellow')
 
-    //document.getElementById('current_R1').innerText = rotors[0]
-    //document.getElementById('current_R2').innerText = rotors[1]
-    //document.getElementById('current_R3').innerText = rotors[2]
-    //document.getElementById('current_R4').innerText = rotors[3]
-    //document.getElementById('current_R5').innerText = rotors[4]
+    document.getElementById('current_R1').innerText = rotors[0]
+    document.getElementById('current_R2').innerText = rotors[1]
+    document.getElementById('current_R3').innerText = rotors[2]
 
     checkCharLimit()
-    cookie.changeCookie()
+    // cookie.changeCookie()
 }
 
 
-function checkCharLimit(){
+function checkCharLimit() {
     let inputContainer = document.querySelector(".inputContainer");
     let outputContainer = document.querySelector(".outputContainer");
     let inputLength = inputContainer.innerText.length
     let outputLength = outputContainer.innerText.length
 
-    if(inputLength !== outputLength){
-        throw "Input and Output Container out of sync"
-    }
-    if (inputLength > 140){
-        inputContainer.innerHTML = inputContainer.innerHTML.slice(1, inputContainer.innerHTML.length)
-        outputContainer.innerHTML = outputContainer.innerHTML.slice(1, outputContainer.innerHTML.length)
+    // if(inputLength !== outputLength){
+    //     throw "Input and Output Container out of sync"
+    // }
+    if (inputLength > 140) {
+        let input = inputContainer.innerHTML
+        inputContainer.innerHTML = input.slice(input.length - 140, input.length)
+        let output = outputContainer.innerHTML
+        outputContainer.innerHTML = output.slice(output.length - 140, output.length)
     }
 }

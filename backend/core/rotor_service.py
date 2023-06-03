@@ -13,6 +13,7 @@ class RotorService(BaseModule):
             'Reflector A': ["EJMZALYXVBWFCRQUONTSPIKHGD"],
             'Reflector B': ["YRUHQSLDPXNGOKMIEBFZCWVJAT"],
             'Reflector C': ["FVPJIAOYEDRZXWGCTKUQSBNMHL"],
+            'Reflector UKW': ["LDGBNCPSKJAVFZHXUIWRMQOTEY"],
             # Enigma I
             'Enigma I-R1': ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", self.convert_to_int("Q"), self.convert_to_int("Y")],
             'Enigma I-R2': ["AJDKSIRUXBLHWTMCQGZNPYFVOE", self.convert_to_int("E"), self.convert_to_int("M")],
@@ -20,9 +21,9 @@ class RotorService(BaseModule):
             'Enigma I-R4': ["ESOVPZJAYQUIRHXLNFTGKDCMWB", self.convert_to_int("J"), self.convert_to_int("R")],
             'Enigma I-R5': ["VZBRGITYUPSDNHLXAWMJQOFECK", self.convert_to_int("Z"), self.convert_to_int("H")],
             # Enigma B
-            'Enigma B-R1': ["DMTWSILRUYQNKFEJCAZBPGXOHV", self.convert_to_int("Q"), self.convert_to_int("")],
-            'Enigma B-R2': ["HQZGPJTMOBLNCIFDYAWVEUSRKX", self.convert_to_int("E"), self.convert_to_int("")],
-            'Enigma B-R3': ["UQNTLSZFMREHDPLKIBVYGJCWOA", self.convert_to_int("V"), self.convert_to_int("")],
+            'Enigma B-R1': ["PSBGXQJDHOUCFRTEZVWINLYMKA", self.convert_to_int("G"), self.convert_to_int("A")],
+            'Enigma B-R2': ["CHNSYADMOTRZXBIGWEKQUPFLVJ", self.convert_to_int("G"), self.convert_to_int("A")],
+            'Enigma B-R3': ["WVQIAXRJBZSPCFYUNTHDOMEKGL", self.convert_to_int("G"), self.convert_to_int("A")],
             # Enigma M3
             'Enigma M3-R1': ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", self.convert_to_int("Q"), self.convert_to_int("Y")],
             'Enigma M3-R2': ["AJDKSIRUXBLHWTMCQGZNPYFVOE", self.convert_to_int("E"), self.convert_to_int("M")],
@@ -56,6 +57,8 @@ class RotorService(BaseModule):
             storage.rotorkeyring[x] = 0
 
     def _rotate(self, storage: DictObject, rotor: str, n: int = 1) -> None:
+        if not rotor:
+            return
         """
         Rotate a specific rotor 'rotor' in 'storage' by 'n' letters forwards.
         :param storage: Storage space in which we can find the current rotor.
@@ -69,10 +72,9 @@ class RotorService(BaseModule):
         perform natural rotor rotation
         :param storage: Storage space in which we can find the used rotors & offsets
         """
-
-        r1 = storage.rotor_order[0][2]
-        r2 = storage.rotor_order[0][1]
-        r3 = storage.rotor_order[0][0]
+        r1 = storage.rotor_order[0][2] if len(storage.rotor_order[0]) == 3 else None
+        r2 = storage.rotor_order[0][1] if len(storage.rotor_order[0]) >= 2 else None
+        r3 = storage.rotor_order[0][0] if len(storage.rotor_order[0]) >= 1 else None
 
         # notch might be a list!
         if (storage.rotors[r2] % 26) in self.rotors[r2][1] \
@@ -80,15 +82,18 @@ class RotorService(BaseModule):
             self._rotate(storage, r1)
             self._rotate(storage, r2)
             self._rotate(storage, r3)
-        elif (storage.rotors[r2] % 26) in self.rotors[r2][1]:
+            return
+        if (storage.rotors[r2] % 26) in self.rotors[r2][1]:
             self._rotate(storage, r1)
             self._rotate(storage, r2)
             self._rotate(storage, r3)
-        elif (storage.rotors[r3] % 26) in self.rotors[r3][1]:
+            return
+
+        if (storage.rotors[r3] % 26) in self.rotors[r3][1]:
             self._rotate(storage, r2)
             self._rotate(storage, r3)
-        else:
-            self._rotate(storage, r3)
+            return
+        self._rotate(storage, r3)
 
     def encrypt(self, storage: DictObject, key: str) -> str:
         """
@@ -102,7 +107,6 @@ class RotorService(BaseModule):
         for x in storage.rotor_order[0]:
             key = self.forward(x, key, storage.rotors[x] - storage.rotorkeyring[x])
         key = self.forward(storage.rotor_order[1], key, 0)
-
         for x in reversed(storage.rotor_order[0]):
             key = self.backward(x, key, storage.rotors[x] - storage.rotorkeyring[x])
         return self.convert_to_str((26 + key) % 26)

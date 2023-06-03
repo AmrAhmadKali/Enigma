@@ -1,3 +1,4 @@
+import asyncio
 import typing
 from typing import Tuple
 
@@ -40,6 +41,7 @@ class EncryptionController(BaseModule):
                 tmp += self.plugboard.encrypt(storage, k)
             out = tmp
             tmp = ""
+            await asyncio.sleep(0)
         if self.rotors:
             for k in out:
                 if k == " ":
@@ -48,6 +50,7 @@ class EncryptionController(BaseModule):
                 tmp += self.rotors.encrypt(storage, k)
             out = tmp
             tmp = ""
+            await asyncio.sleep(0)
         if self.plugboard:
             for k in out:
                 if k == " ":
@@ -55,8 +58,8 @@ class EncryptionController(BaseModule):
                     continue
                 tmp += self.plugboard.encrypt(storage, k)
             out = tmp
-
-        return 200, out
+        key = "".join(self.rotors.convert_to_str(x % 26) for x in reversed(storage.rotors.values()))
+        return 200, [out, key]
 
     @command("decrypt", params=[Any('text_to_decrypt', allowed_chars="[a-zA-Z ]")],
              description="Decrypt a given message")

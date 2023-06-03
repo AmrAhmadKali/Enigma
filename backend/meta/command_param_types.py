@@ -1,7 +1,7 @@
 # DO NOT TOUCH UNLESS YOU'RE 100% SURE WHAT YOU'RE DOING!
 import abc
 import re
-from typing import List
+from typing import List, Union
 
 
 class CommandParam(abc.ABC):
@@ -19,7 +19,7 @@ class CommandParam(abc.ABC):
         :return:
         """
 
-    def process_matches(self, params: List[str]) -> None | str:
+    def process_matches(self, params: List[str]) -> Union[None, str]:
         """
 
         :param params: List of remaining parameters
@@ -87,6 +87,38 @@ class Int(CommandParam):
             return None
         else:
             return int(val.lstrip())
+
+
+class Hex(CommandParam):
+    """
+    This is a Hex Parameter type for usage by Command Handlers.
+    It will only match, if a decimal number is being provided.
+    """
+
+    def __init__(self, name, is_optional=False):
+        self.name = name
+        self.is_optional = is_optional
+        if " " in name:
+            raise Exception("One or more spaces found in command param '%s'." % name)
+
+    def get_regex(self):
+        regex = r"(\s+(0x)?[0-9a-fA-F]+)"
+        return regex + ("?" if self.is_optional else "")
+
+    def get_name(self):
+        if self.is_optional:
+            return "[%s]" % self.name
+        else:
+            return "%s" % self.name
+
+    def process_matches(self, params):
+        val = params.pop(0)
+        if type(val) == int:
+            return val
+        if val is None:
+            return None
+        else:
+            return int(val.lstrip(), 16)
 
 
 class Any(CommandParam):
@@ -164,7 +196,7 @@ class Reflector(CommandParam):
             raise Exception("One or more spaces found in command param '%s'." % name)
 
     def get_regex(self):
-        regex = r"(\s+Reflector [ABC])"
+        regex = r"(\s+Reflector [A-Z]+?)"
         return regex + ("?" if self.is_optional else "")
 
     def get_name(self):

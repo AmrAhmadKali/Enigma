@@ -45,9 +45,9 @@ class Server(WebSocketServer):
             async for msg in websocket:
                 message = json.loads(msg)
                 print(f'Received: {msg} via {path} from {websocket.id}')
-                await self.cmd_service.process_command(websocket, DictObject(message), data)
-        except ConnectionClosedError:
-            pass
+                asyncio.create_task(self.cmd_service.process_command(websocket, DictObject(message), data))
+        except ConnectionClosedError as e:
+            return e
         except NameError as e:
             await self.cmd_service.reply(websocket, (500, e.args))
         print(f'Client disconnected: {websocket.id}')

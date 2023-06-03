@@ -38,6 +38,7 @@ img {
     border-radius: 0.5rem;
     align-items: center;
     overflow-wrap: anywhere;
+    overflow-y: auto;
 }
 
 .rotorContainer{
