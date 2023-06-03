@@ -129,7 +129,8 @@ def step_impl(context):
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
-    ActionChains.move_to_element(dropdown)
+    action = ActionChains(context.driver)
+    action.move_to_element(dropdown).perform()
     dropdown.click()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
