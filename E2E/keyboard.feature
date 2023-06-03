@@ -18,3 +18,4 @@ Feature: Keyboard
     And I press the G key on the virtual keyboard
     Then I see only 140 characters in the input box
     And I see only 140 characters in the output box
+

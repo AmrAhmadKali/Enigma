@@ -62,14 +62,14 @@ function on_message(msg) {
             cookie.setCookie(data.response);
             break;
         }
-        case 'rotors:set': {
-            alert('Rotors successfully set')
-            break
-        }
-        case 'rotors:offset': {
-            alert('Offset successfully set')
-            break
-        }
+        //case 'rotors:set': {
+          //  alert('Rotors successfully set')
+           // break
+        //}
+        //case 'rotors:offset': {
+           // alert('Offset successfully set')
+            //break
+        //}
     }
 
 }

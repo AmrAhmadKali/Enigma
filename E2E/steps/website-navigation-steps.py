@@ -10,7 +10,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException
 
 
-# TODO: context.driver.close() (oder ähnlich) am Ende des Tests, damit Firefox Prozess geschlossen wird
 # TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
 #  Derzeit Probleme da Steps nicht in richtiger Reihenfolge ausgeführt werden
 
@@ -54,6 +53,7 @@ def step_impl(context):
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
+    context.driver.implicitly_wait(0.5)
     if box == 'input':
         element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert element == letter, f'Input Container does not contain {letter}, but {element}'
@@ -118,3 +118,67 @@ def step_impl(context, lamp):
     background_color = element.value_of_css_property("background-color")
     YELLOW = 'rgb(255, 255, 0)'
     assert background_color == YELLOW, f"The lamp {lamp} didn't light up"
+
+
+@when('I click setting symbol')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
+    element.click()
+
+
+@when('I choose the variant {variant}')
+def step_impl(context, variant):
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
+    dropdown.click()
+
+    variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
+    variant_choice.click()
+
+
+@when('I choose the Reflector {reflector}')
+def step_impl(context, reflector):
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#reflector')
+    dropdown.click()
+
+    reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
+    reflector_choice.click()
+
+
+@when('I choose the Rotor 1 {rotor1}')
+def step_impl(context, rotor1):
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#r1')
+    dropdown.click()
+
+    rotor_choice = context.driver.find_element(By.CSS_SELECTOR, f'#r1 option[value="{rotor1}"')
+    rotor_choice.click()
+
+
+@when('I choose the Rotor 2 {rotor2}')
+def step_impl(context, rotor2):
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#r2')
+    dropdown.click()
+
+    rotor_choice = context.driver.find_element(By.CSS_SELECTOR, f'#r2 option[value="{rotor2}"]')
+    rotor_choice.click()
+
+
+@when('I choose the Rotor 3 {rotor3}')
+def step_impl(context, rotor3):
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#r3')
+    dropdown.click()
+
+    rotor_choice = context.driver.find_element(By.CSS_SELECTOR, f'#r3 option[value="{rotor3}"')
+    rotor_choice.click()
+
+
+@when('I click submit')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[type="submit"][id="submitBtn"]')
+    element.click()
+
+
+@then('The {encrypted_letter} letter should be displayed in the output box')
+def step_impl(context, encrypted_letter):
+    element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
+    print('Assert is about to be done')
+    assert element == encrypted_letter, f'Output Container does not contain {encrypted_letter}, but {element}'
