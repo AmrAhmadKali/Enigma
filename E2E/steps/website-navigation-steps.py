@@ -8,6 +8,9 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 
 # TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
@@ -128,10 +131,13 @@ def step_impl(context):
 
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
+    wait = WebDriverWait(context.driver, 1)
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
+    dropdown = wait.until(EC.element_to_be_clickable(dropdown))
     action = ActionChains(context.driver)
-    action.move_to_element(dropdown).perform()
-    dropdown.click()
+    action.move_to_element(dropdown)
+    action.click()
+    action.perform()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
