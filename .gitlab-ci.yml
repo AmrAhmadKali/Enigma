@@ -5,11 +5,15 @@ stages:
   - container_scanning
   - cleanup
 include:
-  - template: Security/SAST.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
 variables:
   CS_ANALYZER_IMAGE: "$CI_TEMPLATE_REGISTRY_HOST/security-products/container-scanning:6"
   CS_SCHEMA_MODEL: 15
-
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - when: always
 
 unit-test:
   stage: test
@@ -33,7 +37,9 @@ containerize:
   stage: package
   image: docker:20.10.15-dind
   rules:
-    - if: $CI_PIPELINE_SOURCE != "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: on_success
   variables:
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   before_script:
@@ -53,8 +59,6 @@ containerize-and-tag:
   image: docker:20.10.15-dind
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
-  #  variables:
-  #    loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   before_script:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
   script:
@@ -70,7 +74,9 @@ containerize-and-tag:
 e2e-test:
   image: docker:20.10.15-dind
   rules:
-    - if: $CI_PIPELINE_SOURCE != "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: on_success
   variables:
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
   services:
@@ -95,7 +101,6 @@ e2e-test-daily:
   services:
     - name: ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
       alias: frontend
-
     - name: ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
       alias: backend
   stage: e2e
@@ -109,7 +114,9 @@ scan_back:
   image: "$CS_ANALYZER_IMAGE$CS_IMAGE_SUFFIX"
   stage: container_scanning
   rules:
-    - if: $CI_PIPELINE_SOURCE != "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: on_success
   variables:
     GIT_STRATEGY: none
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
@@ -133,7 +140,6 @@ scan_back-daily:
     GIT_STRATEGY: none
     loc: "latest"
     CS_IMAGE: ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
-  allow_failure: true
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
@@ -147,7 +153,9 @@ scan_front:
   image: "$CS_ANALYZER_IMAGE$CS_IMAGE_SUFFIX"
   stage: container_scanning
   rules:
-    - if: $CI_PIPELINE_SOURCE != "schedule"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: on_success
   variables:
     GIT_STRATEGY: none
     loc: "${CI_COMMIT_BRANCH}${CI_COMMIT_TAG}"
@@ -185,6 +193,12 @@ remove-container:
   variables:
     loc: "${CI_COMMIT_BRANCH}"
   stage: cleanup
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: on_success
   image: docker:20.10.15-dind
   before_script:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
@@ -193,7 +207,3 @@ remove-container:
     - chmod +x /usr/bin/reg
     - reg rm ${CI_REGISTRY_IMAGE}/enigma_back:${loc}
     - reg rm ${CI_REGISTRY_IMAGE}/enigma_front:${loc}
-  except:
-    variables:
-      - $CI_COMMIT_TAG
-      - $CI_PIPELINE_SOURCE == "schedule"
