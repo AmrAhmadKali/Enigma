@@ -102,7 +102,7 @@ class RotorController(BaseModule):
             Tuple[int, str]:
         if len(offset) != len(storage.rotor_order[0]):
             return 400, f'Please provide an offset with the length {len(storage.rotor_order[0])}'
-        offset = offset.upper()
+        offset = [x for x in reversed(offset.upper())]
         for i, rotor in enumerate(storage.rotor_order[0]):
             storage.rotors[rotor] = self.rotor_service.convert_to_int(offset[i])[0]
         return 200, "Offset Adjusted."
@@ -134,7 +134,7 @@ class RotorController(BaseModule):
             Tuple[int, str]:
         if len(offset) != len(storage.rotor_order[0]):
             return 400, f'Please provide an offset with the length {len(storage.rotor_order[0])}'
-        offset = offset.upper()
+        offset = [x for x in reversed(offset.upper())]
         for i, rotor in enumerate(storage.rotor_order[0]):
             storage.rotorkeyring[rotor] = self.rotor_service.convert_to_int(offset[i])[0]
         return 200, "Ringoffset Adjusted."

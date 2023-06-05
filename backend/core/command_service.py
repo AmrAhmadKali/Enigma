@@ -103,7 +103,7 @@ class CommandService(BaseModule):
         storage.usages += 1
         await self.reply(client, resp)
 
-    def get_command_key(self, command: str, sub_command: str | None) -> str:
+    def get_command_key(self, command: str, sub_command: str) -> str:
         """
         Merge main command and sub command for searching in the command map
         :param command: Main command

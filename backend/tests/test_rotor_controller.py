@@ -102,4 +102,4 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
 
         code, resp = await self.rc.rotors_offset_all_cmd(None, storage, 'BCD')
         self.assertEqual(code, 200)
-        self.assertEqual(storage.rotors, {'Enigma I-R2': 1, 'Enigma I-R3': 2, 'Enigma I-R1': 3})
+        self.assertEqual(storage.rotors, {'Enigma I-R2': 3, 'Enigma I-R3': 2, 'Enigma I-R1': 1})

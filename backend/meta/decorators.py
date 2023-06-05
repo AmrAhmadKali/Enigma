@@ -35,7 +35,7 @@ def instance(cls, name=None, override=False) -> callable:
 
 @parameterized
 def command(handler: callable, command: str, params: List[CommandParam], description: str,
-            sub_command: str | None = None) -> callable:
+            sub_command: str = None) -> callable:
     """
     Used for registering new commands on the backend.
     :param handler: Command Handler this annotation belongs to

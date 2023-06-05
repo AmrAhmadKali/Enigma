@@ -111,7 +111,7 @@ class Registry:
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     @classmethod
-    def load_instances(cls, parent_dirs: List[str | Path]) -> None:
+    def load_instances(cls, parent_dirs: List[str]) -> None:
         """
         :param parent_dirs: List of Directories to check for modules
         """
