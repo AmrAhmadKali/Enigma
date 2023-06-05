@@ -12,7 +12,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
 # TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
 #  Derzeit Probleme da Steps nicht in richtiger Reihenfolge ausgeführt werden
 
@@ -21,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = True  # To change
+    options.headless = False  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
@@ -67,6 +66,13 @@ def step_impl(context, letter, box):
         assert 0, "Wrong box argument given"
 
 
+@then('The plugboard box should be empty')
+def step_impl(context):
+    context.driver.implicitly_wait(0.5)
+    text = context.driver.find_element(By.CSS_SELECTOR, '.plugboardContainer').text
+    assert text == '', 'Plugboard Container should be empty, but is not'
+
+
 @when('I press the {letter} key {limit} times on the keyboard')
 def step_impl(context, letter, limit):
     key = context.driver.find_element(By.NAME, f"k_{letter}")
@@ -99,7 +105,7 @@ def step_impl(context, keys):
 @when('I press on the specified keys on the plugboard')
 def step_impl(context):
     plugboard_limit = 10
-    for i in range(plugboard_limit*2):
+    for i in range(plugboard_limit * 2):
         button = context.driver.find_element(By.NAME, f"p_{context.values[i]}")
         button.click()
 

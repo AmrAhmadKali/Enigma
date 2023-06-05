@@ -33,6 +33,4 @@ Feature: Plugboard
     When I press the U key on the plugboard
     And I press the N key on the plugboard
     And I press the U key on the plugboard
-    Then an alert is shown
-
-
+    Then The plugboard box should be empty
