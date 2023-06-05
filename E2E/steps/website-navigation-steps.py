@@ -68,8 +68,8 @@ def step_impl(context, letter, box):
 @then('The plugboard box should be empty')
 def step_impl(context):
     text = context.driver.find_element(By.CSS_SELECTOR, '.plugboardContainer').text
-    WebDriverWait(context.driver, timeout=20).until(
-        EC.text_to_be_present_in_element((By.CLASS_NAME, "plugboardContainer"), ''))
+    # WebDriverWait(context.driver, timeout=20).until(
+    #     EC.text_to_be_present_in_element((By.CLASS_NAME, "plugboardContainer"), ''))
     assert text == '', 'Plugboard Container should be empty, but is not'
 
 
