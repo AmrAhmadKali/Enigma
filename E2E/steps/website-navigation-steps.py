@@ -23,7 +23,6 @@ def step_impl(context):
     options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
-    context.driver.implicitly_wait(20)
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
     else:
@@ -130,17 +129,17 @@ def step_impl(context, lamp):
 def step_impl(context):
     element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
     element.click()
-    #WebDriverWait(context.driver, 20).until(EC.presence_of_element_located((By.ID, "variants")))
+    WebDriverWait(context.driver, timeout=20).until(EC.element_to_be_clickable((By.ID, "variants")))
 
 
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
     dropdown.click()
-    #action = ActionChains(context.driver)
-    #action.move_to_element(dropdown)
-    #action.click()
-    #action.perform()
+    # action = ActionChains(context.driver)
+    # action.move_to_element(dropdown)
+    # action.click()
+    # action.perform()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
