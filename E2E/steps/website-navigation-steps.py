@@ -97,8 +97,8 @@ def step_impl(context, keys):
     context.values = []
     splitted_keys = keys.split(', ')
     context.values = splitted_keys
-    print(splitted_keys)
-    print(context.values)
+    #print(splitted_keys)
+    #print(context.values)
 
 
 @when('I press on the specified keys on the plugboard')
@@ -137,14 +137,10 @@ def step_impl(context):
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
-
-    context.action_chains.move_to_element(dropdown)
-    context.action_chains.click()
-    context.action_chains.perform()
+    dropdown.click()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
-
 
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
@@ -191,5 +187,5 @@ def step_impl(context):
 @then('The {encrypted_letter} letter should be displayed in the output box')
 def step_impl(context, encrypted_letter):
     element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
-    print('Assert is about to be done')
+    #print('Assert is about to be done')
     assert element == encrypted_letter, f'Output Container does not contain {encrypted_letter}, but {element}'
