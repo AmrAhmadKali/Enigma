@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = False  # To change
+    options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
@@ -133,15 +133,15 @@ def step_impl(context, lamp):
 def step_impl(context):
     element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
     element.click()
+    WebDriverWait(context.driver, 20).until(EC.presence_of_element_located((By.ID, "variants")))
 
 
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
-    wait = WebDriverWait(context.driver, 1)
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
-    wait.until(EC.element_to_be_clickable(dropdown))
-    action = ActionChains(context.driver)
-    action.move_to_element(dropdown)
+    dropdown.click()
+    #action = ActionChains(context.driver)
+    #action.move_to_element(dropdown)
     #action.click()
     #action.perform()
 
