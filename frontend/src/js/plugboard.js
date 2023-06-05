@@ -10,7 +10,7 @@ function plugboard_pressed(key) {
             for (let i in elements) {
                 if (reg.test(elements[i].outerText)) {
                     awaiting.push('plugboard_set')
-                    sendRequest('plugboard', 'set', elements[i].outerText)
+                    sendRequest('plugboard', 'set', elements[i].outerText.split(',')[0])
                     elements[i].remove()
                     $('[name="p_'+elements[i].outerText[0]+'"]').css('background-color', 'white')
                     $('[name="p_'+elements[i].outerText[1]+'"]').css('background-color', 'white')
