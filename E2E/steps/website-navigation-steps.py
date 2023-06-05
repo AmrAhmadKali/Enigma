@@ -139,11 +139,11 @@ def step_impl(context):
 def step_impl(context, variant):
     wait = WebDriverWait(context.driver, 1)
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
-    dropdown = wait.until(EC.element_to_be_clickable(dropdown))
+    wait.until(EC.element_to_be_clickable(dropdown))
     action = ActionChains(context.driver)
     action.move_to_element(dropdown)
-    action.click()
-    action.perform()
+    #action.click()
+    #action.perform()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
