@@ -23,6 +23,7 @@ def step_impl(context):
     options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
+    context.driver.implicitly_wait(20)
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
     else:
@@ -55,7 +56,6 @@ def step_impl(context):
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
-    context.driver.implicitly_wait(0.5)
     if box == 'input':
         element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert element == letter, f'Input Container does not contain {letter}, but {element}'
@@ -68,7 +68,6 @@ def step_impl(context, letter, box):
 
 @then('The plugboard box should be empty')
 def step_impl(context):
-    context.driver.implicitly_wait(0.5)
     text = context.driver.find_element(By.CSS_SELECTOR, '.plugboardContainer').text
     assert text == '', 'Plugboard Container should be empty, but is not'
 
@@ -82,7 +81,6 @@ def step_impl(context, letter, limit):
 
 @then('I see only {limit} characters in the {box} box')
 def step_impl(context, limit, box):
-    context.driver.implicitly_wait(0.5)
     if box == 'input':
         input_box = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert len(input_box) == int(limit), f'Input box should have {limit} characters at most not {len(input_box)}'
@@ -122,7 +120,6 @@ def step_impl(context):
 
 @then('The lamp {lamp} lights up')
 def step_impl(context, lamp):
-    context.driver.implicitly_wait(0.5)
     element = context.driver.find_element(By.NAME, f"l_{lamp}")
     background_color = element.value_of_css_property("background-color")
     YELLOW = 'rgb(255, 255, 0)'
@@ -133,7 +130,7 @@ def step_impl(context, lamp):
 def step_impl(context):
     element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
     element.click()
-    WebDriverWait(context.driver, 20).until(EC.presence_of_element_located((By.ID, "variants")))
+    #WebDriverWait(context.driver, 20).until(EC.presence_of_element_located((By.ID, "variants")))
 
 
 @when('I choose the variant {variant}')
