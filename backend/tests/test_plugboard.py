@@ -5,7 +5,8 @@ from meta.dict_object import DictObject
 
 
 class PlugboardTest(unittest.IsolatedAsyncioTestCase):
-    pg = Plugboard()
+    async def asyncSetUp(self) -> None:
+        self.pg = Plugboard()
 
     async def test_setup(self):
         d = DictObject()

@@ -20,7 +20,12 @@ function on_message(msg) {
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
-    // TODO: Statuscodes abfragen!
+    console.log(data)
+    if (data.status !== 200){
+        alert("Error Code "+data.status+" received")
+        return
+    }
+
     switch (req) {
         case 'help': {
             $('#help').remove();
@@ -45,10 +50,26 @@ function on_message(msg) {
             $(`#dump`).append(msg.data);
             break;
         }
+        case 'getSetting':{
+            currentSet(data.response.rotor_order, data.response.rotors)
+            return;
+        }
         case 'encrypt': {
             letter_received(data.response);
             break;
         }
+        case 'uuid': {
+            cookie.setCookie(data.response);
+            break;
+        }
+        //case 'rotors:set': {
+          //  alert('Rotors successfully set')
+           // break
+        //}
+        //case 'rotors:offset': {
+           // alert('Offset successfully set')
+            //break
+        //}
     }
 
 }

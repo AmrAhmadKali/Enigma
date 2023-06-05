@@ -4,8 +4,13 @@ services:
     build: backend/
     ports:
       - "25500:25500"
+    volumes:
+      - data:/srv/enigma.db
 
   frontend:
     build: frontend/
     ports:
       - "80:80"
+
+volumes:
+  data:

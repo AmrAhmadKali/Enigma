@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
 
 
 @instance("help")
-class Addon2(BaseModule):
+class HelpController(BaseModule):
 
     def inject(self, reg):
         self.app: Server = reg.get_instance("app")

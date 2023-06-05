@@ -1,25 +1,28 @@
 import unittest
 
-from core.rotor_config import Rotors
+from core.rotor_service import RotorService
 from meta.dict_object import DictObject
 
 
 class PlugboardTest(unittest.IsolatedAsyncioTestCase):
-    r = Rotors()
-    str = DictObject()
+    async def asyncSetUp(self) -> None:
+        self.r = RotorService()
+        self.str = DictObject()
+        self.r.start()
+        await self.r.setup(self.str)
 
     async def test_0_setup(self):
-        await self.r.setup(self.str)
         self.assertEqual(self.str, {'rotor_order': [
             ['Enigma I-R3', 'Enigma I-R2', 'Enigma I-R1'],
             'Reflector A'],
             'rotors': {'Enigma I-R3': 0,
                        'Enigma I-R2': 0,
-                       'Enigma I-R1': 0}})
+                       'Enigma I-R1': 0},
+            'rotorkeyring': {'Enigma I-R3': 0,
+                             'Enigma I-R2': 0,
+                             'Enigma I-R1': 0}})
 
     async def test_1_rotation(self):
-        # 21
-        self.r.start()
         self.r._perform_rotate(self.str)
         self.assertEqual(self.str.rotors['Enigma I-R3'], 1)
 
@@ -43,7 +46,5 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.str.rotors['Enigma I-R3'], 49)
 
     async def test_2_encrypt(self):
-        self.r.start()
-        await self.r.setup(self.str)
         self.assertEqual(self.r.encrypt(self.str, 'A'), 'S')
         self.assertEqual(self.r.encrypt(self.str, 'X'), 'U')

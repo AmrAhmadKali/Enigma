@@ -12,7 +12,7 @@ class Plugboard(BaseModule):
 
     @command(command="plugboard", sub_command="set", params=[Any("setting")],
              description="Set the Plugboard Configuration")
-    async def pb_set_cmd(self, ws, storage, pbs):
+    async def pb_set_cmd(self, _, storage, pbs):
         if len(pbs) % 2 == 1:
             return 400, "Uneven variable count"
         if len(pbs) != 2:
@@ -36,7 +36,7 @@ class Plugboard(BaseModule):
 
     @command(command="plugboard", sub_command="reset", params=[],
              description="Reset the Plugboard Configuration to default")
-    async def pb_reset_cmd(self, ws, storage):
+    async def pb_reset_cmd(self, _, storage):
         storage.plugboard = {}
         return 200
 

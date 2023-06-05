@@ -1,3 +1,4 @@
+import asyncio
 import typing
 from typing import Tuple
 
@@ -9,14 +10,14 @@ from meta.decorators import instance, command
 from meta.dict_object import DictObject
 
 if typing.TYPE_CHECKING:
-    from core.rotor_config import Rotors
+    from core.rotor_service import RotorService
 
 
-@instance("encrypt")
-class Encryption(BaseModule):
+@instance("encryption_controller")
+class EncryptionController(BaseModule):
 
     def inject(self, reg):
-        self.rotors: Rotors = reg.get_instance("rotors", is_optional=True)
+        self.rotors: RotorService = reg.get_instance("rotor_service", is_optional=True)
         self.plugboard = reg.get_instance("plugboard", is_optional=True)
 
     # noinspection PyUnusedLocal
@@ -40,6 +41,7 @@ class Encryption(BaseModule):
                 tmp += self.plugboard.encrypt(storage, k)
             out = tmp
             tmp = ""
+            await asyncio.sleep(0)
         if self.rotors:
             for k in out:
                 if k == " ":
@@ -48,6 +50,7 @@ class Encryption(BaseModule):
                 tmp += self.rotors.encrypt(storage, k)
             out = tmp
             tmp = ""
+            await asyncio.sleep(0)
         if self.plugboard:
             for k in out:
                 if k == " ":
@@ -55,8 +58,8 @@ class Encryption(BaseModule):
                     continue
                 tmp += self.plugboard.encrypt(storage, k)
             out = tmp
-
-        return 200, out
+        key = "".join(self.rotors.convert_to_str(x % 26) for x in reversed(storage.rotors.values()))
+        return 200, [out, key]
 
     @command("decrypt", params=[Any('text_to_decrypt', allowed_chars="[a-zA-Z ]")],
              description="Decrypt a given message")
