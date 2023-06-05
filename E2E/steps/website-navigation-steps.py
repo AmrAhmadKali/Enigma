@@ -68,6 +68,8 @@ def step_impl(context, letter, box):
 @then('The plugboard box should be empty')
 def step_impl(context):
     text = context.driver.find_element(By.CSS_SELECTOR, '.plugboardContainer').text
+    WebDriverWait(context.driver, timeout=20).until(
+        EC.text_to_be_present_in_element((By.CLASS_NAME, "plugboardContainer"), ''))
     assert text == '', 'Plugboard Container should be empty, but is not'
 
 
@@ -135,11 +137,10 @@ def step_impl(context):
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
-    dropdown.click()
-    # action = ActionChains(context.driver)
-    # action.move_to_element(dropdown)
-    # action.click()
-    # action.perform()
+
+    context.action_chains.move_to_element(dropdown)
+    context.action_chains.click()
+    context.action_chains.perform()
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
