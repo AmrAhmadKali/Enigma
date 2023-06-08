@@ -35,6 +35,24 @@ function currentSet(rotor_setting, offsets){
     setvariants(rotors.length)
 }
 
+function setOffsetDisplay(rotor_setting, offsets){
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    let rotors = rotor_setting[0]
+
+    let off_r1 = offsets[rotors[2]]
+    let off_r2 = offsets[rotors[1]]
+    let off_r3 = offsets[rotors[0]]
+
+    let mapped_off_r1 = alphabet.charAt(off_r1%26)
+    let mapped_off_r2 = alphabet.charAt(off_r2%26)
+    let mapped_off_r3 = alphabet.charAt(off_r3%26)
+
+    document.getElementById('current_R1').innerText = mapped_off_r1
+    document.getElementById('current_R2').innerText = mapped_off_r2
+    document.getElementById('current_R3').innerText = mapped_off_r3
+}
+
 function submitMenu(){
     let reflector = document.getElementById("reflector").value
     let r1 = document.getElementById("r1").value
@@ -63,13 +81,12 @@ function submitMenu(){
     let offset_r2 = $('input[id=offset_r2]').val()
     let offset_r3 = $('input[id=offset_r3]').val()
 
-    if(document.getElementById('menu_row3').hidden === true){
-        awaiting.push("rotors:offset")
-        sendRequest("rotors", "offset", offset_r1+offset_r2)
-    } else {
-        awaiting.push("rotors:offset")
-        sendRequest("rotors", "offset", offset_r1+offset_r2+offset_r3)
-    }
+    awaiting.push("rotors:offset")
+    sendRequest("rotors", "offset", offset_r1+offset_r2+offset_r3)
+
+    document.getElementById('current_R1').innerText = offset_r1
+    document.getElementById('current_R2').innerText = offset_r2
+    document.getElementById('current_R3').innerText = offset_r3
 
     document.getElementById('menu').close()
     document.addEventListener("keydown", key_event)

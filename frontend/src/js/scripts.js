@@ -13,10 +13,14 @@ socket.onmessage = on_message
 let awaiting = [];
 
 function sock_open() {
-    // sendRequest("help");
+    load();
 }
 
 function on_message(msg) {
+    /***
+     * TODO: alles dokumentieren
+     * @type {any}
+     */
     var data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
@@ -58,9 +62,15 @@ function on_message(msg) {
             letter_received(data.response);
             break;
         }
-        case 'uuid': {
-            cookie.setCookie(data.response);
-            break;
+        case 'load': {
+            awaiting.push('getSaveData')
+            sendRequest('dump')
+            break
+        }
+        case 'getSaveData': {
+            setOffsetDisplay(data.response.rotor_order, data.response.rotors)
+            setPlugboard(data.response.plugboard)
+            break
         }
         //case 'rotors:set': {
           //  alert('Rotors successfully set')

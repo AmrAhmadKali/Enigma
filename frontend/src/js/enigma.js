@@ -2,19 +2,79 @@ const key_event = function () {
     key_pressed(event.key)
 };
 
+let reset_clicked = false;
+
 function listener_init() {
     document.addEventListener("keydown", key_event);
 
-    // cookie.loadCookie();
+    $(window).bind('beforeunload', function(){
+        if(reset_clicked===false){
+            save().then(message => {
+                setCookie(JSON.parse(message.data).response)
+            })
+            // event.preventDefault();
+            return '1234'
+        } });
 
-    document.getElementById('showMenuBtn').addEventListener('click', function(){showMenu()});
+    document.getElementById('showMenuBtn').addEventListener('click', function(){ showMenu() });
 
-    document.getElementById('resetBtn').addEventListener('click', function(){cookie.deleteCookie(); window.location.reload()});
+    document.getElementById('clearBtn').addEventListener('click', function(){ clearContainer() });
 
+    document.getElementById('resetBtn').addEventListener('click', function(){
+        if (window.confirm("Do you really want to delete all save data?")) {
+            reset()
+        }
+    });
+
+}
+
+function reset() {
+    reset_clicked = true
+    deleteCookie()
+    window.location.reload()
 }
 
 function remove_keydown_listener(){
     document.removeEventListener("keydown", key_event);
+}
+
+function save(timeout = 10000){
+    return new Promise((resolve, reject) => {
+        let timer;
+
+        awaiting.push('save');
+        sendRequest('save');
+
+
+        function responseHandler(message) {
+            // resolve promise with the value we got
+            resolve(message);
+            clearTimeout(timer);
+        }
+
+        socket.onmessage = responseHandler;
+
+        // set timeout so if a response is not received within a
+        // reasonable amount of time, the promise will reject
+        timer = setTimeout(() => {
+            reject(new Error("timeout waiting for save"));
+            socket.onmessage = on_message
+        }, timeout);
+    });
+}
+
+function load(){
+    console.log(isCookieSaved())
+    if(isCookieSaved()){
+        awaiting.push('load')
+        sendRequest('load', null, getCookie())
+    }
+}
+
+function clearContainer(){
+    document.querySelector(".inputContainer").innerText = ''
+    document.querySelector(".outputContainer").innerText = ''
+    $("[name^=l_]").css('background-color', 'white')
 }
 
 function key_pressed(key){
@@ -56,7 +116,6 @@ function letter_received(response) {
     document.getElementById('current_R3').innerText = rotors[2]
 
     checkCharLimit()
-    // cookie.changeCookie()
 }
 
 

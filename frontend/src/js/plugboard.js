@@ -68,3 +68,7 @@ function checkPlugLimitReached(){
     }
     return false
 }
+
+function setPlugboard(){
+ // TODO
+}

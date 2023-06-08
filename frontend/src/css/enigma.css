@@ -20,7 +20,8 @@ img {
 /* Container: */
 .flex_center {
     display: flex;
-    justify-content: center;
+    justify-content: center; /*TODO: alles in Tabelle (?)*/
+    position: relative;
 }
 
 .flex_left {
@@ -44,7 +45,6 @@ img {
 .rotorContainer{
     display: flex;
     width: 65%;
-
 }
 
 .rotorContainer p{
@@ -53,6 +53,7 @@ img {
     margin: 2%;
     padding: 1.5%;
     align-self: center;
+    font-size: 2vw;
 }
 
 .plugboardContainer{
@@ -127,8 +128,8 @@ img {
     width: fit-content;
 }
 
-/* Menu */
-#showMenuBtn, #resetBtn{
+/* Buttons */
+#showMenuBtn, #resetBtn, #clearBtn{
     height: 5vh;
     width: 5vh;
     background-color: white;
@@ -136,4 +137,3 @@ img {
     padding: 1vh 1vh;
     cursor: pointer;
 }
-
