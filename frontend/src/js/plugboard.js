@@ -1,10 +1,25 @@
-var letters = []
-var lastpressed = null
+/**
+ * a global array of the currently set plugs.
+ * @type {string[]}
+ */
+let plugs = [];
+/**
+ * a global variable containing the key on the plugboard that has been pressed the last.
+ * @type {any}
+ * @default null
+ */
+let lastpressed = null;
 
+/**
+ * Handles the plugboard pressed event by sending the commands to the backend,
+ *  coloring the plugboard
+ *  and filling or deleting the chars in the plugboard container.
+ * @param key - The key that has been pressed on the plugboard
+ */
 function plugboard_pressed(key) {
-    for (let i = 0; i < letters.length; i++) {
-        if (letters[i].includes(key)) {
-            letters.splice(i, 1)
+    for (let i = 0; i < plugs.length; i++) {
+        if (plugs[i].includes(key)) {
+            plugs.splice(i, 1)
             const reg = new RegExp(".?" + key + ".?")
             const elements = [...document.getElementsByClassName('tuple')];
             for (let i in elements) {
@@ -37,7 +52,7 @@ function plugboard_pressed(key) {
         lastpressed = null
         return
     }
-    letters.push([key, lastpressed])
+    plugs.push([key, lastpressed])
     awaiting.push('plugboard_set')
     sendRequest('plugboard', 'set', ''+key+lastpressed+'')
     $('.plugboardContainer').append("<p class='tuple' id='"+key+lastpressed+"'>"+lastpressed+key+',&nbsp;'+"</p>")
@@ -47,28 +62,39 @@ function plugboard_pressed(key) {
     lastpressed = null
 }
 
+/**
+ * Resets the plugboard by clearing the plugs and lastpressed variables, sending a reset command to the server and
+ * emptying the Plugboard and Container.
+ */
 function reset_plugboard() {
     lastpressed = null
-    letters = []
+    plugs = []
     awaiting.push('plugboard_reset')
     sendRequest('plugboard', 'reset')
     $('.plugboardContainer').empty()
     $("[name^=p_]").css('background-color', 'white')
 }
 
+/**
+ * Counts the currently set plugs and returns true if it is 10. Otherwise, returns false.
+ * @returns {boolean}
+ */
 function checkPlugLimitReached(){
     let plugboardContainer = document.querySelector(".plugboardContainer");
     let contentLength = plugboardContainer.textContent.length
 
     if (contentLength%4 === 0) {
-        let plugs = contentLength / 4
-        if (plugs === 10){
+        let plug_count = contentLength / 4
+        if (plug_count === 10){
             return true
         }
     }
     return false
 }
 
+/**
+ *
+ */
 function setPlugboard(){
  // TODO
 }

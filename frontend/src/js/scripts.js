@@ -1,3 +1,6 @@
+/**
+ * global variable for the websocket object
+ */
 let socket;
 
 // this will automatically pick the websocket up, making the assumption that it runs on the same host as the Website
@@ -8,20 +11,20 @@ if (document.location.hostname === "frontend") {
 }
 
 
-socket.onopen = sock_open
+socket.onopen = load
 socket.onmessage = on_message
+/**
+ * Array containing all pending server requests, can be different as sent commands.
+ * @type {string[]}
+ */
 let awaiting = [];
 
-function sock_open() {
-    load();
-}
-
+/**
+ * handles websocket answers by popping awaiting
+ * @param msg
+ */
 function on_message(msg) {
-    /***
-     * TODO: alles dokumentieren
-     * @type {any}
-     */
-    var data = JSON.parse(msg.data);
+    const data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
     console.log(data)
@@ -81,12 +84,14 @@ function on_message(msg) {
             //break
         //}
     }
-
 }
 
-/*
-Use this for sending requests to the websocket...
-*/
+/**
+ * Used to send requests to the websocket server. A push to awaiting is necessary before calling this function.
+ * @param cmd - main command
+ * @param sub - sub command
+ * @param params - command parameter
+ */
 function sendRequest(cmd, sub, params) {
     if (sub == null && params == null) {
         socket.send('{"cmd": "' + cmd + '"}');

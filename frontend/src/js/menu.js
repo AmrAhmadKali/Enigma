@@ -1,14 +1,27 @@
+/**
+ * Starts the process to open the menu by getting sending a request to get the current settings from the backend
+ * and calling remove_keydown_listener()
+ */
 function showMenu(){
     awaiting.push('getSetting')
     sendRequest('dump')
     remove_keydown_listener()
 }
 
+/**
+ * Closes the menu and adds the keydown listener.
+ */
 function hideMenu(){
     document.getElementById('menu').close()
     document.addEventListener("keydown", key_event)
 }
 
+/**
+ * Sets the value of the menu fields according to the server answers.
+ * Only to be called by the responseHandler of getSetting.
+ * @param rotor_setting - The order and name of the rotors and the reflector
+ * @param offsets - The offsets of the current rotors
+ */
 function currentSet(rotor_setting, offsets){
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let reflector = rotor_setting[1].toString()
@@ -32,9 +45,16 @@ function currentSet(rotor_setting, offsets){
     document.getElementById('offset_r2').value = mapped_off_r2
     document.getElementById('offset_r3').value = mapped_off_r3
 
+    // TODO call still necessary?
     setvariants(rotors.length)
 }
 
+/**
+ * sets the offset display according to the server answer.
+ * Only to be called by the responseHandler of getSaveData.
+ * @param rotor_setting - The order and name of the rotors and the reflector
+ * @param offsets - The offsets of the current rotors
+ */
 function setOffsetDisplay(rotor_setting, offsets){
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -53,6 +73,9 @@ function setOffsetDisplay(rotor_setting, offsets){
     document.getElementById('current_R3').innerText = mapped_off_r3
 }
 
+/**
+ * Reads the values of the menu form, sends the settings to the server and sets the offset display.
+ */
 function submitMenu(){
     let reflector = document.getElementById("reflector").value
     let r1 = document.getElementById("r1").value
@@ -92,6 +115,11 @@ function submitMenu(){
     document.addEventListener("keydown", key_event)
 }
 
+/**
+ * Disables all menu options not available for the chosen variant.
+ * Only to be called after a variant has been chosen.
+ * @param rotor_count - TODO: nötig?
+ */
 function setvariants(rotor_count = null){
     const variant = document.getElementById("variants").value
 
