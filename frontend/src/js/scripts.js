@@ -66,7 +66,7 @@ function on_message(msg) {
             break;
         }
         case 'getSetting':{
-            currentSet(data.response.rotor_order, data.response.rotors)
+            currentSet(data.response.rotor_order, data.response.rotors, data.response.rotorkeyring)
             return;
         }
         case 'encrypt': {

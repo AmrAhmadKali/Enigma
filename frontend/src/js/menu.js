@@ -22,7 +22,7 @@ function hideMenu(){
  * @param rotor_setting - The order and name of the rotors and the reflector
  * @param offsets - The offsets of the current rotors
  */
-function currentSet(rotor_setting, offsets){
+function currentSet(rotor_setting, offsets, keyrings){
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let reflector = rotor_setting[1].toString()
     let rotors = rotor_setting[0]
@@ -44,6 +44,10 @@ function currentSet(rotor_setting, offsets){
     document.getElementById('offset_r1').value = mapped_off_r1
     document.getElementById('offset_r2').value = mapped_off_r2
     document.getElementById('offset_r3').value = mapped_off_r3
+    
+    changevalue('ring_r1', keyrings[rotors[2]], true)
+    changevalue('ring_r2', keyrings[rotors[1]], true)
+    changevalue('ring_r3', keyrings[rotors[0]], true)
 
     // TODO call still necessary?
     setvariants(rotors.length)
@@ -110,6 +114,12 @@ function submitMenu(){
     document.getElementById('current_R1').innerText = offset_r1
     document.getElementById('current_R2').innerText = offset_r2
     document.getElementById('current_R3').innerText = offset_r3
+
+    awaiting.push("rotors:ringoffset")
+    sendRequest("rotors", "ringoffset", valuering_r1 + valuering_r2 + valuering_r3)
+    console.log("Wert r1" + valuering_r1)
+    console.log("Wert r2" + valuering_r2)
+    console.log("Wert r3" + valuering_r3)
 
     document.getElementById('menu').close()
     clearContainer()
@@ -185,4 +195,40 @@ function setvariants(rotor_count = null){
         }
 
     }
+}
+var valuering_r1
+var valuering_r2
+var valuering_r3
+function changevalue(inputid, change, reset = false) {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    var input = document.getElementById(inputid)
+    var value = parseInt(input.value)
+    if (reset) {
+        value = change % 26
+
+    }
+    else {
+        value = (value + change + 26) % 26
+    }
+    console.log(value)
+    console.log(input.value)
+    var letter = letters.charAt(value)
+    console.log("Der dazugehörige Buchstabe ist" + letter)
+    var newValue = value.toString() + " " + letter
+    console.log(newValue)
+    input.innerHTML = newValue
+    document.getElementById(inputid).value = newValue
+    console.log(input.innerHTML)
+    console.log(value)
+    if (inputid === "ring_r1") {
+        valuering_r1 = letter
+
+    }
+    if (inputid === "ring_r2") {
+        valuering_r2 = letter
+    }
+    if (inputid === "ring_r3") {
+        valuering_r3 = letter
+    }
+
 }
