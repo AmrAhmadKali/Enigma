@@ -112,6 +112,7 @@ function submitMenu(){
     document.getElementById('current_R3').innerText = offset_r3
 
     document.getElementById('menu').close()
+    clearContainer()
     document.addEventListener("keydown", key_event)
 }
 
