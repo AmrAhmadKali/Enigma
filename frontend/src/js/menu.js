@@ -1,3 +1,8 @@
+let valuering_r1;
+let valuering_r2;
+let valuering_r3;
+
+
 /**
  * Starts the process to open the menu by getting sending a request to get the current settings from the backend
  * and calling remove_keydown_listener()
@@ -21,6 +26,7 @@ function hideMenu(){
  * Only to be called by the responseHandler of getSetting.
  * @param rotor_setting - The order and name of the rotors and the reflector
  * @param offsets - The offsets of the current rotors
+ * @param keyrings - The current keyring setting
  */
 function currentSet(rotor_setting, offsets, keyrings){
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -117,9 +123,6 @@ function submitMenu(){
 
     awaiting.push("rotors:ringoffset")
     sendRequest("rotors", "ringoffset", valuering_r1 + valuering_r2 + valuering_r3)
-    console.log("Wert r1" + valuering_r1)
-    console.log("Wert r2" + valuering_r2)
-    console.log("Wert r3" + valuering_r3)
 
     document.getElementById('menu').close()
     clearContainer()
@@ -196,9 +199,13 @@ function setvariants(rotor_count = null){
 
     }
 }
-var valuering_r1
-var valuering_r2
-var valuering_r3
+
+/**
+ * TODO
+ * @param inputid
+ * @param change
+ * @param reset
+ */
 function changevalue(inputid, change, reset = false) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var input = document.getElementById(inputid)
@@ -210,16 +217,11 @@ function changevalue(inputid, change, reset = false) {
     else {
         value = (value + change + 26) % 26
     }
-    console.log(value)
-    console.log(input.value)
     var letter = letters.charAt(value)
-    console.log("Der dazugehörige Buchstabe ist" + letter)
     var newValue = value.toString() + " " + letter
-    console.log(newValue)
     input.innerHTML = newValue
     document.getElementById(inputid).value = newValue
-    console.log(input.innerHTML)
-    console.log(value)
+
     if (inputid === "ring_r1") {
         valuering_r1 = letter
 
@@ -230,5 +232,4 @@ function changevalue(inputid, change, reset = false) {
     if (inputid === "ring_r3") {
         valuering_r3 = letter
     }
-
 }

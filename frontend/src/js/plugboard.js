@@ -93,8 +93,21 @@ function checkPlugLimitReached(){
 }
 
 /**
- *
+ * Sets the plug board according to the saved data in the backend.
+ * Only to be called by the getSaveData response Handler.
+ * @param setting - Dictionary with the plug mapping
  */
-function setPlugboard(){
- // TODO
+function setPlugboard(setting){
+    let tmp = null
+    for(let i in setting){
+        if(tmp){
+            $('[name="p_'+i+'"]').css('background-color', 'LightBlue')
+            $('[name="p_'+tmp+'"]').css('background-color', 'LightBlue')
+            $('.plugboardContainer').append("<p class='tuple' id='"+i+tmp+"'>"+i+tmp+',&nbsp;'+"</p>")
+            plugs.push(i+tmp)
+            tmp = null
+        } else {
+            tmp = i
+        }
+    }
 }

@@ -121,7 +121,7 @@
 </div>
 
 
-<dialog id="menu">
+<dialog id="menu"> <!-- TODO menu in iframe?-->
     <form action="#" onsubmit="submitMenu(); return false">
         <p>
         <table>
@@ -252,18 +252,18 @@
                 <td></td>
                 <td>
                     <input type = "text"  id="ring_r1" value ="0 A" readonly>
-                    <button type = "button" id = "+" onclick="changevalue('ring_r1', 1)">+</button>
-                    <button type = "button" id = "-" onclick="changevalue('ring_r1', -1)">-</button>
+                    <button type = "button" onclick="changevalue('ring_r1', 1)">+</button>
+                    <button type = "button" onclick="changevalue('ring_r1', -1)">-</button>
                 </td>
                 <td>
                 <input type = "text"  id="ring_r2" value ="0 A" readonly>
-                <button type = "button" id = "+" onclick="changevalue('ring_r2', 1)">+</button>
-                <button type = "button" id = "-" onclick="changevalue('ring_r2', -1)">-</button>
+                <button type = "button" onclick="changevalue('ring_r2', 1)">+</button>
+                <button type = "button" onclick="changevalue('ring_r2', -1)">-</button>
             </td>
             <td>
                 <input type = "text"  id="ring_r3" value ="0 A" readonly>
-                <button type = "button" id = "+" onclick="changevalue('ring_r3', 1)">+</button>
-                <button type = "button" id = "-" onclick="changevalue('ring_r3', -1)">-</button>
+                <button type = "button" onclick="changevalue('ring_r3', 1)">+</button>
+                <button type = "button" onclick="changevalue('ring_r3', -1)">-</button>
             </td>
             </tr>
             </tbody>
