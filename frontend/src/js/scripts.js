@@ -11,13 +11,21 @@ if (document.location.hostname === "frontend") {
 }
 
 
-socket.onopen = load
+socket.onopen = sock_open
 socket.onmessage = on_message
 /**
  * Array containing all pending server requests, can be different as sent commands.
  * @type {string[]}
  */
 let awaiting = [];
+
+/**
+ * calls load on socket connection established event
+ */
+function sock_open() {
+    load();
+}
+
 
 /**
  * handles websocket answers by popping awaiting
