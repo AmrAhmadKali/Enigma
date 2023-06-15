@@ -9,6 +9,7 @@ include:
 variables:
   CS_ANALYZER_IMAGE: "$CI_TEMPLATE_REGISTRY_HOST/security-products/container-scanning:6"
   CS_SCHEMA_MODEL: 15
+  SAST_EXCLUDED_PATHS: E2E
 workflow:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
