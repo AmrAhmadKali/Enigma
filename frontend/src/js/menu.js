@@ -124,6 +124,8 @@ function submitMenu(){
     awaiting.push("rotors:ringoffset")
     sendRequest("rotors", "ringoffset", valuering_r1 + valuering_r2 + valuering_r3)
 
+    document.getElementById('plugboard-row').hidden = !document.getElementById('deactivate_plugboard').checked;
+
     document.getElementById('menu').close()
     clearContainer()
     document.addEventListener("keydown", key_event)
@@ -148,6 +150,10 @@ function setvariants(rotor_count = null){
         case "B":{
             //$('tr[id="menu_row3"]').prop('hidden', true)
 
+            $('input[id="deactivate_plugboard"]').prop('checked', false)
+            $('input[id="deactivate_plugboard"]').prop('disabled', true)
+
+
             $('[value="Reflector A"]').prop('disabled', true)
             $('[value="Reflector B"]').prop('disabled', true)
             $('[value="Reflector C"]').prop('disabled', true)
@@ -162,6 +168,9 @@ function setvariants(rotor_count = null){
 
         case "1":{
             //$('tr[id="menu_row3"]').prop('hidden', false)
+
+            $('input[id="deactivate_plugboard"]').prop('checked', true)
+            $('input[id="deactivate_plugboard"]').prop('disabled', true)
 
             $('[value="Reflector A"]').prop('disabled', false)
             $('[value="Reflector B"]').prop('disabled', false)
@@ -178,6 +187,9 @@ function setvariants(rotor_count = null){
         case "M3":{
            //$('tr[id="menu_row3"]').prop('hidden', false)
 
+            $('input[id="deactivate_plugboard"]').prop('checked', true)
+            $('input[id="deactivate_plugboard"]').prop('disabled', true)
+
             $('[value="Reflector A"]').prop('disabled', true)
             $('[value="Reflector B"]').prop('disabled', false)
             $('[value="Reflector C"]').prop('disabled', false)
@@ -192,6 +204,8 @@ function setvariants(rotor_count = null){
 
         case "All":{
             //$('tr[id="menu_row3"]').prop('hidden', false)
+
+            $('input[id="deactivate_plugboard"]').prop('disabled', false)
             $('[value^=Reflector]').prop('disabled', false)
             $('option[value^=Enigma]').prop('disabled', false)
             break

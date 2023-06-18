@@ -2,5 +2,5 @@
 **.db
 **.sqlite
 **.log
-***.db-journal
+**.db-journal
 **__pycache__

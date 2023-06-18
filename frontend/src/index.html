@@ -15,110 +15,162 @@
 
 <body onload="listener_init()">
 
-<div class="flex_center">
+<h1>Cryptic-Crew Enigma</h1>
 
-    <h1>Cryptic-Crew Enigma</h1>
-</div>
-<div class="flex_center">
+<table id="body_table">
+    <tbody>
+    <tr>
+        <td>
+            <div class="rotorContainer">
+                <p id="offset_heading"> Rotor Offset:</p>
+                <p id="current_R1">A</p>
+                <p id="current_R2">A</p>
+                <p id="current_R3">A</p>
+            </div>
+        </td>
+        <td align="right">
+            <img src="images/reset_icon.svg" id="clearBtn" alt="clear text">
+            <img src="images/setting_icon.svg" id="showMenuBtn" alt="Settings">
+            <img src="images/delete_icon.svg" id="resetBtn" alt="Reset All">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="lamppanel">
+                <div class="row">
+                    <button class="key" name='l_Q' disabled>Q</button>
+                    <button class="key" name='l_W' disabled>W</button>
+                    <button class="key" name='l_E' disabled>E</button>
+                    <button class="key" name='l_R' disabled>R</button>
+                    <button class="key" name='l_T' disabled>T</button>
+                    <button class="key" name='l_Z' disabled>Z</button>
+                    <button class="key" name='l_U' disabled>U</button>
+                    <button class="key" name='l_I' disabled>I</button>
+                    <button class="key" name='l_O' disabled>O</button>
+                    <button class="key" name='l_P' disabled>P</button>
+                </div>
+                <div class="row">
+                    <button class="key" name='l_A' disabled>A</button>
+                    <button class="key" name='l_S' disabled>S</button>
+                    <button class="key" name='l_D' disabled>D</button>
+                    <button class="key" name='l_F' disabled>F</button>
+                    <button class="key" name='l_G' disabled>G</button>
+                    <button class="key" name='l_H' disabled>H</button>
+                    <button class="key" name='l_J' disabled>J</button>
+                    <button class="key" name='l_K' disabled>K</button>
+                    <button class="key" name='l_L' disabled>L</button>
+                </div>
+                <div class="row">
+                    <button class="key" name='l_Y' disabled>Y</button>
+                    <button class="key" name='l_X' disabled>X</button>
+                    <button class="key" name='l_C' disabled>C</button>
+                    <button class="key" name='l_V' disabled>V</button>
+                    <button class="key" name='l_B' disabled>B</button>
+                    <button class="key" name='l_N' disabled>N</button>
+                    <button class="key" name='l_M' disabled>M</button>
+                </div>
 
-    <p>Rotor Offset:</p>
-    <div class="rotorContainer">
-        <p id="current_R1">A</p>
-        <p id="current_R2">A</p>
-        <p id="current_R3">A</p>
-    </div>
-    <img src="images/reset_icon.svg" id="clearBtn" alt="clear text">
-    <img src="images/setting_icon.svg" id="showMenuBtn" alt="Settings">
-    <img src="images/delete_icon.svg" id="resetBtn" alt="Reset All">
+            </div>
+        </td>
+        <td>
+            <p> Output:</p>
+            <div class="outputContainer"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="keyboard">
+                <div class="row">
+                    <button class="key" onclick="key_pressed('Q')" name='k_Q'>Q</button>
+                    <button class="key" onclick="key_pressed('W')" name='k_W'>W</button>
+                    <button class="key" onclick="key_pressed('E')" name='k_E'>E</button>
+                    <button class="key" onclick="key_pressed('R')" name='k_R'>R</button>
+                    <button class="key" onclick="key_pressed('T')" name='k_T'>T</button>
+                    <button class="key" onclick="key_pressed('Z')" name='k_Z'>Z</button>
+                    <button class="key" onclick="key_pressed('U')" name='k_U'>U</button>
+                    <button class="key" onclick="key_pressed('I')" name='k_I'>I</button>
+                    <button class="key" onclick="key_pressed('O')" name='k_O'>O</button>
+                    <button class="key" onclick="key_pressed('P')" name='k_P'>P</button>
+                </div>
+                <div class="row">
+                    <button class="key" onclick="key_pressed('A')" name='k_A'>A</button>
+                    <button class="key" onclick="key_pressed('S')" name='k_S'>S</button>
+                    <button class="key" onclick="key_pressed('D')" name='k_D'>D</button>
+                    <button class="key" onclick="key_pressed('F')" name='k_F'>F</button>
+                    <button class="key" onclick="key_pressed('G')" name='k_G'>G</button>
+                    <button class="key" onclick="key_pressed('H')" name='k_H'>H</button>
+                    <button class="key" onclick="key_pressed('J')" name='k_J'>J</button>
+                    <button class="key" onclick="key_pressed('K')" name='k_K'>K</button>
+                    <button class="key" onclick="key_pressed('L')" name='k_L'>L</button>
+                </div>
+                <div class="row">
+                    <button class="key" onclick="key_pressed('Y')" name='k_Y'>Y</button>
+                    <button class="key" onclick="key_pressed('X')" name='k_X'>X</button>
+                    <button class="key" onclick="key_pressed('C')" name='k_C'>C</button>
+                    <button class="key" onclick="key_pressed('V')" name='k_V'>V</button>
+                    <button class="key" onclick="key_pressed('B')" name='k_B'>B</button>
+                    <button class="key" onclick="key_pressed('N')" name='k_N'>N</button>
+                    <button class="key" onclick="key_pressed('M')" name='k_M'>M</button>
+                </div>
+                <div class="row">
+                    <button class="key" onclick="key_pressed(' ')" name='k_space'></button>
+                </div>
+            </div>
+        </td>
+        <td>
+            <p> Input:&nbsp;</p>
+            <div class="inputContainer"></div>
+        </td>
+    </tr>
+    <tr id="plugboard-row">
+        <td>
+            <div class="plugboard">
+                <div class="row">
+                    <button type="button" name="p_Q" onclick="plugboard_pressed('Q')">Q</button>
+                    <button type="button" name="p_W" onclick="plugboard_pressed('W')">W</button>
+                    <button type="button" name="p_E" onclick="plugboard_pressed('E')">E</button>
+                    <button type="button" name="p_R" onclick="plugboard_pressed('R')">R</button>
+                    <button type="button" name="p_T" onclick="plugboard_pressed('T')">T</button>
+                    <button type="button" name="p_Z" onclick="plugboard_pressed('Z')">Z</button>
+                    <button type="button" name="p_U" onclick="plugboard_pressed('U')">U</button>
+                    <button type="button" name="p_I" onclick="plugboard_pressed('I')">I</button>
+                    <button type="button" name="p_O" onclick="plugboard_pressed('O')">O</button>
+                    <button type="button" name="p_P" onclick="plugboard_pressed('P')">P</button>
+                    <button type="button" name="p_A" onclick="plugboard_pressed('A')">A</button>
+                    <button type="button" name="p_S" onclick="plugboard_pressed('S')">S</button>
+                    <button type="button" name="p_D" onclick="plugboard_pressed('D')">D</button>
+                </div>
 
-</div>
+                <div class="row">
+                    <button type="button" name="p_F" onclick="plugboard_pressed('F')">F</button>
+                    <button type="button" name="p_G" onclick="plugboard_pressed('G')">G</button>
+                    <button type="button" name="p_H" onclick="plugboard_pressed('H')">H</button>
+                    <button type="button" name="p_J" onclick="plugboard_pressed('J')">J</button>
+                    <button type="button" name="p_K" onclick="plugboard_pressed('K')">K</button>
+                    <button type="button" name="p_L" onclick="plugboard_pressed('L')">L</button>
+                    <button type="button" name="p_Y" onclick="plugboard_pressed('Y')">Y</button>
+                    <button type="button" name="p_X" onclick="plugboard_pressed('X')">X</button>
+                    <button type="button" name="p_C" onclick="plugboard_pressed('C')">C</button>
+                    <button type="button" name="p_V" onclick="plugboard_pressed('V')">V</button>
+                    <button type="button" name="p_B" onclick="plugboard_pressed('B')">B</button>
+                    <button type="button" name="p_N" onclick="plugboard_pressed('N')">N</button>
+                    <button type="button" name="p_M" onclick="plugboard_pressed('M')">M</button>
+                </div>
 
+                <div class="reset">
+                    <button type="button" name="plugboard_reset" onclick="reset_plugboard()">Reset</button>
+                </div>
 
-<div class="flex_center">
-    <div class="lamppanel">
-        <div class="row">
-            <button class="key" name='l_Q' disabled>Q</button>
-            <button class="key" name='l_W' disabled>W</button>
-            <button class="key" name='l_E' disabled>E</button>
-            <button class="key" name='l_R' disabled>R</button>
-            <button class="key" name='l_T' disabled>T</button>
-            <button class="key" name='l_Z' disabled>Z</button>
-            <button class="key" name='l_U' disabled>U</button>
-            <button class="key" name='l_I' disabled>I</button>
-            <button class="key" name='l_O' disabled>O</button>
-            <button class="key" name='l_P' disabled>P</button>
-        </div>
-        <div class="row">
-            <button class="key" name='l_A' disabled>A</button>
-            <button class="key" name='l_S' disabled>S</button>
-            <button class="key" name='l_D' disabled>D</button>
-            <button class="key" name='l_F' disabled>F</button>
-            <button class="key" name='l_G' disabled>G</button>
-            <button class="key" name='l_H' disabled>H</button>
-            <button class="key" name='l_J' disabled>J</button>
-            <button class="key" name='l_K' disabled>K</button>
-            <button class="key" name='l_L' disabled>L</button>
-        </div>
-        <div class="row">
-            <button class="key" name='l_Y' disabled>Y</button>
-            <button class="key" name='l_X' disabled>X</button>
-            <button class="key" name='l_C' disabled>C</button>
-            <button class="key" name='l_V' disabled>V</button>
-            <button class="key" name='l_B' disabled>B</button>
-            <button class="key" name='l_N' disabled>N</button>
-            <button class="key" name='l_M' disabled>M</button>
-        </div>
+            </div>
 
-    </div>
-
-
-    <p> Output:</p>
-    <div class="outputContainer"></div>
-</div>
-
-<div class="flex_center">
-    <div class="keyboard">
-        <div class="row">
-            <button class="key" onclick="key_pressed('Q')" name='k_Q'>Q</button>
-            <button class="key" onclick="key_pressed('W')" name='k_W'>W</button>
-            <button class="key" onclick="key_pressed('E')" name='k_E'>E</button>
-            <button class="key" onclick="key_pressed('R')" name='k_R'>R</button>
-            <button class="key" onclick="key_pressed('T')" name='k_T'>T</button>
-            <button class="key" onclick="key_pressed('Z')" name='k_Z'>Z</button>
-            <button class="key" onclick="key_pressed('U')" name='k_U'>U</button>
-            <button class="key" onclick="key_pressed('I')" name='k_I'>I</button>
-            <button class="key" onclick="key_pressed('O')" name='k_O'>O</button>
-            <button class="key" onclick="key_pressed('P')" name='k_P'>P</button>
-        </div>
-        <div class="row">
-            <button class="key" onclick="key_pressed('A')" name='k_A'>A</button>
-            <button class="key" onclick="key_pressed('S')" name='k_S'>S</button>
-            <button class="key" onclick="key_pressed('D')" name='k_D'>D</button>
-            <button class="key" onclick="key_pressed('F')" name='k_F'>F</button>
-            <button class="key" onclick="key_pressed('G')" name='k_G'>G</button>
-            <button class="key" onclick="key_pressed('H')" name='k_H'>H</button>
-            <button class="key" onclick="key_pressed('J')" name='k_J'>J</button>
-            <button class="key" onclick="key_pressed('K')" name='k_K'>K</button>
-            <button class="key" onclick="key_pressed('L')" name='k_L'>L</button>
-        </div>
-        <div class="row">
-            <button class="key" onclick="key_pressed('Y')" name='k_Y'>Y</button>
-            <button class="key" onclick="key_pressed('X')" name='k_X'>X</button>
-            <button class="key" onclick="key_pressed('C')" name='k_C'>C</button>
-            <button class="key" onclick="key_pressed('V')" name='k_V'>V</button>
-            <button class="key" onclick="key_pressed('B')" name='k_B'>B</button>
-            <button class="key" onclick="key_pressed('N')" name='k_N'>N</button>
-            <button class="key" onclick="key_pressed('M')" name='k_M'>M</button>
-        </div>
-        <div class="row">
-            <button class="key" onclick="key_pressed(' ')" name='k_space'></button>
-        </div>
-    </div>
-
-    <p> Input:&nbsp;</p>
-    <div class="inputContainer"></div>
-
-</div>
+        </td>
+        <td>
+            <p> Plugboard:</p>
+            <div class="plugboardContainer"></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
 <dialog id="menu"> <!-- TODO menu in iframe?-->
@@ -179,7 +231,8 @@
                     </select>
                 </td>
                 <td>
-                    <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                    <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A"
+                           required>
                 </td>
             </tr>
             <tr>
@@ -208,7 +261,8 @@
                     </select>
                 </td>
                 <td>
-                    <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                    <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A"
+                           required>
                 </td>
             </tr>
             <tr id="menu_row3">
@@ -237,7 +291,16 @@
                     </select>
                 </td>
                 <td>
-                    <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A" required>
+                    <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A"
+                           required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="deactivate_plugboard">Plugboard:</label>
+                </td>
+                <td>
+                    <input id="deactivate_plugboard" type="checkbox" checked>
                 </td>
             </tr>
             <tr>
@@ -251,70 +314,25 @@
                 </td>
                 <td></td>
                 <td>
-                    <input type = "text"  id="ring_r1" value ="0 A" readonly>
-                    <button type = "button" onclick="changevalue('ring_r1', 1)">+</button>
-                    <button type = "button" onclick="changevalue('ring_r1', -1)">-</button>
+                    <input type="text" id="ring_r1" value="0 A" readonly>
+                    <button type="button" onclick="changevalue('ring_r1', 1)">+</button>
+                    <button type="button" onclick="changevalue('ring_r1', -1)">-</button>
                 </td>
                 <td>
-                <input type = "text"  id="ring_r2" value ="0 A" readonly>
-                <button type = "button" onclick="changevalue('ring_r2', 1)">+</button>
-                <button type = "button" onclick="changevalue('ring_r2', -1)">-</button>
-            </td>
-            <td>
-                <input type = "text"  id="ring_r3" value ="0 A" readonly>
-                <button type = "button" onclick="changevalue('ring_r3', 1)">+</button>
-                <button type = "button" onclick="changevalue('ring_r3', -1)">-</button>
-            </td>
+                    <input type="text" id="ring_r2" value="0 A" readonly>
+                    <button type="button" onclick="changevalue('ring_r2', 1)">+</button>
+                    <button type="button" onclick="changevalue('ring_r2', -1)">-</button>
+                </td>
+                <td>
+                    <input type="text" id="ring_r3" value="0 A" readonly>
+                    <button type="button" onclick="changevalue('ring_r3', 1)">+</button>
+                    <button type="button" onclick="changevalue('ring_r3', -1)">-</button>
+                </td>
             </tr>
             </tbody>
         </table>
     </form>
 </dialog>
-
-
-<div class="flex_left">
-    <div class="plugboard">
-        <div class="row">
-            <button type="button" name="p_Q" onclick="plugboard_pressed('Q')">Q</button>
-            <button type="button" name="p_W" onclick="plugboard_pressed('W')">W</button>
-            <button type="button" name="p_E" onclick="plugboard_pressed('E')">E</button>
-            <button type="button" name="p_R" onclick="plugboard_pressed('R')">R</button>
-            <button type="button" name="p_T" onclick="plugboard_pressed('T')">T</button>
-            <button type="button" name="p_Z" onclick="plugboard_pressed('Z')">Z</button>
-            <button type="button" name="p_U" onclick="plugboard_pressed('U')">U</button>
-            <button type="button" name="p_I" onclick="plugboard_pressed('I')">I</button>
-            <button type="button" name="p_O" onclick="plugboard_pressed('O')">O</button>
-            <button type="button" name="p_P" onclick="plugboard_pressed('P')">P</button>
-            <button type="button" name="p_A" onclick="plugboard_pressed('A')">A</button>
-            <button type="button" name="p_S" onclick="plugboard_pressed('S')">S</button>
-            <button type="button" name="p_D" onclick="plugboard_pressed('D')">D</button>
-        </div>
-
-        <div class="row">
-            <button type="button" name="p_F" onclick="plugboard_pressed('F')">F</button>
-            <button type="button" name="p_G" onclick="plugboard_pressed('G')">G</button>
-            <button type="button" name="p_H" onclick="plugboard_pressed('H')">H</button>
-            <button type="button" name="p_J" onclick="plugboard_pressed('J')">J</button>
-            <button type="button" name="p_K" onclick="plugboard_pressed('K')">K</button>
-            <button type="button" name="p_L" onclick="plugboard_pressed('L')">L</button>
-            <button type="button" name="p_Y" onclick="plugboard_pressed('Y')">Y</button>
-            <button type="button" name="p_X" onclick="plugboard_pressed('X')">X</button>
-            <button type="button" name="p_C" onclick="plugboard_pressed('C')">C</button>
-            <button type="button" name="p_V" onclick="plugboard_pressed('V')">V</button>
-            <button type="button" name="p_B" onclick="plugboard_pressed('B')">B</button>
-            <button type="button" name="p_N" onclick="plugboard_pressed('N')">N</button>
-            <button type="button" name="p_M" onclick="plugboard_pressed('M')">M</button>
-        </div>
-
-        <div class="reset">
-            <button type="button" name="plugboard_reset" onclick="reset_plugboard()">Reset</button>
-        </div>
-
-    </div>
-
-    <p> Plugboard:</p> <!-- TODO: zentrieren -->
-    <div class="plugboardContainer"></div>
-</div>
 
 
 </body>
