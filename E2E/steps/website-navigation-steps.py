@@ -55,6 +55,7 @@ def step_impl(context):
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
+    context.driver.implicitly_wait(0.5)
     if box == 'input':
         element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert element == letter, f'Input Container does not contain {letter}, but {element}'
@@ -82,6 +83,7 @@ def step_impl(context, letter, limit):
 
 @then('I see only {limit} characters in the {box} box')
 def step_impl(context, limit, box):
+    context.driver.implicitly_wait(0.5)
     if box == 'input':
         input_box = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert len(input_box) == int(limit), f'Input box should have {limit} characters at most not {len(input_box)}'
@@ -97,8 +99,6 @@ def step_impl(context, keys):
     context.values = []
     splitted_keys = keys.split(', ')
     context.values = splitted_keys
-    #print(splitted_keys)
-    #print(context.values)
 
 
 @when('I press on the specified keys on the plugboard')
@@ -121,6 +121,7 @@ def step_impl(context):
 
 @then('The lamp {lamp} lights up')
 def step_impl(context, lamp):
+    context.driver.implicitly_wait(0.5)
     element = context.driver.find_element(By.NAME, f"l_{lamp}")
     background_color = element.value_of_css_property("background-color")
     YELLOW = 'rgb(255, 255, 0)'
@@ -131,7 +132,7 @@ def step_impl(context, lamp):
 def step_impl(context):
     element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
     element.click()
-    WebDriverWait(context.driver, timeout=20).until(EC.element_to_be_clickable((By.ID, "variants")))
+    WebDriverWait(context.driver, timeout=10).until(EC.element_to_be_clickable((By.ID, "variants")))
 
 
 @when('I choose the variant {variant}')
@@ -141,6 +142,7 @@ def step_impl(context, variant):
 
     variant_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{variant}"]')
     variant_choice.click()
+
 
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
