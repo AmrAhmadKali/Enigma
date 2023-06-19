@@ -234,6 +234,10 @@
                     <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A"
                            required>
                 </td>
+                <td><button type="button" onclick="changevalue('ring_r1', -1)">-</button>
+                    <input type="text" id="ring_r1" value="0 A" readonly>
+                     <button type="button" onclick="changevalue('ring_r1', 1)">+</button>
+                 </td>
             </tr>
             <tr>
                 <td>
@@ -263,6 +267,12 @@
                 <td>
                     <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A"
                            required>
+                </td>
+                <td>
+                    <button type="button" onclick="changevalue('ring_r2', -1)">-</button>
+                    <input type="text" id="ring_r2" value="0 A" readonly>
+                    <button type="button" onclick="changevalue('ring_r2', 1)">+</button>
+                    
                 </td>
             </tr>
             <tr id="menu_row3">
@@ -294,6 +304,12 @@
                     <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A"
                            required>
                 </td>
+                <td>
+                    <button type="button" onclick="changevalue('ring_r3', -1)">-</button>
+                    <input type="text" id="ring_r3" value="0 A" readonly>
+                    <button type="button" onclick="changevalue('ring_r3', 1)">+</button>
+                    
+                </td>
             </tr>
             <tr>
                 <td>
@@ -313,22 +329,10 @@
                     <input type="submit" id="submitBtn" value="Submit">
                 </td>
                 <td></td>
-                <td>
-                    <input type="text" id="ring_r1" value="0 A" readonly>
-                    <button type="button" onclick="changevalue('ring_r1', 1)">+</button>
-                    <button type="button" onclick="changevalue('ring_r1', -1)">-</button>
-                </td>
-                <td>
-                    <input type="text" id="ring_r2" value="0 A" readonly>
-                    <button type="button" onclick="changevalue('ring_r2', 1)">+</button>
-                    <button type="button" onclick="changevalue('ring_r2', -1)">-</button>
-                </td>
-                <td>
-                    <input type="text" id="ring_r3" value="0 A" readonly>
-                    <button type="button" onclick="changevalue('ring_r3', 1)">+</button>
-                    <button type="button" onclick="changevalue('ring_r3', -1)">-</button>
-                </td>
+    
+
             </tr>
+        
             </tbody>
         </table>
     </form>

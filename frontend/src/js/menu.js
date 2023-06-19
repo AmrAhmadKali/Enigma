@@ -124,7 +124,14 @@ function submitMenu(){
     awaiting.push("rotors:ringoffset")
     sendRequest("rotors", "ringoffset", valuering_r1 + valuering_r2 + valuering_r3)
 
-    document.getElementById('plugboard-row').hidden = !document.getElementById('deactivate_plugboard').checked;
+    if(!document.getElementById('deactivate_plugboard').checked){
+        document.getElementById('plugboard-row').hidden = true
+        awaiting.push('plugboard_reset')
+        sendRequest('plugboard', 'reset')
+    }
+    else{
+        document.getElementById('plugboard-row').hidden = false
+    }
 
     document.getElementById('menu').close()
     clearContainer()
@@ -220,6 +227,8 @@ function setvariants(rotor_count = null){
  * @param change
  * @param reset
  */
+
+/* Updates the ringsettings*/
 function changevalue(inputid, change, reset = false) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var input = document.getElementById(inputid)

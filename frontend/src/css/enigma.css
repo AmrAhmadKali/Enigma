@@ -72,7 +72,7 @@ img {
 
 /* Keyboards: */
 .plugboard {
-    margin: 3%;
+    margin:  3%;
     display: flex;
     flex-direction: column;
     align-items: center;
