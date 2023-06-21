@@ -8,8 +8,6 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 # TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
@@ -20,7 +18,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = True  # To change
+    options.headless = False  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
@@ -130,9 +128,9 @@ def step_impl(context, lamp):
 
 @when('I click setting symbol')
 def step_impl(context):
-    element = context.driver.find_element(By.CSS_SELECTOR, 'img[id="showMenuBtn"]')
+    element = context.driver.find_element(By.ID, 'showMenuBtn')
     element.click()
-    WebDriverWait(context.driver, timeout=10).until(EC.element_to_be_clickable((By.ID, "variants")))
+    # WebDriverWait(context.driver, timeout=10).until(EC.element_to_be_clickable((By.ID, "variants")))
 
 
 @when('I choose the variant {variant}')
@@ -146,7 +144,7 @@ def step_impl(context, variant):
 
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
-    dropdown = context.driver.find_element(By.CSS_SELECTOR, '#reflector')
+    dropdown = context.driver.find_element(By.ID, 'reflector')
     dropdown.click()
 
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
