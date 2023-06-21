@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = True  # To change
+    options.headless = False  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
@@ -55,7 +55,7 @@ def step_impl(context):
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
-    context.driver.implicitly_wait(0.5)
+    # context.driver.implicitly_wait(0.5)
     if box == 'input':
         element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert element == letter, f'Input Container does not contain {letter}, but {element}'
@@ -83,7 +83,7 @@ def step_impl(context, letter, limit):
 
 @then('I see only {limit} characters in the {box} box')
 def step_impl(context, limit, box):
-    context.driver.implicitly_wait(0.5)
+    # context.driver.implicitly_wait(0.5)
     if box == 'input':
         input_box = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert len(input_box) == int(limit), f'Input box should have {limit} characters at most not {len(input_box)}'
@@ -121,7 +121,7 @@ def step_impl(context):
 
 @then('The lamp {lamp} lights up')
 def step_impl(context, lamp):
-    context.driver.implicitly_wait(0.5)
+    # context.driver.implicitly_wait(0.5)
     element = context.driver.find_element(By.NAME, f"l_{lamp}")
     background_color = element.value_of_css_property("background-color")
     YELLOW = 'rgb(255, 255, 0)'
@@ -191,3 +191,42 @@ def step_impl(context, encrypted_letter):
     element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
     #print('Assert is about to be done')
     assert element == encrypted_letter, f'Output Container does not contain {encrypted_letter}, but {element}'
+
+
+@when('I uncheck the Plugboard checkbox')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="deactivate_plugboard"]')
+
+    if element.get_attribute('checked'):
+        element.click()
+
+
+@then('Plugboard is disappeared')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'tr[id="plugboard-row"]')
+
+    assert element.get_attribute('hidden')
+
+
+@when('I set rotor 1 offset to {offset1}')
+def step_impl(context, offset1):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="offset_r1"]')
+
+    element.clear()
+    element.send_keys(offset1)
+
+
+@when('I set rotor 2 offset to {offset2}')
+def step_impl(context, offset2):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="offset_r2"]')
+
+    element.clear()
+    element.send_keys(offset2)
+
+
+@when('I set rotor 3 offset to {offset3}')
+def step_impl(context, offset3):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="offset_r3"]')
+
+    element.clear()
+    element.send_keys(offset3)
