@@ -8,6 +8,8 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException, ElementNotInteractableException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 # TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
@@ -151,11 +153,13 @@ def step_impl(context, reflector):
     scroll_script = f"window.scrollTo({dropdown_position['x']}, {dropdown_position['y']})"
     context.driver.execute_script(scroll_script)
     try:
-        dropdown.click()
-    except ElementNotInteractableException:
+        # dropdown.click()
+        wait = WebDriverWait(context.driver, 10)
+        wait.until(EC.visibility_of(dropdown)).click()
+    except Exception as e:
         print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\nscroll_script :   {scroll_script}')
         print(f' Is dropdown displayed:     {dropdown.is_displayed()}')
-
+        print(e)
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
     reflector_choice.click()
 
