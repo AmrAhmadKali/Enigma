@@ -125,6 +125,7 @@ function key_pressed(key){
         if(key === ' '){
             space_pressed()
         } else {
+            highlightKey(key);
             awaiting.push('encrypt');
             sendRequest('encrypt', null, key);
         }
@@ -132,6 +133,11 @@ function key_pressed(key){
     } else{
         console.log("Invalid key '"+key+"' pressed");
     }
+}
+
+function highlightKey(key) {
+    $('[name^="k_"]').css('background-color', 'black')
+    $('[name="k_' + key + '"]').css('background-color', 'green')
 }
 
 /**

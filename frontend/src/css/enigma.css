@@ -109,12 +109,13 @@ img {
 .keyboard button {
     color: white;
     background-color: black;
+    box-shadow: 0 5px #999;
 }
+
 .lamppanel button {
     color: black;
     background-color: white;
     cursor: default;
-
 }
 .plugboard button {
     text-align: center;

@@ -20,7 +20,7 @@ function plugboard_pressed(key) {
     for (let i = 0; i < plugs.length; i++) {
         if (plugs[i].includes(key)) {
             plugs.splice(i, 1)
-            const reg = new RegExp(".?" + key + ".?")
+            const reg = new RegExp(`.?${key}.?`)
             const elements = [...document.getElementsByClassName('tuple')];
             for (let i in elements) {
                 if (reg.test(elements[i].outerText)) {
