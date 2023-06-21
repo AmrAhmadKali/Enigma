@@ -53,7 +53,7 @@ Feature: Option Menu
       |  Reflector B   | Enigma I-R2  |  Enigma B-R2  |  Enigma M3-R3   |     Y    |
 
 
-    Scenario Outline: Rotor offsets
+    Scenario Outline: Rotor offsetsss
       Given The Enigma Website is opened
       When I click setting symbol
     # Dont have to select default for Variant because it 's by default selected
