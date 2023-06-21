@@ -160,6 +160,8 @@ def step_impl(context, reflector):
         print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\nscroll_script :   {scroll_script}')
         print(f' Is dropdown displayed:     {dropdown.is_displayed()}')
         print(e)
+        raise RuntimeError("Unable to process input") from e
+
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
     reflector_choice.click()
 
