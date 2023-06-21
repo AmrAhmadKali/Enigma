@@ -20,7 +20,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = False  # To change
+    options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
