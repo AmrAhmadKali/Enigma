@@ -145,7 +145,12 @@ def step_impl(context, variant):
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
     dropdown = context.driver.find_element(By.ID, 'reflector')
-    context.driver.execute_script("arguments[0].scrollIntoView();", dropdown)
+    # Get the position of the element
+    dropdown_position = dropdown.location
+    # Scroll to the position of the element
+    scroll_script = f"window.scrollTo({dropdown_position['x']}, {dropdown_position['y']})"
+    context.driver.execute_script(scroll_script)
+
     dropdown.click()
 
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
