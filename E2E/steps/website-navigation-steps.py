@@ -144,7 +144,7 @@ def step_impl(context, variant):
 
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
-    dropdown = context.driver.find_element(By.ID, 'reflector')
+    dropdown = context.driver.find_element(By.CSS_SELECTOR, 'select[id="reflector"]')
     # Get the position of the element
     dropdown_position = dropdown.location
     # Scroll to the position of the element
@@ -154,6 +154,7 @@ def step_impl(context, reflector):
         dropdown.click()
     except ElementNotInteractableException:
         print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\nscroll_script :   {scroll_script}')
+        print(f' Is dropdown displayed:     {dropdown.is_displayed()}')
 
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
     reflector_choice.click()
