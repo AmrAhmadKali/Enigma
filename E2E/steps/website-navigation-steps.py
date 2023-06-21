@@ -19,7 +19,6 @@ def step_impl(context):
     # spin up driver
     options = Options()
     options.headless = True  # To change
-    options.add_argument("--start-maximized")  # Maximize the browser window
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     context.action_chains = ActionChains(context.driver)
     if "CI" in os.environ.keys():
@@ -146,6 +145,7 @@ def step_impl(context, variant):
 @when('I choose the Reflector {reflector}')
 def step_impl(context, reflector):
     dropdown = context.driver.find_element(By.ID, 'reflector')
+    context.driver.execute_script("arguments[0].scrollIntoView();", dropdown)
     dropdown.click()
 
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
