@@ -56,7 +56,7 @@ Feature: Option Menu
     Scenario Outline: Rotor offset
       Given The Enigma Website is opened
       When I click setting symbol
-     Dont have to select default for Variant because it 's by default selected
+#     Dont have to select default for Variant because it 's by default selected
       And I choose the Reflector <reflector>
       And I choose the Rotor 1 <rotor1>
       And I choose the Rotor 2 <rotor2>
