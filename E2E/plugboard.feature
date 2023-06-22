@@ -7,7 +7,7 @@ Feature: Plugboard
     And I press the G key on the virtual keyboard
     Then The letter N should be displayed in the output box
 
- Scenario Outline: Plugboard reached its limit
+ Scenario Outline: Plugboard reached its limits
   Given The Enigma Website is opened
    And I have a list of keys <keys>
   When I press on the specified keys on the plugboard
