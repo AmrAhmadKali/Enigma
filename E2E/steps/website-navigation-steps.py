@@ -23,14 +23,15 @@ def step_impl(context):
     options = Options()
     options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
-    context.driver.maximize_window()
-    time.sleep(5)
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
         assert context.driver.title == "Enigma"
     else:
         context.driver.get("http://localhost")
         assert context.driver.title == "Enigma"
+
+    context.driver.maximize_window()
+    time.sleep(5)
 
 
 @when('I press the {letter} key on the {keyboard} keyboard')
