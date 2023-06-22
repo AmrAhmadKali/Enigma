@@ -69,6 +69,6 @@
 #      Then The letter <encrypted_letter> should be displayed in the output box
 
 
-      Examples:
-      |  reflector    | rotor1      | rotor2      |    rotor3     |        offset1         |      offset2       |      offset3       | encrypted_letter |
-      |  Reflector C   |  Enigma I-R5  |  Enigma B-R3  |   Enigma M3-R8  |        B         |         D         |           Z         |         U        |
+#      Examples:
+#      |  reflector    | rotor1      | rotor2      |    rotor3     |        offset1         |      offset2       |      offset3       | encrypted_letter |
+#      |  Reflector C   |  Enigma I-R5  |  Enigma B-R3  |   Enigma M3-R8  |        B         |         D         |           Z         |         U        |
