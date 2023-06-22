@@ -1,4 +1,5 @@
 import os
+import time
 
 from behave import *
 from selenium import webdriver
@@ -22,9 +23,11 @@ def step_impl(context):
     options = Options()
     options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
-    context.action_chains = ActionChains(context.driver)
+    context.driver.maximize_window()
+    time.sleep(5)
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
+        assert context.driver.title == "Enigma"
     else:
         context.driver.get("http://localhost")
         assert context.driver.title == "Enigma"
@@ -166,7 +169,7 @@ def step_impl(context, reflector):
         wait = WebDriverWait(context.driver, 10)
         wait.until(EC.visibility_of(dropdown)).click()
     except Exception as e:
-        print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\nscroll_script :   {scroll_script}')
+        print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\n scroll_script :   {scroll_script}')
         print(f' Is dropdown displayed:     {dropdown.is_displayed()}')
         print(e)
         raise RuntimeError("Unable to process input") from e
@@ -252,3 +255,13 @@ def step_impl(context, offset3):
 
     element.clear()
     element.send_keys(offset3)
+
+
+# Scenarios in session.feature
+@when('I refresh the page')
+def step_impl(context):
+    context.driver.refresh()
+
+
+# @when('I click Leave Page in the Alert')
+# def step_impl(context):
