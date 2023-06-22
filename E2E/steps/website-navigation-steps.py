@@ -53,6 +53,15 @@ def step_impl(context):
     key.click()
 
 
+@then('The letter {letter} should be highlighted on the virtual keyboard')
+def step_impl(context, letter):
+    key = context.driver.find_element(By.NAME, f'k_{letter}')
+
+    background_color = key.value_of_css_property("background-color")
+    GREEN = 'rgb(0, 128, 0)'
+    assert background_color == GREEN, f"The Key {letter} didn't light up"
+
+
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
     # context.driver.implicitly_wait(0.5)

@@ -4,12 +4,14 @@ Feature: Keyboard
     Given The Enigma Website is opened
       When I press the G key on the physical keyboard
       Then The letter G should be displayed in the input box
+      And The letter G should be highlighted on the virtual keyboard
       And The letter U should be displayed in the output box
 
   Scenario: Virtual Keyboard is used as Enigma input
     Given The Enigma Website is opened
       When I press the G key on the virtual keyboard
       Then The letter G should be displayed in the input box
+      And The letter G should be highlighted on the virtual keyboard
       And The letter U should be displayed in the output box
 
   Scenario: Input history reaches 140 characters
