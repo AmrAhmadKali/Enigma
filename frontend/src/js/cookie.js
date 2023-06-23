@@ -31,9 +31,9 @@ function getCookie() {
 /**
  * Determines whether cookie with the name 'CC_uuid' is set.
  * @returns {boolean}
- */ //TODO
+ */
 function isCookieSaved(){
-    return decodeURIComponent(document.cookie).startsWith("CC_uuid=")
+    return decodeURIComponent(document.cookie).includes("CC_uuid=")
 }
 
 

@@ -40,6 +40,7 @@ function currentSet(rotor_setting, offsets, keyrings){
 
     loadVariantsToMenu()
     document.getElementById("variants").value = getCurrentVariant()
+    document.getElementById("deactivate_plugboard").checked = (localStorage.getItem("plugboard") === "true")
 
     for(let i= 1; i <= rotors.length; i++ ){
         document.getElementById('reflector').value = reflector
@@ -156,8 +157,7 @@ function setvariants(){
         }
         i++
     }
-    alert("Error") //TODO
-
+    alert("An Error occurred")
 }
 
 function hideVariantsInMenu(variant){
