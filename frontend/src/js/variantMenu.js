@@ -39,22 +39,31 @@ function hideVariantMenu(){
 }
 
 function submitVariantMenu(){
-    let name = document.getElementById("variantName").value
+    let variantName = document.getElementById("variantName").value
     let plugboard = document.getElementById("variantPlugboard").checked
     let reflectors = $("#variantReflectors").val().toLocaleString()
     let rotors = $("#variantRotors").val().toLocaleString()
 
-    let variant = "name,"+name+",reflectors," +reflectors+",rotors,"+rotors+",plugboard,"+plugboard
+    let variant = "name,"+variantName+",reflectors," +reflectors+",rotors,"+rotors+",plugboard,"+plugboard
 
-    appendToLocalStorage(variant)
+    appendToLocalStorage(variantName, variant)
     hideVariantMenu()
 }
 
-function appendToLocalStorage(variant){
-    let savedVariants = localStorage.length - 2
-    let VariantNbr = savedVariants + 1
+function appendToLocalStorage(variantName, variant){
+    let i = 1
+    while(localStorage.getItem(String(i))){
+        let savedVariant = localStorage.getItem(String(i)).split(',')
+        let name = savedVariant[1]
 
-    localStorage.setItem(String(VariantNbr), String(variant))
+        if(name === variantName){
+            localStorage.setItem(String(i), String(variant))
+            return
+        }
+        i++
+    }
+
+    localStorage.setItem(String(i), String(variant))
 }
 
 function loadVariantsToMenu(){
