@@ -28,7 +28,7 @@ def step_impl(context):
         assert context.driver.title == "Enigma"
     else:
         context.driver.get("http://localhost")
-        assert context.driver.title == "Enigma"
+        assert context.driver.title == "CC-Enigma"
 
     context.driver.maximize_window()
     time.sleep(5)
