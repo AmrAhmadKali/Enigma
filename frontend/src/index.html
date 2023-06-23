@@ -9,6 +9,7 @@
     <script src="js/enigma.js"></script>
     <script src="js/plugboard.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/variantMenu.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -184,14 +185,12 @@
                 </td>
                 <td>
                     <select id="variants" onchange="setvariants()">
-                        <option value="default" disabled selected="selected"></option>
-                        <option value="1">Enigma 1</option>
-                        <option value="B">Enigma B</option>
-                        <option value="M3">Enigma M3</option>
-                        <option value="All">All</option>
+                        <option value="default" disabled selected></option>
                     </select>
                 </td>
-                <td></td>
+                <td>
+                    <button type=button onclick="hideMenu(); showVariantMenu()">create variant</button>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -199,7 +198,7 @@
                 </td>
                 <td>
                     <select id="reflector">
-                        <option value="default" disabled selected="selected"></option>
+                        <option value="default" disabled selected></option>
                         <option value="Reflector A">UKW A</option>
                         <option value="Reflector B">UKW B</option>
                         <option value="Reflector C">UKW C</option>
@@ -211,7 +210,7 @@
                 <td><label for="r1"> Rotor 1:</label></td>
                 <td>
                     <select id="r1">
-                        <option value="default" disabled selected="selected"></option>
+                        <option value="default" disabled selected></option>
                         <option value="Enigma I-R1">Enigma I-R1</option>
                         <option value="Enigma I-R2">Enigma I-R2</option>
                         <option value="Enigma I-R3">Enigma I-R3</option>
@@ -234,9 +233,9 @@
                     <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A"
                            required>
                 </td>
-                <td><button type="button" onclick="changevalue('ring_r1', -1)">-</button>
+                <td><button type="button" onclick="changeRingsetting('ring_r1', -1)">-</button>
                     <input type="text" id="ring_r1" value="0 A" readonly>
-                     <button type="button" onclick="changevalue('ring_r1', 1)">+</button>
+                     <button type="button" onclick="changeRingsetting('ring_r1', 1)">+</button>
                  </td>
             </tr>
             <tr>
@@ -269,9 +268,9 @@
                            required>
                 </td>
                 <td>
-                    <button type="button" onclick="changevalue('ring_r2', -1)">-</button>
+                    <button type="button" onclick="changeRingsetting('ring_r2', -1)">-</button>
                     <input type="text" id="ring_r2" value="0 A" readonly>
-                    <button type="button" onclick="changevalue('ring_r2', 1)">+</button>
+                    <button type="button" onclick="changeRingsetting('ring_r2', 1)">+</button>
                     
                 </td>
             </tr>
@@ -305,9 +304,9 @@
                            required>
                 </td>
                 <td>
-                    <button type="button" onclick="changevalue('ring_r3', -1)">-</button>
+                    <button type="button" onclick="changeRingsetting('ring_r3', -1)">-</button>
                     <input type="text" id="ring_r3" value="0 A" readonly>
-                    <button type="button" onclick="changevalue('ring_r3', 1)">+</button>
+                    <button type="button" onclick="changeRingsetting('ring_r3', 1)">+</button>
                     
                 </td>
             </tr>
@@ -335,6 +334,49 @@
         
             </tbody>
         </table>
+    </form>
+</dialog>
+
+<dialog id="variantMenu">
+    <form action="#" onsubmit="submitVariantMenu(); return false">
+        <p>(hold cmd to select multiple)</p>
+        <br>
+        <label for="variantName">Name:</label>
+        <input type="text" id="variantName" pattern="[a-zA-Z0-9]{1,15}" title="one to fifteen alphabetic characters">
+        <br>
+        <label for="variantReflectors">Reflectors:</label>
+        <select id="variantReflectors" multiple>
+            <option value="Reflector A">UKW A</option>
+            <option value="Reflector B">UKW B</option>
+            <option value="Reflector C">UKW C</option>
+            <option value="Reflector UKW">UKW Enigma B</option>
+        </select>
+    <br>
+        <label for="variantRotors">Rotors:</label>
+        <select id="variantRotors" multiple>
+            <option value="Enigma I-R1">Enigma I-R1</option>
+            <option value="Enigma I-R2">Enigma I-R2</option>
+            <option value="Enigma I-R3">Enigma I-R3</option>
+            <option value="Enigma I-R4">Enigma I-R4</option>
+            <option value="Enigma I-R5">Enigma I-R5</option>
+            <option value="Enigma B-R1">Enigma B-R1</option>
+            <option value="Enigma B-R2">Enigma B-R2</option>
+            <option value="Enigma B-R3">Enigma B-R3</option>
+            <option value="Enigma M3-R1">Enigma M3-R1</option>
+            <option value="Enigma M3-R2">Enigma M3-R2</option>
+            <option value="Enigma M3-R3">Enigma M3-R3</option>
+            <option value="Enigma M3-R4">Enigma M3-R4</option>
+            <option value="Enigma M3-R5">Enigma M3-R5</option>
+            <option value="Enigma M3-R6">Enigma M3-R6</option>
+            <option value="Enigma M3-R7">Enigma M3-R7</option>
+            <option value="Enigma M3-R8">Enigma M3-R8</option>
+        </select>
+        <br>
+        <label for="variantPlugboard">Plugboard:</label>
+        <input id="variantPlugboard" type="checkbox">
+        <button type="button" id="cancelVariantMenuBtn" onclick="hideVariantMenu()">Cancel</button>
+        <input type="submit" id="submitVariantMenuBtn" value="Submit">
+
     </form>
 </dialog>
 

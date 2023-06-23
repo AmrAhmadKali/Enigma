@@ -38,6 +38,9 @@ function currentSet(rotor_setting, offsets, keyrings){
 
     document.getElementById('menu').showModal()
 
+    loadVariantsToMenu()
+    document.getElementById("variants").value = getCurrentVariant()
+
     for(let i= 1; i <= rotors.length; i++ ){
         document.getElementById('reflector').value = reflector
         document.getElementById('r'+i).value = rotors[rotors.length-i]
@@ -51,12 +54,9 @@ function currentSet(rotor_setting, offsets, keyrings){
     document.getElementById('offset_r2').value = mapped_off_r2
     document.getElementById('offset_r3').value = mapped_off_r3
     
-    changevalue('ring_r1', keyrings[rotors[2]], true)
-    changevalue('ring_r2', keyrings[rotors[1]], true)
-    changevalue('ring_r3', keyrings[rotors[0]], true)
-
-    // TODO call still necessary?
-    setvariants(rotors.length)
+    changeRingsetting('ring_r1', keyrings[rotors[2]], true)
+    changeRingsetting('ring_r2', keyrings[rotors[1]], true)
+    changeRingsetting('ring_r3', keyrings[rotors[0]], true)
 }
 
 /**
@@ -141,95 +141,82 @@ function submitMenu(){
 /**
  * Disables all menu options not available for the chosen variant.
  * Only to be called after a variant has been chosen.
- * @param rotor_count - TODO: nötig?
  */
-function setvariants(rotor_count = null){
+function setvariants(){
     const variant = document.getElementById("variants").value
 
-    if(rotor_count === null){
-        document.getElementById("reflector").value = "default"
-        document.getElementById("r1").value = "default"
-        document.getElementById("r2").value = "default"
-        document.getElementById("r3").value = "default"
+    let i = 1
+    while(localStorage.getItem(String(i))){
+        let savedVariant = localStorage.getItem(String(i)).split(',')
+        let name = savedVariant[1]
+        if(name === variant){
+            localStorage.setItem("current", String(i))
+            hideVariantsInMenu(savedVariant)
+            return
+        }
+        i++
+    }
+    alert("Error") //TODO
+
+}
+
+function hideVariantsInMenu(variant){
+    let reflectorIndex
+    let rotorIndex
+    let plugboardIndex
+    for(let i=0; i<variant.length; i++){
+        if(variant[i]==="reflectors"){
+            reflectorIndex = i
+        }
+        if(variant[i]==="rotors"){
+            rotorIndex = i
+        }
+        if(variant[i]==="plugboard"){
+            plugboardIndex = i
+        }
     }
 
-    switch(variant){
-        case "B":{
-            //$('tr[id="menu_row3"]').prop('hidden', true)
+    document.getElementById("reflector").value = "default"
+    document.getElementById("r1").value = "default"
+    document.getElementById("r2").value = "default"
+    document.getElementById("r3").value = "default"
 
-            $('input[id="deactivate_plugboard"]').prop('checked', false)
-            $('input[id="deactivate_plugboard"]').prop('disabled', true)
+    let reflectorArray = variant.slice(reflectorIndex+1,rotorIndex)
+    let rotorArray = variant.slice(rotorIndex+1,plugboardIndex)
 
-
-            $('[value="Reflector A"]').prop('disabled', true)
-            $('[value="Reflector B"]').prop('disabled', true)
-            $('[value="Reflector C"]').prop('disabled', true)
-            $('[value="Reflector UKW"]').prop('disabled', false)
-
-
-            $('option[value^="Enigma B-"]').prop('disabled', false)
-            $('option[value^="Enigma I-"]').prop('disabled', true)
-            $('option[value^="Enigma M3-"]').prop('disabled', true)
-            break
-        }
-
-        case "1":{
-            //$('tr[id="menu_row3"]').prop('hidden', false)
-
-            $('input[id="deactivate_plugboard"]').prop('checked', true)
-            $('input[id="deactivate_plugboard"]').prop('disabled', true)
-
-            $('[value="Reflector A"]').prop('disabled', false)
-            $('[value="Reflector B"]').prop('disabled', false)
-            $('[value="Reflector C"]').prop('disabled', false)
-            $('[value="Reflector UKW"]').prop('disabled', true)
-
-
-            $('option[value^="Enigma B-"]').prop('disabled', true)
-            $('option[value^="Enigma I-"]').prop('disabled', false)
-            $('option[value^="Enigma M3-"]').prop('disabled', true)
-            break
-        }
-
-        case "M3":{
-           //$('tr[id="menu_row3"]').prop('hidden', false)
-
-            $('input[id="deactivate_plugboard"]').prop('checked', true)
-            $('input[id="deactivate_plugboard"]').prop('disabled', true)
-
-            $('[value="Reflector A"]').prop('disabled', true)
-            $('[value="Reflector B"]').prop('disabled', false)
-            $('[value="Reflector C"]').prop('disabled', false)
-            $('[value="Reflector UKW"]').prop('disabled', true)
-
-
-            $('option[value^="Enigma B-"]').prop('disabled', true)
-            $('option[value^="Enigma I-"]').prop('disabled', true)
-            $('option[value^="Enigma M3-"]').prop('disabled', false)
-            break
-        }
-
-        case "All":{
-            //$('tr[id="menu_row3"]').prop('hidden', false)
-
-            $('input[id="deactivate_plugboard"]').prop('disabled', false)
-            $('[value^=Reflector]').prop('disabled', false)
-            $('option[value^=Enigma]').prop('disabled', false)
-            break
-        }
+    if(variant[variant.length-1] === "true"){
+        $('input[id="deactivate_plugboard"]').prop('checked', true)
+        localStorage.setItem("plugboard", "true")
+    } else {
+        $('input[id="deactivate_plugboard"]').prop('checked', false)
+        $('input[id="deactivate_plugboard"]').prop('disabled', true)
+        localStorage.setItem("plugboard", "false")
 
     }
+
+    $('option[value^="Reflector"]').prop('disabled', true)
+
+    for(let i=0; i<reflectorArray.length; i++){
+        $('option[value="'+reflectorArray[i]+'"').prop('disabled', false)
+    }
+
+    $('option[value^="Enigma I-R"]').prop('disabled', true)
+    $('option[value^="Enigma B-R"]').prop('disabled', true)
+    $('option[value^="Enigma M3-R"]').prop('disabled', true)
+
+    for(let i=0; i<rotorArray.length; i++){
+        $('option[value="'+rotorArray[i]+'"').prop('disabled', false)
+    }
+
 }
 
 /**
- * TODO
+ * Updates the ringsettings
  * @param inputid
  * @param change
  * @param reset
  */
-
-/* Updates the ringsettings*/
-function changevalue(inputid, change, reset = false) {
+function changeRingsetting(inputid, change, reset = false) {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var input = document.getElementById(inputid)
     var value = parseInt(input.value)

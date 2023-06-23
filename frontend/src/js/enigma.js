@@ -46,6 +46,7 @@ function listener_init() {
 function reset() {
     reset_clicked = true
     deleteCookie()
+    localStorage.clear()
     window.location.reload()
 }
 

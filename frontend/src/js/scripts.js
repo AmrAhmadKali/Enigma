@@ -24,6 +24,7 @@ let awaiting = [];
  */
 function sock_open() {
     load();
+    initLocalStorage();
 }
 
 
