@@ -46,6 +46,7 @@ function listener_init() {
 function reset() {
     reset_clicked = true
     deleteCookie()
+    localStorage.clear()
     window.location.reload()
 }
 
@@ -109,6 +110,7 @@ function clearContainer(){
     document.querySelector(".inputContainer").innerText = ''
     document.querySelector(".outputContainer").innerText = ''
     $("[name^=l_]").css('background-color', 'white')
+    $("[name^=k_]").css('background-color', 'black')
 }
 
 /**

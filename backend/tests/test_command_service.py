@@ -8,6 +8,7 @@ from core.db import DB
 from core.encryption_controller import EncryptionController
 from core.help_controller import HelpController
 from core.main import Server
+from core.plugboard import Plugboard
 from core.rotor_controller import RotorController
 from core.rotor_service import RotorService
 from meta.command_param_types import Any
@@ -21,12 +22,14 @@ class InitTest(unittest.IsolatedAsyncioTestCase):
         # First of all, we need to check if the code would even run, prior to testing it..
         typing.TYPE_CHECKING = True
         self.reg = Registry()
-        HelpController()
-        DB()
-        EncryptionController()
-        RotorService()
-        RotorController()
-        CommandService()
+        self.reg.add_instance('app', Server(), True)
+        self.reg.add_instance('help', HelpController(), True)
+        self.reg.add_instance('db', DB(), True)
+        self.reg.add_instance('encryption_controller', EncryptionController(), True)
+        self.reg.add_instance('rotor_service', RotorService(), True)
+        self.reg.add_instance('rotor_controller', RotorController(), True)
+        self.reg.add_instance('command_service', CommandService(), True)
+        self.reg.add_instance('plugboard', Plugboard(), True)
         app: Server = self.reg.get_instance("app")
         self.reg.load_instances(["core"])
         app.init(["core"], self.reg)
@@ -89,4 +92,3 @@ class InitTest(unittest.IsolatedAsyncioTestCase):
         self.reg.add_instance('test', self)
         self.assertRaises(Exception, self.reg.add_instance, "test", self)
 
-        self.assertRaises(Exception, self.reg.add_instance, "aa", self, True)

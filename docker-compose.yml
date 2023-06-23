@@ -5,7 +5,7 @@ services:
     ports:
       - "25500:25500"
     volumes:
-      - data:/srv/enigma.db
+      - data:/home/developer/data
 
   frontend:
     build: frontend/

@@ -33,7 +33,7 @@ function getCookie() {
  * @returns {boolean}
  */
 function isCookieSaved(){
-    return decodeURIComponent(document.cookie).startsWith("CC_uuid=")
+    return decodeURIComponent(document.cookie).includes("CC_uuid=")
 }
 
 

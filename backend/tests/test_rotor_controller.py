@@ -103,3 +103,34 @@ class PlugboardTest(unittest.IsolatedAsyncioTestCase):
         code, resp = await self.rc.rotors_offset_all_cmd(None, storage, 'BCD')
         self.assertEqual(code, 200)
         self.assertEqual(storage.rotors, {'Enigma I-R2': 3, 'Enigma I-R3': 2, 'Enigma I-R1': 1})
+
+    async def test_6_roffset_single(self):
+        storage = DictObject({'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
+                              'rotors': {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0}})
+        self.rs.reset_offsets(storage)
+
+        code, resp = await self.rc.rotors_ringoffset_single_cmd(None, storage, 9, 'A')
+        self.assertEqual(code, 400)
+
+        code, resp = await self.rc.rotors_ringoffset_single_cmd(None, storage, 1, 'AA')
+        self.assertEqual(code, 400)
+
+        code, resp = await self.rc.rotors_ringoffset_single_cmd(None, storage, 1, 'Z')
+        self.assertEqual(code, 200)
+        self.assertEqual(storage.rotorkeyring,
+                         {'Enigma I-R2': 0, 'Enigma I-R3': self.rs.convert_to_int('Z')[0], 'Enigma I-R1': 0})
+
+    async def test_7_roffset_all(self):
+        storage = DictObject({'rotor_order': [['Enigma I-R2', 'Enigma I-R3', 'Enigma I-R1'], 'Reflector A'],
+                              'rotors': {'Enigma I-R2': 9, 'Enigma I-R3': 7, 'Enigma I-R1': 3}})
+        self.rs.reset_offsets(storage)
+        code, resp = await self.rc.rotors_ringoffset_all_cmd(None, storage, 'ABCD')
+        self.assertEqual(code, 400)
+
+        code, resp = await self.rc.rotors_ringoffset_all_cmd(None, storage, 'AAA')
+        self.assertEqual(code, 200)
+        self.assertEqual(storage.rotorkeyring, {'Enigma I-R2': 0, 'Enigma I-R3': 0, 'Enigma I-R1': 0})
+
+        code, resp = await self.rc.rotors_ringoffset_all_cmd(None, storage, 'BCD')
+        self.assertEqual(code, 200)
+        self.assertEqual(storage.rotorkeyring, {'Enigma I-R2': 3, 'Enigma I-R3': 2, 'Enigma I-R1': 1})
