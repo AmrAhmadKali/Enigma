@@ -134,7 +134,7 @@ img {
 #showMenuBtn, #resetBtn, #clearBtn{
     height: 5vh;
     width: 5vh;
-    padding-right: 15%;
+    margin-right: 8%;
 }
 
 #showMenuBtn {
