@@ -11,6 +11,7 @@ function showMenu(){
     awaiting.push('getSetting')
     sendRequest('dump')
     remove_keydown_listener()
+
 }
 
 /**
@@ -39,8 +40,11 @@ function currentSet(rotor_setting, offsets, keyrings){
     document.getElementById('menu').showModal()
 
     loadVariantsToMenu()
+
     document.getElementById("variants").value = getCurrentVariant()
+    setvariants()
     document.getElementById("deactivate_plugboard").checked = (localStorage.getItem("plugboard") === "true")
+    $('input[id="deactivate_plugboard"]').prop('disabled', true)
 
     for(let i= 1; i <= rotors.length; i++ ){
         document.getElementById('reflector').value = reflector
