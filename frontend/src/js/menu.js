@@ -97,6 +97,10 @@ function submitMenu(){
         alert("Please choose a value for each field!")
         return
     }
+    if(r1===r2 || r1===r3 || r2===r3){
+        alert("A rotor cannot be chosen twice!")
+        return
+    }
 
     let setup
 

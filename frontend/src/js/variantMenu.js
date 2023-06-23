@@ -44,6 +44,16 @@ function submitVariantMenu(){
     let reflectors = $("#variantReflectors").val().toLocaleString()
     let rotors = $("#variantRotors").val().toLocaleString()
 
+    if(rotors.split(',').length<3){
+        alert("Please choose at least 3 rotors")
+        return
+    }
+    if(reflectors === ""){
+        alert("Please choose at least 1 reflector")
+        return
+    }
+
+
     let variant = "name,"+variantName+",reflectors," +reflectors+",rotors,"+rotors+",plugboard,"+plugboard
 
     appendToLocalStorage(variantName, variant)
