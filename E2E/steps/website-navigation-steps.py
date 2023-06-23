@@ -25,7 +25,7 @@ def step_impl(context):
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
-        assert context.driver.title == "Enigma"
+        assert context.driver.title == "CC-Enigma"
     else:
         context.driver.get("http://localhost")
         assert context.driver.title == "CC-Enigma"
