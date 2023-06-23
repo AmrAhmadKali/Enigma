@@ -12,9 +12,8 @@ from meta.dict_object import DictObject
 @instance("db")
 class DB(BaseModule):
     # TODO: Move Database to persistent docker volume
-    DB_LOCATION = "enigma.db"
+    DB_LOCATION = "data/enigma.db"
     _conn: Connection
-
     def __init__(self):
         pass
 
@@ -72,6 +71,7 @@ class DB(BaseModule):
             return [cur.rowcount, cur.lastrowid]
 
         row_count, lastrowid = await self._exec_wrapper(sql, params, map_result)
+        await self._conn.commit()
         self.lastrowid = lastrowid
         return row_count
 
