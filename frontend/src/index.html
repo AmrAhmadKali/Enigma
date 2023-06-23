@@ -189,7 +189,7 @@
                     </select>
                 </td>
                 <td>
-                    <button type=button onclick="hideMenu(); showVariantMenu()">create variant</button>
+                    <button type=button onclick="hideMenu(); showVariantMenu()">Add/Modify Variant</button>
                 </td>
             </tr>
             <tr>
@@ -338,45 +338,82 @@
 </dialog>
 
 <dialog id="variantMenu">
+    <p>Add or Modify a Variant</p>
     <form action="#" onsubmit="submitVariantMenu(); return false">
-        <p>(hold cmd to select multiple)</p>
-        <br>
-        <label for="variantName">Name:</label>
-        <input type="text" id="variantName" pattern="[a-zA-Z0-9]{1,15}" title="one to fifteen alphabetic characters">
-        <br>
-        <label for="variantReflectors">Reflectors:</label>
-        <select id="variantReflectors" multiple>
-            <option value="Reflector A">UKW A</option>
-            <option value="Reflector B">UKW B</option>
-            <option value="Reflector C">UKW C</option>
-            <option value="Reflector UKW">UKW Enigma B</option>
-        </select>
-    <br>
-        <label for="variantRotors">Rotors:</label>
-        <select id="variantRotors" multiple>
-            <option value="Enigma I-R1">Enigma I-R1</option>
-            <option value="Enigma I-R2">Enigma I-R2</option>
-            <option value="Enigma I-R3">Enigma I-R3</option>
-            <option value="Enigma I-R4">Enigma I-R4</option>
-            <option value="Enigma I-R5">Enigma I-R5</option>
-            <option value="Enigma B-R1">Enigma B-R1</option>
-            <option value="Enigma B-R2">Enigma B-R2</option>
-            <option value="Enigma B-R3">Enigma B-R3</option>
-            <option value="Enigma M3-R1">Enigma M3-R1</option>
-            <option value="Enigma M3-R2">Enigma M3-R2</option>
-            <option value="Enigma M3-R3">Enigma M3-R3</option>
-            <option value="Enigma M3-R4">Enigma M3-R4</option>
-            <option value="Enigma M3-R5">Enigma M3-R5</option>
-            <option value="Enigma M3-R6">Enigma M3-R6</option>
-            <option value="Enigma M3-R7">Enigma M3-R7</option>
-            <option value="Enigma M3-R8">Enigma M3-R8</option>
-        </select>
-        <br>
-        <label for="variantPlugboard">Plugboard:</label>
-        <input id="variantPlugboard" type="checkbox">
-        <button type="button" id="cancelVariantMenuBtn" onclick="hideVariantMenu()">Cancel</button>
-        <input type="submit" id="submitVariantMenuBtn" value="Submit">
+        <table>
+            <tbody>
 
+            <tr>
+                <td>
+                    <label for="variantName">Name:</label>
+                </td>
+                <td>
+                    <input type="text" id="variantName" pattern="[a-zA-Z0-9]{1,15}" title="one to fifteen alphabetic characters">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    (hold cmd to select multiple)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="variantReflectors">Reflectors:</label>
+                </td>
+                <td>
+                    <select id="variantReflectors" multiple>
+                        <option value="Reflector A">UKW A</option>
+                        <option value="Reflector B">UKW B</option>
+                        <option value="Reflector C">UKW C</option>
+                        <option value="Reflector UKW">UKW Enigma B</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                <label for="variantRotors">Rotors:</label>
+                </td>
+                <td>
+                <select id="variantRotors" multiple>
+                    <option value="Enigma I-R1">Enigma I-R1</option>
+                    <option value="Enigma I-R2">Enigma I-R2</option>
+                    <option value="Enigma I-R3">Enigma I-R3</option>
+                    <option value="Enigma I-R4">Enigma I-R4</option>
+                    <option value="Enigma I-R5">Enigma I-R5</option>
+                    <option value="Enigma B-R1">Enigma B-R1</option>
+                    <option value="Enigma B-R2">Enigma B-R2</option>
+                    <option value="Enigma B-R3">Enigma B-R3</option>
+                    <option value="Enigma M3-R1">Enigma M3-R1</option>
+                    <option value="Enigma M3-R2">Enigma M3-R2</option>
+                    <option value="Enigma M3-R3">Enigma M3-R3</option>
+                    <option value="Enigma M3-R4">Enigma M3-R4</option>
+                    <option value="Enigma M3-R5">Enigma M3-R5</option>
+                    <option value="Enigma M3-R6">Enigma M3-R6</option>
+                    <option value="Enigma M3-R7">Enigma M3-R7</option>
+                    <option value="Enigma M3-R8">Enigma M3-R8</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="variantPlugboard">Plugboard:</label>
+                </td>
+                <td>
+                    <input id="variantPlugboard" type="checkbox">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" id="cancelVariantMenuBtn" onclick="hideVariantMenu()">Cancel</button>
+                </td>
+                <td>
+                    <input type="submit" id="submitVariantMenuBtn" value="Submit">
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </dialog>
 
