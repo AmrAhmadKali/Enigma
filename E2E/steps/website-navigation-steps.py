@@ -3,18 +3,13 @@ import time
 
 from behave import *
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.common.exceptions import NoAlertPresentException, ElementNotInteractableException
+from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-
-
-# TODO: Tests laufen zu schnell, sollten auf Websocket Antwort warten bis nächster Step ausgeführt wird.
-#  Derzeit Probleme da Steps nicht in richtiger Reihenfolge ausgeführt werden
+from selenium.webdriver.support.ui import WebDriverWait, Select
 
 
 @given('The Enigma Website is opened')
@@ -143,13 +138,20 @@ def step_impl(context, lamp):
 
 @when('I click setting symbol')
 def step_impl(context):
-    element = context.driver.find_element(By.ID, 'showMenuBtn')
-    element.click()
-    # WebDriverWait(context.driver, timeout=10).until(EC.element_to_be_clickable((By.ID, "variants")))
+    ignored_exceptions = [NoSuchElementException, StaleElementReferenceException]
+    try:
+        element = WebDriverWait(context.driver, 5, ignored_exceptions=ignored_exceptions) \
+        .until(EC.presence_of_element_located((By.ID, "showMenuBtn")))
+        # element = context.driver.find_element(By.CSS_SELECTOR, 'button[id="showMenuBtn"')
+        element.click()
+
+    except Exception as e:
+        print(e)
 
 
 @when('I choose the variant {variant}')
 def step_impl(context, variant):
+    time.sleep(2)
     dropdown = context.driver.find_element(By.CSS_SELECTOR, '#variants')
     dropdown.click()
 
@@ -215,16 +217,7 @@ def step_impl(context):
 @then('The {encrypted_letter} letter should be displayed in the output box')
 def step_impl(context, encrypted_letter):
     element = context.driver.find_element(By.CSS_SELECTOR, '.outputContainer').text
-    #print('Assert is about to be done')
     assert element == encrypted_letter, f'Output Container does not contain {encrypted_letter}, but {element}'
-
-
-@when('I uncheck the Plugboard checkbox')
-def step_impl(context):
-    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="deactivate_plugboard"]')
-
-    if element.get_attribute('checked'):
-        element.click()
 
 
 @then('Plugboard is disappeared')
@@ -259,10 +252,66 @@ def step_impl(context, offset3):
 
 
 # Scenarios in session.feature
-@when('I refresh the page')
+@when('I press the reset button')
 def step_impl(context):
-    context.driver.refresh()
+    element = context.driver.find_element(By.CSS_SELECTOR, 'button[id="resetBtn"]')
+    element.click()
 
 
-# @when('I click Leave Page in the Alert')
-# def step_impl(context):
+@when('I close the Alert')
+def step_impl(context):
+    alert = context.driver.switch_to.alert
+
+    alert.accept()
+
+
+@then('Variant is set to {default_variant}')
+def step_impl(context, default_variant):
+    time.sleep(3)
+    select_element = context.driver.find_element(By.CSS_SELECTOR, 'select[id="variants"]')
+    select = Select(select_element)
+    print(select.first_selected_option.text)
+    selected_option_text = select.first_selected_option.text
+
+    assert selected_option_text == default_variant, f'{default_variant} is not selected'
+
+
+@then('Reflector is set to {default_reflector}')
+def step_impl(context, default_reflector):
+    select_element = context.driver.find_element(By.ID, 'reflector')
+    select = Select(select_element)
+    print(select.first_selected_option.text)
+    selected_option_text = select.first_selected_option.text
+
+    assert selected_option_text == 'UKW A', f'{default_reflector} is not selected'
+
+
+@then('Rotor 1 is set to {default_rotor1}')
+def step_impl(context, default_rotor1):
+    select_element = context.driver.find_element(By.ID, 'r1')
+    select = Select(select_element)
+    print(select.first_selected_option.text)
+    selected_option_text = select.first_selected_option.text
+
+    assert selected_option_text == default_rotor1, f'{default_rotor1} is not selected'
+
+
+@then('Rotor 2 is set to {default_rotor2}')
+def step_impl(context, default_rotor2):
+    select_element = context.driver.find_element(By.ID, 'r2')
+    select = Select(select_element)
+    print(select.first_selected_option.text)
+    selected_option_text = select.first_selected_option.text
+
+    assert selected_option_text == default_rotor2, f'{default_rotor2} is not selected'
+
+
+@then('Rotor 3 is set to {default_rotor3}')
+def step_impl(context, default_rotor3):
+    select_element = context.driver.find_element(By.ID, 'r3')
+    select = Select(select_element)
+    print(select.first_selected_option.text)
+    selected_option_text = select.first_selected_option.text
+
+    assert selected_option_text == default_rotor3, f'{default_rotor3} is not selected'
+
