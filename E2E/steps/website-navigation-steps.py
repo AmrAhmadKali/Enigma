@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException
+from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
 
@@ -169,12 +169,12 @@ def step_impl(context, reflector):
     context.driver.execute_script(scroll_script)
     try:
         # dropdown.click()
-        wait = WebDriverWait(context.driver, 10)
+        wait = WebDriverWait(context.driver, 5)
         wait.until(EC.visibility_of(dropdown)).click()
     except Exception as e:
         print(f'dropdown.location :     {dropdown.location}\ndropdown_position:    {dropdown_position}\n scroll_script :   {scroll_script}')
         print(f' Is dropdown displayed:     {dropdown.is_displayed()}')
-        print(e)
+        # print(e)
         raise RuntimeError("Unable to process input") from e
 
     reflector_choice = context.driver.find_element(By.CSS_SELECTOR, f'option[value="{reflector}"]')
@@ -267,13 +267,27 @@ def step_impl(context):
 
 @then('Variant is set to {default_variant}')
 def step_impl(context, default_variant):
-    time.sleep(3)
-    select_element = context.driver.find_element(By.CSS_SELECTOR, 'select[id="variants"]')
-    select = Select(select_element)
-    print(select.first_selected_option.text)
-    selected_option_text = select.first_selected_option.text
-
-    assert selected_option_text == default_variant, f'{default_variant} is not selected'
+    locator = (By.ID, 'variants')
+    retries = 3
+    while retries > 0:
+        try:
+            element = context.driver.find_element(By.ID, 'variants')
+            staleness_result = EC.staleness_of(element)
+            print('staleness:', staleness_result(context.driver))
+            is_select_present = WebDriverWait(context.driver, 10).until(EC.text_to_be_present_in_element_value(locator,
+                                                                                                               default_variant))
+            print(f'is_select_present : {is_select_present}')
+            select_element = context.driver.find_element(*locator)
+            print(f'.is_displayed():   {select_element.is_displayed()}')
+            select = Select(select_element)
+            print(select.first_selected_option.text)  # Heisenbug was here WATCH OUT!!
+            selected_option_text = select.first_selected_option.text
+            assert selected_option_text == default_variant, f'{default_variant} is not selected but {selected_option_text}'
+            break
+        except (StaleElementReferenceException, NoSuchElementException, TimeoutException) as e:
+            retries -= 1
+            context.driver.refresh()
+            context.execute_steps('When I click setting symbol')
 
 
 @then('Reflector is set to {default_reflector}')
@@ -283,7 +297,7 @@ def step_impl(context, default_reflector):
     print(select.first_selected_option.text)
     selected_option_text = select.first_selected_option.text
 
-    assert selected_option_text == 'UKW A', f'{default_reflector} is not selected'
+    assert selected_option_text == 'UKW A', f'{default_reflector} is not selected but {selected_option_text}'
 
 
 @then('Rotor 1 is set to {default_rotor1}')
@@ -293,7 +307,7 @@ def step_impl(context, default_rotor1):
     print(select.first_selected_option.text)
     selected_option_text = select.first_selected_option.text
 
-    assert selected_option_text == default_rotor1, f'{default_rotor1} is not selected'
+    assert selected_option_text == default_rotor1, f'{default_rotor1} is not selected but {selected_option_text}'
 
 
 @then('Rotor 2 is set to {default_rotor2}')
@@ -303,7 +317,7 @@ def step_impl(context, default_rotor2):
     print(select.first_selected_option.text)
     selected_option_text = select.first_selected_option.text
 
-    assert selected_option_text == default_rotor2, f'{default_rotor2} is not selected'
+    assert selected_option_text == default_rotor2, f'{default_rotor2} is not selected but {selected_option_text}'
 
 
 @then('Rotor 3 is set to {default_rotor3}')
@@ -313,5 +327,5 @@ def step_impl(context, default_rotor3):
     print(select.first_selected_option.text)
     selected_option_text = select.first_selected_option.text
 
-    assert selected_option_text == default_rotor3, f'{default_rotor3} is not selected'
+    assert selected_option_text == default_rotor3, f'{default_rotor3} is not selected but {selected_option_text}'
 
