@@ -141,7 +141,12 @@ function highlightKey(key) {
     $('[name^="k_"]').css('background-color', 'black')
     $('[name="k_' + key + '"]').css('background-color', 'green')
 }
-
+function highlightWhiteSpace(){
+    $('[name^="k_"]').css('background-color', 'black')
+    $("[name^=k_space]").css('background-color', 'black')
+    $('[name="k_space"]').css('background-color', 'green')
+   
+}
 /**
  * Appends a whitespace to the output Container, as we don't send space to the backend for encryption.
  * Only to be called by key_pressed().
@@ -149,6 +154,7 @@ function highlightKey(key) {
 function space_pressed(){
     let outputContainer = document.querySelector(".outputContainer");
     outputContainer.innerHTML += ' ';
+    highlightWhiteSpace() 
 
     checkCharLimit();
 }
