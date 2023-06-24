@@ -2,6 +2,9 @@
 
 ## How to run it
 - execute ` docker-compose up --build` in project root folder
+- open `http://localhost` in Firefox Browser 
+
+**Project has been designed for Firefox. Compability with other browsers cannot be guaranteed**
 
 
 ## Content
