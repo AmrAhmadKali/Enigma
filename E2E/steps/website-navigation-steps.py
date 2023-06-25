@@ -17,7 +17,7 @@ from selenium.webdriver.common.alert import Alert
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = False  # To change
+    options.headless = True  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
