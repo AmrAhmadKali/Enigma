@@ -25,8 +25,8 @@ def step_impl(context):
         context.driver.get("http://localhost")
         assert context.driver.title == "CC-Enigma"
 
-    #context.driver.maximize_window()
-    #time.sleep(5)
+    # context.driver.maximize_window()
+    # time.sleep(5)
 
 
 @when('I press the {letter} key on the {keyboard} keyboard')
@@ -265,7 +265,7 @@ def step_impl(context):
         alert = context.driver.switch_to.alert
 
         alert.accept()
-    except (NoAlertPresentException, TimeoutException) as e:
+    except (NoAlertPresentException, TimeoutException):
         pass
 
 
@@ -287,7 +287,7 @@ def step_impl(context, default_variant):
             selected_option_text = select.first_selected_option.text
             assert selected_option_text == default_variant, f'{default_variant} is not selected but {selected_option_text}'
             return
-        except (StaleElementReferenceException, NoSuchElementException, TimeoutException) as e:
+        except (StaleElementReferenceException, NoSuchElementException, TimeoutException):
             retries -= 1
             context.execute_steps('I refresh page and close Alert')
             context.execute_steps('When I click setting symbol')
@@ -342,7 +342,28 @@ def step_impl(context):
     context.driver.refresh()
 
 
+@when('I set rotor 1 ring setting to {ring1}')
+def step_impl(context, ring1):
+    add1 = context.driver.find_element(By.CSS_SELECTOR, 'button[onclick="changeRingsetting(\'ring_r1\', 1)"]')
+    if int(ring1) < 26:
+
+        for i in range(int(ring1)):
+            add1.click()
 
 
+@when('I set rotor 2 ring setting to {ring2}')
+def step_impl(context, ring2):
+    add1 = context.driver.find_element(By.CSS_SELECTOR, 'button[onclick="changeRingsetting(\'ring_r2\', 1)"]')
+
+    if int(ring2) < 26:
+        for i in range(int(ring2)):
+            add1.click()
 
 
+@when('I set rotor 3 ring setting to {ring3}')
+def step_impl(context, ring3):
+    add1 = context.driver.find_element(By.CSS_SELECTOR, 'button[onclick="changeRingsetting(\'ring_r3\', 1)"]')
+
+    if int(ring3) < 26:
+        for i in range(int(ring3)):
+            add1.click()
