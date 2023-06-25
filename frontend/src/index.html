@@ -193,6 +193,7 @@
                     <button type=button onclick="hideMenu(); showVariantMenu()">Add/Modify Variant</button>
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td>
                     <label for="reflector">Reflector: </label>
@@ -207,11 +208,19 @@
                     </select>
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
+
             <tr>
+                <td></td>
                 <td><label for="r1"> Rotor 1:</label></td>
+                <td><label for="r2"> Rotor 2: </label></td>
+                <td><label for="r3"> Rotor 3:</label></td>
+            </tr>
+            <tr>
+                <td>Rotors:</td>
                 <td>
                     <select id="r1">
-                        <option value="default" disabled selected></option>
+                        <option value="default" disabled selected="selected"></option>
                         <option value="Enigma I-R1">Enigma I-R1</option>
                         <option value="Enigma I-R2">Enigma I-R2</option>
                         <option value="Enigma I-R3">Enigma I-R3</option>
@@ -229,19 +238,6 @@
                         <option value="Enigma M3-R7">Enigma M3-R7</option>
                         <option value="Enigma M3-R8">Enigma M3-R8</option>
                     </select>
-                </td>
-                <td>
-                    <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter" value="A"
-                           required>
-                </td>
-                <td><button type="button" onclick="changeRingsetting('ring_r1', -1)">-</button>
-                    <input type="text" id="ring_r1" value="0 A" readonly>
-                     <button type="button" onclick="changeRingsetting('ring_r1', 1)">+</button>
-                 </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="r2"> Rotor 2: </label>
                 </td>
                 <td>
                     <select id="r2">
@@ -265,21 +261,6 @@
                     </select>
                 </td>
                 <td>
-                    <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter" value="A"
-                           required>
-                </td>
-                <td>
-                    <button type="button" onclick="changeRingsetting('ring_r2', -1)">-</button>
-                    <input type="text" id="ring_r2" value="0 A" readonly>
-                    <button type="button" onclick="changeRingsetting('ring_r2', 1)">+</button>
-                    
-                </td>
-            </tr>
-            <tr id="menu_row3">
-                <td>
-                    <label for="r3"> Rotor 3:</label>
-                </td>
-                <td>
                     <select id="r3">
                         <option value="default" disabled selected="selected"></option>
                         <option value="Enigma I-R1">Enigma I-R1</option>
@@ -300,35 +281,56 @@
                         <option value="Enigma M3-R8">Enigma M3-R8</option>
                     </select>
                 </td>
+            </tr>
+
+            <tr>
+                <td>Offsets:</td>
                 <td>
-                    <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter" value="A"
-                           required>
+                    <input name="offset_r1" id="offset_r1" pattern="[A-Z]{1}" title="one capital letter"
+                           maxlength="5" value="A" required>
                 </td>
+                <td>
+                    <input name="offset_r2" id="offset_r2" pattern="[A-Z]{1}" title="one capital letter"
+                           value="A" required>
+                </td>
+                <td>
+                    <input name="offset_r3" id="offset_r3" pattern="[A-Z]{1}" title="one capital letter"
+                           value="A" required>
+                </td>
+
+            </tr>
+            <tr>
+                <td>Ringsettings:</td>
+                <td>
+                    <button type="button" onclick="changeRingsetting('ring_r1', -1)">-</button>
+                    <input type="text" id="ring_r1" value="0 A" readonly>
+                    <button type="button" onclick="changeRingsetting('ring_r1', 1)">+</button>
+                </td>
+                <td>
+                    <button type="button" onclick="changeRingsetting('ring_r2', -1)">-</button>
+                    <input type="text" id="ring_r2" value="0 A" readonly>
+                    <button type="button" onclick="changeRingsetting('ring_r2', 1)">+</button>
+                </td>
+
                 <td>
                     <button type="button" onclick="changeRingsetting('ring_r3', -1)">-</button>
                     <input type="text" id="ring_r3" value="0 A" readonly>
                     <button type="button" onclick="changeRingsetting('ring_r3', 1)">+</button>
-                    
+
                 </td>
+
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
-                <td>
-                    <label for="deactivate_plugboard">Plugboard:</label>
-                </td>
+                <td><label for="deactivate_plugboard">Plugboard:</label></td>
                 <td>
                     <input id="deactivate_plugboard" type="checkbox" checked>
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
-                <td>
-                    <br>
-                    <button type="button" id="cancelBtn" onclick="hideMenu()">Cancel</button>
-                </td>
-                <td>
-                    <br>
-                    <input type="submit" id="submitBtn" value="Submit">
-                </td>
-                <td></td>
+                <td><button type="button" id="cancelBtn" onclick="hideMenu()">Cancel</button></td>
+                <td> <input type="submit" id="submitBtn" value="Submit"></td>
             </tr>
             </tbody>
         </table>
@@ -340,7 +342,7 @@
     <form action="#" onsubmit="submitVariantMenu(); return false">
         <table>
             <tbody>
-
+            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td>
                     <label for="variantName">Name:</label>
@@ -349,6 +351,7 @@
                     <input type="text" id="variantName" pattern="[a-zA-Z0-9 ]{1,15}" title="one to fifteen alphanumeric characters" required>
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td></td>
                 <td>
@@ -402,6 +405,7 @@
                     <input id="variantPlugboard" type="checkbox">
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td>
                     <button type="button" id="cancelVariantMenuBtn" onclick="hideVariantMenu()">Cancel</button>
