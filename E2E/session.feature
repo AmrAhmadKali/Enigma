@@ -21,7 +21,7 @@ Feature: Session
 
     Examples:
       | variant | reflector   | rotor1      | rotor2      | rotor3      | default_variant  |  default_reflector | default_rotor1 |  default_rotor2  | default_rotor3  |
-      | Enigma M3 | Reflector C   | Enigma M3-R8      | Enigma M3-R7      | Enigma M3-R6      | Enigma 1  | Reflector A | Enigma I-R1 | Enigma I-R2 | Enigma I-R3 |
+      | Enigma M3 | Reflector C   | Enigma M3-R8      | Enigma M3-R7      | Enigma M3-R6      | Enigma 1  | UKW A | Enigma I-R1 | Enigma I-R2 | Enigma I-R3 |
 
 
     Scenario: test cookies, save state
