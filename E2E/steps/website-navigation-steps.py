@@ -17,7 +17,7 @@ from selenium.webdriver.common.alert import Alert
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = True  # To change
+    options.headless = False  # To change
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
@@ -338,13 +338,17 @@ def step_impl(context, default_rotor3):
 
 @when('I refresh page and close Alert')
 def step_impl(context):
-    try:
-        context.driver.refresh()
-        WebDriverWait(context.driver, 10).until(EC.alert_is_present())
-        alert = context.driver.switch_to.alert
-        alert.accept()
-    except TimeoutException:
-        print("Alert did not appear within the specified timeout.")
+
+    # context.driver.refresh()
+    # context.driver.exit()
+    context.driver.execute_script('save().then(uuid => {setCookie(uuid)})')
+    # context.driver.get("http://localhost")
+    context.driver.refresh()
+
+    # WebDriverWait(context.driver, 10).until(EC.alert_is_present())
+    # alert = context.driver.switch_to.alert
+    # alert.accept()
+
 
 
 

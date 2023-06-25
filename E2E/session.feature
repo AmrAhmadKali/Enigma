@@ -44,5 +44,5 @@ Feature: Session
 #      Examples:
 #        | variant | reflector   | rotor1      | rotor2      | rotor3      | saved_variant  |  saved_reflector | saved_rotor1 |  saved_rotor2  | saved_rotor3  |
 #        | Enigma B | Reflector UKW   | Enigma B-R3      | Enigma B-R2      | Enigma B-R1      | Enigma B  |  Reflector UKW | Enigma B-R3 |  Enigma B-R2  | Enigma B-R1  |
-#
-#
+
+
