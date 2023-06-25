@@ -10,7 +10,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
-from selenium.webdriver.common.alert import Alert
 
 
 @given('The Enigma Website is opened')
@@ -26,8 +25,8 @@ def step_impl(context):
         context.driver.get("http://localhost")
         assert context.driver.title == "CC-Enigma"
 
-    context.driver.maximize_window()
-    time.sleep(5)
+    #context.driver.maximize_window()
+    #time.sleep(5)
 
 
 @when('I press the {letter} key on the {keyboard} keyboard')
@@ -303,7 +302,7 @@ def step_impl(context, default_reflector):
     print(select.first_selected_option.text)
     selected_option_text = select.first_selected_option.text
 
-    assert selected_option_text == 'UKW A', f'{default_reflector} is not selected but {selected_option_text}'
+    assert selected_option_text == default_reflector, f'{default_reflector} is not selected but {selected_option_text}'
 
 
 @then('Rotor 1 is set to {default_rotor1}')
@@ -338,16 +337,11 @@ def step_impl(context, default_rotor3):
 
 @when('I refresh page and close Alert')
 def step_impl(context):
-
-    # context.driver.refresh()
-    # context.driver.exit()
     context.driver.execute_script('save().then(uuid => {setCookie(uuid)})')
-    # context.driver.get("http://localhost")
+    time.sleep(3)
     context.driver.refresh()
 
-    # WebDriverWait(context.driver, 10).until(EC.alert_is_present())
-    # alert = context.driver.switch_to.alert
-    # alert.accept()
+
 
 
 
