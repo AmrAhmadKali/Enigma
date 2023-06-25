@@ -10,6 +10,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException, TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
+from selenium.webdriver.common.alert import Alert
 
 
 @given('The Enigma Website is opened')
@@ -260,9 +261,13 @@ def step_impl(context):
 
 @when('I close the Alert')
 def step_impl(context):
-    alert = context.driver.switch_to.alert
+    try:
+        WebDriverWait(context.driver, 3).until(EC.alert_is_present())
+        alert = context.driver.switch_to.alert
 
-    alert.accept()
+        alert.accept()
+    except (NoAlertPresentException, TimeoutException) as e:
+        pass
 
 
 @then('Variant is set to {default_variant}')
@@ -271,23 +276,24 @@ def step_impl(context, default_variant):
     retries = 3
     while retries > 0:
         try:
-            element = context.driver.find_element(By.ID, 'variants')
-            staleness_result = EC.staleness_of(element)
-            print('staleness:', staleness_result(context.driver))
-            is_select_present = WebDriverWait(context.driver, 10).until(EC.text_to_be_present_in_element_value(locator,
-                                                                                                               default_variant))
+            # element = context.driver.find_element(By.ID, 'variants')
+            # staleness_result = EC.staleness_of(element)
+            # print('staleness:', staleness_result(context.driver))
+            is_select_present = WebDriverWait(context.driver, 10).until(EC.visibility_of_element_located(locator))
             print(f'is_select_present : {is_select_present}')
             select_element = context.driver.find_element(*locator)
             print(f'.is_displayed():   {select_element.is_displayed()}')
             select = Select(select_element)
-            print(select.first_selected_option.text)  # Heisenbug was here WATCH OUT!!
+            print('select.first_selected_option.text:   ', select.first_selected_option.text)  # Heisenbug was here WATCH OUT!!
             selected_option_text = select.first_selected_option.text
             assert selected_option_text == default_variant, f'{default_variant} is not selected but {selected_option_text}'
-            break
+            return
         except (StaleElementReferenceException, NoSuchElementException, TimeoutException) as e:
             retries -= 1
-            context.driver.refresh()
+            context.execute_steps('I refresh page and close Alert')
             context.execute_steps('When I click setting symbol')
+            if retries == 0:  # Assert for failure case
+                assert 0, f'{default_variant} is not selected, The select Element is after 3 Times still raising Exceptions'
 
 
 @then('Reflector is set to {default_reflector}')
@@ -328,4 +334,17 @@ def step_impl(context, default_rotor3):
     selected_option_text = select.first_selected_option.text
 
     assert selected_option_text == default_rotor3, f'{default_rotor3} is not selected but {selected_option_text}'
+
+
+@when('I refresh page and close Alert')
+def step_impl(context):
+    try:
+        context.driver.refresh()
+        WebDriverWait(context.driver, 10).until(EC.alert_is_present())
+        alert = context.driver.switch_to.alert
+        alert.accept()
+    except TimeoutException:
+        print("Alert did not appear within the specified timeout.")
+
+
 
