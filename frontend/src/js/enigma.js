@@ -142,6 +142,7 @@ function highlightKey(key) {
     $('[name="k_' + key + '"]').css('background-color', 'green')
 }
 function highlightWhiteSpace(){
+    $("[name^=l_]").css('background-color', 'white')
     $('[name^="k_"]').css('background-color', 'black')
     $("[name^=k_space]").css('background-color', 'black')
     $('[name="k_space"]').css('background-color', 'green')
