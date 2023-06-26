@@ -132,6 +132,7 @@ def step_impl(context, lamp):
 @when('I click setting symbol')
 def step_impl(context):
     ignored_exceptions = [NoSuchElementException, StaleElementReferenceException]
+    time.sleep(3)
     try:
         element = WebDriverWait(context.driver, 5, ignored_exceptions=ignored_exceptions) \
         .until(EC.presence_of_element_located((By.ID, "showMenuBtn")))
@@ -262,25 +263,10 @@ def step_impl(context):
 
 @then('Variant is set to {default_variant}')
 def step_impl(context, default_variant):
-    locator = (By.ID, 'variants')
-    retries = 3
-    while retries > 0:
-        try:
-            is_select_present = WebDriverWait(context.driver, 10).until(EC.visibility_of_element_located(locator))
-            print(f'is_select_present : {is_select_present}')
-            select_element = context.driver.find_element(*locator)
-            print(f'.is_displayed():   {select_element.is_displayed()}')
-            select = Select(select_element)
-            print('select.first_selected_option.text:   ', select.first_selected_option.text)  # Heisenbug was here WATCH OUT!!
-            selected_option_text = select.first_selected_option.text
-            assert selected_option_text == default_variant, f'{default_variant} is not selected but {selected_option_text}'
-            return
-        except (StaleElementReferenceException, NoSuchElementException, TimeoutException):
-            retries -= 1
-            context.execute_steps('I refresh page and close Alert')
-            context.execute_steps('When I click setting symbol')
-            if retries == 0:  # Assert for failure case
-                assert 0, f'{default_variant} is not selected, The select Element is after 3 Times still raising Exceptions'
+    select_element = context.driver.find_element(By.ID, 'variants')
+    select = Select(select_element)
+    selected_option_text = select.first_selected_option.text
+    assert selected_option_text == default_variant, f'{default_variant} is not selected but {selected_option_text}'
 
 
 @then('Reflector is set to {default_reflector}')
