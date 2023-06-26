@@ -72,7 +72,7 @@ containerize-and-tag:
     - docker rmi ${CI_REGISTRY_IMAGE}/enigma_front:latest
 
 e2e-test:
-  image: docker:20.10.15-dind
+  image: docker:23.0.6-dind-alpine3.18
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never
@@ -93,7 +93,7 @@ e2e-test:
     - python3 -m behave E2E/
 
 e2e-test-daily:
-  image: docker:20.10.15-dind
+  image: docker:23.0.6-dind-alpine3.18
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   variables:

@@ -1,14 +1,15 @@
-# Enigma
+# Cryptic-Crew Enigma
 
 ## How to run it
-1) `chmod +x go.sh`
-2) `./go.sh`
-3) Enjoy
+- execute ` docker-compose up --build` in project root folder
+- open `http://localhost` in Firefox Browser 
 
-TESTED ON ARCH LINUX, 07.04.2023
+**Project has been designed for Firefox. Compability with other browsers cannot be guaranteed**
+
+Until the Repository gets archived, a live demo will be available here: https://ign.ddnss.de/
 
 ## Content
 - `backend` contains all code related to the websocket
-- `frontend` contains the config & static data for the frontend
-Use the built-in continuous integration in GitLab.
-
+- `backend/tests` contains the unit and integration tests of the backend
+- `frontend` contains the nginx config & source data of the frontend
+- `E2E` contains the e2e tests for the UI 

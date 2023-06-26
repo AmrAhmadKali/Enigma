@@ -4,8 +4,18 @@ body {
     min-height: 100%;
 }
 
+h1{
+    text-align: center;
+}
+
 p {
     display: inline;
+    font-size: 1.5vw;
+}
+
+#offset_heading{
+    background-color: #b2b2b2;
+    color: black;
     font-size: 1.5vw;
 }
 
@@ -13,25 +23,33 @@ button {
     cursor: pointer;
 }
 
-img {
-    margin: 1%;
+#body_table{
+    padding: 0;
+    width: 100%;
 }
+
+#body_table td{
+    width: 50%;
+    padding-top: 1%;
+}
+
+/* Variant Menu: */
+#variantMenu{
+    width: 30%;
+    height: fit-content;
+    font-size: 1vw;
+}
+
+#variantMenu select{
+    width: 100%;
+    height: 25vh;
+}
+
 
 /* Container: */
-.flex_center {
-    display: flex;
-    justify-content: center;
-}
-
-.flex_left {
-    display: flex;
-    justify-content: left;
-}
-
 .inputContainer, .outputContainer {
-    font-size: 2vw;
-    width: 40%;
-    height: 20vh;
+    font-size: 1.5vw;
+    height: 18vh;
     margin: 1%;
     background: white;
     box-shadow: 0 0 0.1em grey;
@@ -41,24 +59,18 @@ img {
     overflow-y: auto;
 }
 
-.rotorContainer{
-    display: flex;
-    width: 65%;
-
-}
-
 .rotorContainer p{
     background-color: black;
     color: white;
     margin: 2%;
     padding: 1.5%;
     align-self: center;
+    font-size: 1.5vw;
 }
 
 .plugboardContainer{
     font-size: 1vw;
     box-shadow: 0 0 0.1em grey;
-    width: 40%;
     height: 10vh;
     margin: 1%;
     line-height: 10vh;
@@ -69,8 +81,7 @@ img {
 
 /* Keyboards: */
 .plugboard {
-    width: 41.5%;
-    margin: 3%;
+    margin:  3%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,26 +111,31 @@ img {
 /* Keys: */
 .key {
     border-radius: 50%;
-    width: 4vw;
-    height: 4vw;
+    width: 3vw;
+    height: 3vw;
     font-size: 1.5vw;
 }
 .keyboard button {
     color: white;
     background-color: black;
+    box-shadow: 0 5px #999;
+    font-size: 1vw;
+
 }
+
 .lamppanel button {
     color: black;
     background-color: white;
     cursor: default;
+    font-size: 1vw;
 
 }
 .plugboard button {
     text-align: center;
-    font-size: 1.5vw;
-    width: 2.5vw;
+    font-size: 1vw;
+    width: 2vw;
     border-radius: 10%;
-    height: 2.5vw;
+    height: 2vw;
     color: black;
     background-color: white;
 }
@@ -127,13 +143,31 @@ img {
     width: fit-content;
 }
 
-/* Menu */
-#showMenuBtn, #resetBtn{
-    height: 5vh;
-    width: 5vh;
-    background-color: white;
-    border-radius: 50%;
-    padding: 1vh 1vh;
-    cursor: pointer;
+/* Buttons */
+#showMenuBtn, #resetBtn, #clearBtn{
+    height: 7vh;
+    width: 7vh;
+    margin-right: 8%;
 }
 
+#showMenuBtn {
+    background-image: url("../images/setting_icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #b2b2b2;
+    border: none;
+}
+#resetBtn{
+    background-image: url("../images/delete_icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #b2b2b2;
+    border: none;
+}
+#clearBtn{
+    background-image: url("../images/reset_icon.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #b2b2b2;
+    border: none;
+}

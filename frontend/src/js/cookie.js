@@ -1,71 +1,39 @@
-var cookie = {
-
-    generateUUID: function() {
-        let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let uuid = '';
-        for(let i = 0; i < 20; i++) {
-            uuid += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return uuid;
-    },
-
-    changeCookie: function(){
-        let settings = this.getCookie();
-        if (settings.length !== 0) {
-            this.deleteCookie();
-            this.setCookie(settings[0]);
-        }else{
-            awaiting.push('uuid');
-            sendRequest('uuid')
-            //let uuid = this.generateUUID();
-            //this.setCookie(uuid);
-        }
-    },
-
-    deleteCookie: function(){
-        document.cookie = "enigma_settings=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    },
-
-    setCookie: function(uuid) {
-        let input = document.querySelector(".inputContainer");
-        let cypher = document.querySelector(".outputContainer");
-        const d = new Date();
-        d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000));
-        let expires = "expires="+d.toUTCString();
-        let replaced_uuid = uuid.replace("=", "!");
-        console.log(replaced_uuid);
-        console.log("test");
-        let cookie_value = "UUID=" + replaced_uuid + ":input=" + input.innerHTML + ":cypher=" + cypher.innerHTML;
-        document.cookie = "enigma_settings"+ "=" + cookie_value + ";" + expires + ";path=/";
-    },
-
-    getCookie: function() {
-        let settings = "enigma_settings=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(settings) === 0) {
-                let value_list = c.substring(settings.length, c.length).split(":").map(function (x){return x.slice(x.indexOf("=") + 1)});
-                value_list[0] = value_list[0].replace("!", "=");
-                return value_list
-            }
-        }
-        return [];
-    },
-
-    loadCookie: function(){
-        let settings = this.getCookie();
-        if (settings.length !== 0){
-            let inputContainer = document.querySelector(".inputContainer");
-            let outputContainer = document.querySelector(".outputContainer");
-
-            inputContainer.innerHTML = settings[1];
-            outputContainer.innerHTML = settings[2];
-        }
-    }
+/**
+ * Deletes the cookie with the name 'CC_uuid' if it exists.
+ */
+function deleteCookie(){
+    document.cookie = "CC_uuid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
+
+/**
+ * Sets a cookie with the name 'CC_uuid' and the specified UUID.
+ * This UUID should be the identifier for a saved Enigma State at the backend.
+ * @param uuid - The value of the cookie
+ */
+function setCookie(uuid) {
+    const d = new Date()
+    d.setTime(d.getTime() + (7 * 24 * 60 * 60 * 1000))
+
+    document.cookie = "CC_uuid="+ uuid + ";" + "expires=" + d.toUTCString() + "; path=/;"
+}
+
+/**
+ * Returns the value of the cookie named 'CC_uuid' as a string.
+ * This value is the UUID for a saved Enigma State at the backend.
+ * @returns {string}
+ */
+function getCookie() {
+    let cookieName = "CC_uuid="
+    let cookie = decodeURIComponent(document.cookie)
+    return cookie.split(';')[0].slice(cookieName.length, cookie.length)
+}
+
+/**
+ * Determines whether cookie with the name 'CC_uuid' is set.
+ * @returns {boolean}
+ */
+function isCookieSaved(){
+    return decodeURIComponent(document.cookie).includes("CC_uuid=")
+}
+
 

@@ -12,13 +12,15 @@ from meta.dict_object import DictObject
 @instance("db")
 class DB(BaseModule):
     # TODO: Move Database to persistent docker volume
-    DB_LOCATION = "enigma.db"
+    DB_LOCATION = "data/enigma.db"
     _conn: Connection
-
     def __init__(self):
         pass
 
     async def connect_db(self, location=None):
+        """
+        Establish a Database connection..
+        """
         if not location:
             location = self.DB_LOCATION
         self._conn = await aiosqlite.connect(location)
@@ -46,6 +48,9 @@ class DB(BaseModule):
         return result or None
 
     async def query_single(self, sql, params=None):
+        """
+        Query the database, but only yield the first result as a DictObject()
+        """
         if params is None:
             params = []
 
@@ -56,6 +61,9 @@ class DB(BaseModule):
         return await self._exec_wrapper(sql, params, map_results)
 
     async def query(self, sql, params=None) -> list[DictObject]:
+        """
+        Query the database, and yield all results as a list of DictObject()'s
+        """
         if params is None:
             params = []
 
@@ -65,6 +73,10 @@ class DB(BaseModule):
         return await self._exec_wrapper(sql, params, map_result)
 
     async def exec(self, sql, params=None) -> int:
+        """
+        Execute commands inside tha Database, and commit them after.
+        Used for Insert/Update/...
+        """
         if params is None:
             params = []
 
@@ -72,6 +84,7 @@ class DB(BaseModule):
             return [cur.rowcount, cur.lastrowid]
 
         row_count, lastrowid = await self._exec_wrapper(sql, params, map_result)
+        await self._conn.commit()
         self.lastrowid = lastrowid
         return row_count
 

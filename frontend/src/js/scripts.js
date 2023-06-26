@@ -1,3 +1,6 @@
+/**
+ * global variable for the websocket object
+ */
 let socket;
 
 // this will automatically pick the websocket up, making the assumption that it runs on the same host as the Website
@@ -10,14 +13,27 @@ if (document.location.hostname === "frontend") {
 
 socket.onopen = sock_open
 socket.onmessage = on_message
+/**
+ * Array containing all pending server requests, can be different as sent commands.
+ * @type {string[]}
+ */
 let awaiting = [];
 
+/**
+ * calls load on socket connection established event
+ */
 function sock_open() {
-    // sendRequest("help");
+    load();
+    initLocalStorage();
 }
 
+
+/**
+ * handles websocket answers by popping awaiting
+ * @param msg
+ */
 function on_message(msg) {
-    var data = JSON.parse(msg.data);
+    const data = JSON.parse(msg.data);
     let req = awaiting.pop();
 
     console.log(data)
@@ -27,56 +43,33 @@ function on_message(msg) {
     }
 
     switch (req) {
-        case 'help': {
-            $('#help').remove();
-            $('#main').append("<div id='help'><a id='status'>Status Code: </a><table id='help-table'>   " +
-                "<tr><td>Command</td><td>Parameters</td><td>Regex</td><td>Description</td></tr>" +
-                "</table></div>")
-            $('#status').append(data.status);
-            data.response.forEach((val, _, _1) => {
-                $('#help-table').append("<tr id='help-tr'>" +
-                    "<td>" + val.cmd + "</td>" +
-                    "<td>" + val.params + "</td>" +
-                    "<td>" + val.regex + "</td>" +
-                    "<td>" + val.desc + "</td>" +
-                    "</tr>");
-            });
-            break;
-        }
-        case 'dump': {
-            $('#dump').remove();
-            $('#main').append("<div id='dump'><a id='d-status'>Status Code: </a><br></div>")
-            $('#d-status').append(data.status);
-            $(`#dump`).append(msg.data);
-            break;
-        }
         case 'getSetting':{
-            currentSet(data.response.rotor_order, data.response.rotors)
+            currentSet(data.response.rotor_order, data.response.rotors, data.response.rotorkeyring)
             return;
         }
         case 'encrypt': {
             letter_received(data.response);
             break;
         }
-        case 'uuid': {
-            cookie.setCookie(data.response);
-            break;
+        case 'load': {
+            awaiting.push('getSaveData')
+            sendRequest('dump')
+            break
         }
-        //case 'rotors:set': {
-          //  alert('Rotors successfully set')
-           // break
-        //}
-        //case 'rotors:offset': {
-           // alert('Offset successfully set')
-            //break
-        //}
+        case 'getSaveData': {
+            setOffsetDisplay(data.response.rotor_order, data.response.rotors)
+            setPlugboard(data.response.plugboard)
+            break
+        }
     }
-
 }
 
-/*
-Use this for sending requests to the websocket...
-*/
+/**
+ * Used to send requests to the websocket server. A push to awaiting is necessary before calling this function.
+ * @param cmd - main command
+ * @param sub - sub command
+ * @param params - command parameter
+ */
 function sendRequest(cmd, sub, params) {
     if (sub == null && params == null) {
         socket.send('{"cmd": "' + cmd + '"}');
@@ -86,6 +79,5 @@ function sendRequest(cmd, sub, params) {
         socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '"}');
     } else {
         socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '", "params": "' + params + '"}');
-
     }
 }

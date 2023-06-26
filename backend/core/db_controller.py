@@ -25,6 +25,10 @@ class DBController(BaseModule):
              params=[],
              description="Save the current backend state into the DB")
     async def save(self, _: WebSocketServerProtocol, _1: DictObject) -> Tuple[int, str]:
+        """
+        Generates a UUID, which gets linked to a copy of the current connection-storage.
+        May be loaded again by using load <key> - where <key> is the response of this command.
+        """
         uid = uuid.uuid4().int & self.bitmask
         timeout = time.time()
         await self.db.exec('DELETE FROM storage WHERE timeout <?', [timeout])
@@ -38,6 +42,9 @@ class DBController(BaseModule):
              params=[Hex('uuid')],
              description="Load backend settings from a given UUID")
     async def load(self, _: WebSocketServerProtocol, storage: DictObject, uid) -> Tuple[int, str]:
+        """
+        Loads the Storage which was previously saved with "save"
+        """
         data = await self.db.query_single('SELECT data FROM storage where UUID=? and timeout > ?',
                                           [uid ^ self.bitmask, time.time()])
         if not data:
