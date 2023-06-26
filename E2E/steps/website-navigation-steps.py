@@ -16,7 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 def step_impl(context):
     # spin up driver
     options = Options()
-    options.headless = True  # To change
+    options.headless = True
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
@@ -25,8 +25,6 @@ def step_impl(context):
         context.driver.get("http://localhost")
         assert context.driver.title == "CC-Enigma"
 
-    # context.driver.maximize_window()
-    # time.sleep(5)
 
 
 @when('I press the {letter} key on the {keyboard} keyboard')
@@ -63,7 +61,6 @@ def step_impl(context, letter):
 
 @then('The letter {letter} should be displayed in the {box} box')
 def step_impl(context, letter, box):
-    # context.driver.implicitly_wait(0.5)
     if box == 'input':
         element = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert element == letter, f'Input Container does not contain {letter}, but {element}'
@@ -77,8 +74,6 @@ def step_impl(context, letter, box):
 @then('The plugboard box should be empty')
 def step_impl(context):
     text = context.driver.find_element(By.CSS_SELECTOR, '.plugboardContainer').text
-    # WebDriverWait(context.driver, timeout=20).until(
-    #     EC.text_to_be_present_in_element((By.CLASS_NAME, "plugboardContainer"), ''))
     assert text == '', 'Plugboard Container should be empty, but is not'
 
 
@@ -91,7 +86,6 @@ def step_impl(context, letter, limit):
 
 @then('I see only {limit} characters in the {box} box')
 def step_impl(context, limit, box):
-    # context.driver.implicitly_wait(0.5)
     if box == 'input':
         input_box = context.driver.find_element(By.CSS_SELECTOR, '.inputContainer').text
         assert len(input_box) == int(limit), f'Input box should have {limit} characters at most not {len(input_box)}'
@@ -129,7 +123,6 @@ def step_impl(context):
 
 @then('The lamp {lamp} lights up')
 def step_impl(context, lamp):
-    # context.driver.implicitly_wait(0.5)
     element = context.driver.find_element(By.NAME, f"l_{lamp}")
     background_color = element.value_of_css_property("background-color")
     YELLOW = 'rgb(255, 255, 0)'
@@ -142,7 +135,6 @@ def step_impl(context):
     try:
         element = WebDriverWait(context.driver, 5, ignored_exceptions=ignored_exceptions) \
         .until(EC.presence_of_element_located((By.ID, "showMenuBtn")))
-        # element = context.driver.find_element(By.CSS_SELECTOR, 'button[id="showMenuBtn"')
         element.click()
 
     except Exception as e:
@@ -168,7 +160,6 @@ def step_impl(context, reflector):
     scroll_script = f"window.scrollTo({dropdown_position['x']}, {dropdown_position['y']})"
     context.driver.execute_script(scroll_script)
     try:
-        # dropdown.click()
         wait = WebDriverWait(context.driver, 5)
         wait.until(EC.visibility_of(dropdown)).click()
     except Exception as e:
@@ -275,9 +266,6 @@ def step_impl(context, default_variant):
     retries = 3
     while retries > 0:
         try:
-            # element = context.driver.find_element(By.ID, 'variants')
-            # staleness_result = EC.staleness_of(element)
-            # print('staleness:', staleness_result(context.driver))
             is_select_present = WebDriverWait(context.driver, 10).until(EC.visibility_of_element_located(locator))
             print(f'is_select_present : {is_select_present}')
             select_element = context.driver.find_element(*locator)
