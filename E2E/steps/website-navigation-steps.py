@@ -7,7 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException, TimeoutException
+from selenium.common.exceptions import NoAlertPresentException, NoSuchElementException, StaleElementReferenceException,\
+    TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait, Select
 
@@ -17,6 +18,7 @@ def step_impl(context):
     # spin up driver
     options = Options()
     options.headless = True
+
     context.driver = webdriver.Firefox(options=options, service=Service(GeckoDriverManager().install()))
     if "CI" in os.environ.keys():
         context.driver.get("http://frontend")
@@ -24,7 +26,6 @@ def step_impl(context):
     else:
         context.driver.get("http://localhost")
         assert context.driver.title == "CC-Enigma"
-
 
 
 @when('I press the {letter} key on the {keyboard} keyboard')
@@ -341,3 +342,54 @@ def step_impl(context, ring3):
     if int(ring3) < 26:
         for i in range(int(ring3)):
             add1.click()
+
+
+@when('I click Add/Modify Variant')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'button[onclick="hideMenu(); showVariantMenu()"]')
+
+    element.click()
+
+
+@when('I enter the variant name {variant_name}')
+def step_impl(context, variant_name):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="variantName"]')
+
+    element.clear()
+    element.send_keys(variant_name)
+
+
+@when('I choose Reflectors {available_reflectors}')
+def step_impl(context, available_reflectors):
+    select_element = context.driver.find_element(By.CSS_SELECTOR, 'select[id="variantReflectors"]')
+
+    chosen_reflectors = available_reflectors.split(', ')
+
+    for i in range(len(chosen_reflectors)):
+        option_element = select_element.find_element(By.CSS_SELECTOR, f'option[value="{chosen_reflectors[i]}"]')
+        option_element.click()
+
+
+@when('I choose Rotors {available_rotors}')
+def step_impl(context, available_rotors):
+    select_element = context.driver.find_element(By.CSS_SELECTOR, 'select[id="variantRotors"]')
+
+    chosen_rotors = available_rotors.split(', ')
+
+    for i in range(len(chosen_rotors)):
+        option_element = select_element.find_element(By.CSS_SELECTOR, f'option[value="{chosen_rotors[i]}"]')
+        option_element.click()
+
+
+@when('Plugboard {is_plugboard_existent}')
+def step_impl(context, is_plugboard_existent):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="variantPlugboard"]')
+    if is_plugboard_existent:
+        element.click()
+
+
+@when('I submit Variant')
+def step_impl(context):
+    element = context.driver.find_element(By.CSS_SELECTOR, 'input[id="submitVariantMenuBtn"]')
+
+    element.click()

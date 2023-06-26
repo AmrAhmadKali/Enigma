@@ -94,3 +94,29 @@ Feature: Option Menu
           | variant |  reflector | rotor1 | rotor2  |  rotor3  |   offset1    |   offset2   |   offset3    |  ring1 | ring2 | ring3 | encrypted_letter  |
           | Enigma 1 |  Reflector A | Enigma I-R3 | Enigma I-R4  |  Enigma I-R5  |   A    |   A   |   A    |  2     | 5     | 7     |        H          |
           | Enigma 1 |  Reflector A | Enigma I-R3 | Enigma I-R4  |  Enigma I-R5  |   B    |   D   |   F    |  2     | 5     | 7     |        V          |
+
+
+        Scenario Outline: Add and modify Custom Variants
+          Given The Enigma Website is opened
+          When I click setting symbol
+          And I click Add/Modify Variant
+          And I enter the variant name <variant_name>
+          And I choose Reflectors <available_reflectors>
+          And I choose Rotors <available_rotors>
+          And Plugboard <is_plugboard_existent>
+          And I submit Variant
+          And I click setting symbol
+          And I choose the variant <variant_name>
+          And I choose the Reflector <reflector>
+          And I choose the Rotor 1 <rotor1>
+          And I choose the Rotor 2 <rotor2>
+          And I choose the Rotor 3 <rotor3>
+          And I click submit
+          And I press the G key on the physical keyboard
+          Then The letter <encrypted_letter> should be displayed in the output box
+
+
+          Examples:
+          | variant_name  | available_reflectors  | available_rotors  | is_plugboard_existent |  reflector | rotor1 | rotor2  |  rotor3  |  encrypted_letter  |
+          | Amro  |  Reflector A, Reflector UKW  |  Enigma I-R1, Enigma I-R4, Enigma B-R2, Enigma M3-R6  | True |  Reflector UKW | Enigma I-R1 | Enigma B-R2  |  Enigma M3-R6  |  T  |
+          | Amro  |  Reflector B, Reflector UKW  |  Enigma I-R2, Enigma B-R2, Enigma B-R3, Enigma M3-R8  | False |  Reflector B | Enigma I-R2 | Enigma B-R2  |  Enigma M3-R8  |  L  |
