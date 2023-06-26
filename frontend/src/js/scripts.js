@@ -43,29 +43,6 @@ function on_message(msg) {
     }
 
     switch (req) {
-        case 'help': {
-            $('#help').remove();
-            $('#main').append("<div id='help'><a id='status'>Status Code: </a><table id='help-table'>   " +
-                "<tr><td>Command</td><td>Parameters</td><td>Regex</td><td>Description</td></tr>" +
-                "</table></div>")
-            $('#status').append(data.status);
-            data.response.forEach((val, _, _1) => {
-                $('#help-table').append("<tr id='help-tr'>" +
-                    "<td>" + val.cmd + "</td>" +
-                    "<td>" + val.params + "</td>" +
-                    "<td>" + val.regex + "</td>" +
-                    "<td>" + val.desc + "</td>" +
-                    "</tr>");
-            });
-            break;
-        }
-        case 'dump': {
-            $('#dump').remove();
-            $('#main').append("<div id='dump'><a id='d-status'>Status Code: </a><br></div>")
-            $('#d-status').append(data.status);
-            $(`#dump`).append(msg.data);
-            break;
-        }
         case 'getSetting':{
             currentSet(data.response.rotor_order, data.response.rotors, data.response.rotorkeyring)
             return;
@@ -84,14 +61,6 @@ function on_message(msg) {
             setPlugboard(data.response.plugboard)
             break
         }
-        //case 'rotors:set': {
-          //  alert('Rotors successfully set')
-           // break
-        //}
-        //case 'rotors:offset': {
-           // alert('Offset successfully set')
-            //break
-        //}
     }
 }
 
@@ -110,6 +79,5 @@ function sendRequest(cmd, sub, params) {
         socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '"}');
     } else {
         socket.send('{"cmd": "' + cmd + '", "sub_cmd": "' + sub + '", "params": "' + params + '"}');
-
     }
 }

@@ -137,16 +137,22 @@ function key_pressed(key){
     }
 }
 
+/**
+ * colors the given key on the plugboard
+ * @param key - which key to highlight
+ */
 function highlightKey(key) {
     $('[name^="k_"]').css('background-color', 'black')
     $('[name="k_' + key + '"]').css('background-color', 'green')
 }
+
+/**
+ * colors the space key on the keyboard
+ */
 function highlightWhiteSpace(){
     $("[name^=l_]").css('background-color', 'white')
     $('[name^="k_"]').css('background-color', 'black')
-    $("[name^=k_space]").css('background-color', 'black')
     $('[name="k_space"]').css('background-color', 'green')
-   
 }
 /**
  * Appends a whitespace to the output Container, as we don't send space to the backend for encryption.

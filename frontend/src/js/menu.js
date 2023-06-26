@@ -168,6 +168,10 @@ function setvariants(){
     alert("An Error occurred")
 }
 
+/**
+ * sets the property disabled for select options in the menu which are not part of the given variant
+ * @param variant - the selected variant
+ */
 function hideVariantsInMenu(variant){
     let reflectorIndex
     let rotorIndex
