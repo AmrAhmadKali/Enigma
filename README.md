@@ -5,7 +5,7 @@
 - open `http://localhost` in Firefox Browser 
 
 **Project has been designed for Firefox. Compability with other browsers cannot be guaranteed**
-
+Until the Repository gets archived, a live demo will be available here: https://ign.ddnss.de/
 
 ## Content
 - `backend` contains all code related to the websocket
