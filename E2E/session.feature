@@ -1,6 +1,6 @@
 Feature: Session
 
-  Scenario Outline: Delete settings to recover default settings
+  Scenario Outline: Reset settings to recover default settings
     Given The Enigma Website is opened
     When I click setting symbol
     And I choose the variant <variant>
@@ -24,7 +24,7 @@ Feature: Session
       | Enigma M3 | Reflector C   | Enigma M3-R8      | Enigma M3-R7      | Enigma M3-R6      | Enigma 1  | UKW A | Enigma I-R1 | Enigma I-R2 | Enigma I-R3 |
 
 
-    Scenario: test cookies, save state
+    Scenario: Test cookies with page refresh
       Given The Enigma Website is opened
       When I click setting symbol
       And I choose the variant Enigma B

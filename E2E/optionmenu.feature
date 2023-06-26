@@ -1,6 +1,6 @@
 Feature: Option Menu
 
-  Scenario Outline: Test Enigma variants with the different Rotors and Reflectors
+  Scenario Outline: Test Enigma standard variants with the different Rotors and Reflectors
    Given The Enigma Website is opened
     When I click setting symbol
     And I choose the variant <variant>
@@ -31,7 +31,7 @@ Feature: Option Menu
     | Enigma M3      | Reflector C | Enigma M3-R6 | Enigma M3-R7 | Enigma M3-R8 | D             |
 
 
-  Scenario Outline: Plugboard Existence in Variant B
+  Scenario Outline: Plugboard disabled for Variant B
     Given The Enigma Website is opened
     When I click setting symbol
     And I choose the variant <variant>
@@ -50,7 +50,7 @@ Feature: Option Menu
       | Enigma B  |  Reflector UKW   | Enigma B-R3  |  Enigma B-R2  |  Enigma B-R1   |     S    |
 
 
-    Scenario Outline: Rotor offset
+    Scenario Outline: Set Rotor offset
       Given The Enigma Website is opened
       When I click setting symbol
       And I choose the variant <variant>
@@ -71,7 +71,7 @@ Feature: Option Menu
       |  Enigma M3  |  Reflector C   |  Enigma M3-R8  |  Enigma M3-R7  |   Enigma M3-R6  |        B         |         D         |           Z         |         Q        |
 
 
-      Scenario Outline: Ring settings
+      Scenario Outline: Set Ring settings
         Given The Enigma Website is opened
         When I click setting symbol
         And I choose the variant <variant>
